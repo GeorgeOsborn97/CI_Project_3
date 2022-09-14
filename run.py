@@ -15,8 +15,34 @@ SCOPED_CREDS = CREDS.with_scopes(SCOPE)
 GSPREAD_CLIENT = gspread.authorize(SCOPED_CREDS)
 SHEET = GSPREAD_CLIENT.open('project3_test_sheet')
 
-sheet1 = SHEET.worksheet('Sheet1')
+races = SHEET.worksheet('Races')
+race = races.get_all_values()
+print('Welcome to the Dungeons and Drgaons character creator!')
+print('To begin please choose from one of the following races.')
+print(race)
 
-data = sheet1.get_all_values()
 
-print(data)
+def select_race(prompt):
+    """
+    Return the users chosen race
+    """
+    return input(prompt)
+
+
+chosen_race = select_race('Type a race here to see their traits and starting abilities: ')
+print(chosen_race)
+
+
+def pull_racial_traits():
+    """
+    Pull the relevent racial traits
+    """
+    trait_sheet = SHEET.worksheet('Human')
+    racial_traits = trait_sheet.get_all_values()
+    if chosen_race == 'Human':
+        print(racial_traits)
+    else:
+        print('not human')
+
+
+pull_racial_traits()
