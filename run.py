@@ -22,30 +22,56 @@ print('To begin please choose from one of the following races.')
 print(race)
 xy = 1
 
-while xy == 1:
-    def select_race(prompt):
-        """
-        Return the users chosen race
-        """
-        return input(prompt)
 
-    chosen_race = select_race('Type a race here to see their traits and starting abilities: ')
-    print(chosen_race)
+def first_choice():
+    """
+    users first choice
+    """
+    while xy == 1:
+        def select_race(prompt):
+            """
+            Return the users chosen race
+            """
+            return input(prompt)
+        global chosen_race
+        chosen_race = select_race('Type a race here to see their traits and starting abilities: ')
 
-    def pull_racial_traits(choosen_race):
-        """
-        Pull the relevent racial traits
-        """
-        global xy
-        try:
-            trait_sheet = SHEET.worksheet(choosen_race)
-            racial_traits = trait_sheet.get_all_values()
-            print(racial_traits)
-            xy += 1
+        def pull_racial_traits(choosen_race):
+            """
+            Pull the relevent racial traits
+            """
+            global xy
+            try:
+                trait_sheet = SHEET.worksheet(choosen_race)
+                racial_traits = trait_sheet.get_all_values()
+                print(racial_traits)
+                xy += 1
 
-        except Exception:
-            print(f'{choosen_race} is not a playable Race, please select again.')
+            except Exception:
+                print(f'{choosen_race} is not a playable Race, please select again.')
 
-    pull_racial_traits(chosen_race)
+        pull_racial_traits(chosen_race)
 
-print('out the loop')
+
+first_choice()
+
+
+def confirm_race(prompt):
+    """
+    confirm the users chosen race
+    """
+    return input(prompt)
+
+
+confirmed_race = confirm_race(f'Are you sure you want to choose {chosen_race}? ')
+while confirmed_race != 'yes':
+    if confirmed_race == 'yes':
+        print(f'{chosen_race} confirmed!')
+    else:  
+        xy = 1
+        print('change decision')
+        first_choice()
+        confirmed_race = confirm_race(f'Are you sure you want to choose {chosen_race}? ')
+
+print('end of step one')
+
