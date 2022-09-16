@@ -178,3 +178,58 @@ while confirmed_class != 'Yes':
 your_character['Class'] = chosen_class
 print(your_character)
 print('end of step two')
+
+print("Now you that you have chosen a race and class for your chracter it's time to pick a level")
+print('Please choose from a level from 1 - 20')
+
+
+def third_choice():
+    """
+    users third choice
+    """
+    def choose_level(prompt):
+        """
+        pick a level
+        """
+        return input(prompt)
+    global chosen_level    
+    chosen_level = choose_level('Please choose your level: ')
+
+
+third_choice()
+
+
+def confirm_level(prompt):
+    """
+    confirm the users chosen level
+    """
+    return input(prompt)
+
+
+if int(chosen_level) < 0:
+    print(f'{chosen_level} is not a valid character level please select again')
+    third_choice()
+elif int(chosen_level) > 20:
+    print(f'{chosen_level} exceeds the maximun level, please pick again')
+    third_choice()
+
+confirmed_level = None
+while confirmed_level != 'Yes':
+    confirmed_level = confirm_level(f'Are you sure you want to choose {chosen_level}? Please answer "Yes" or "No" ')
+    if confirmed_level == 'Yes':
+        print(f'{chosen_level} confirmed!')
+    elif confirmed_level == 'No':
+        yz = 1
+        print('change decision')
+        third_choice()
+        confirmed_level = confirm_level(f'Are you sure you want to choose {chosen_level}? Please answer "Yes" or "No" ')
+        if confirmed_level == 'Yes':
+            print(f'{chosen_level} confirmed!')
+    else:
+        print('Please only type "Yes" or "No".')
+        confirmed_level = confirm_level(f'Are you sure you want to choose {chosen_level}? Please answer "Yes" or "No" ')
+        if confirmed_level == 'Yes':
+            print(f'{chosen_level} confirmed!')
+your_character['Level'] = chosen_level
+print(your_character)
+print('end of step 3')
