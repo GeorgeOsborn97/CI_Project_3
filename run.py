@@ -41,10 +41,13 @@ your_spells_and_attacks = {
 
 races = SHEET.worksheet('Races')
 race = races.get_all_values()
+classes = SHEET.worksheet('Classes')
+classes_values = classes.get_all_values()
 print('Welcome to the Dungeons and Drgaons character creator!')
 print('To begin please choose from one of the following races.')
 print(race)
 xy = 1
+yz = 1
 
 
 def first_choice():
@@ -87,17 +90,91 @@ def confirm_race(prompt):
     return input(prompt)
 
 
-confirmed_race = confirm_race(f'Are you sure you want to choose {chosen_race}? Please answer "Yes" or "No"')
+confirmed_race = None
 while confirmed_race != 'Yes':
+    confirmed_race = confirm_race(f'Are you sure you want to choose {chosen_race}? Please answer "Yes" or "No" ')
     if confirmed_race == 'Yes':
         print(f'{chosen_race} confirmed!')
-    elif confirmed_race == 'No':  
+    elif confirmed_race == 'No':
         xy = 1
         print('change decision')
         first_choice()
-        confirmed_race = confirm_race(f'Are you sure you want to choose {chosen_race}? Please answer "Yes" or "No"')
+        confirmed_race = confirm_race(f'Are you sure you want to choose {chosen_race}? Please answer "Yes" or "No" ')
+        if confirmed_race == 'Yes':
+            print(f'{chosen_race} confirmed!')
     else:
         print('Please only type "Yes" or "No".')
-        confirmed_race = confirm_race(f'Are you sure you want to choose {chosen_race}? Please answer "Yes" or "No"')
+        confirmed_race = confirm_race(f'Are you sure you want to choose {chosen_race}? Please answer "Yes" or "No" ')
+        if confirmed_race == 'Yes':
+            print(f'{chosen_race} confirmed!')
 
+your_character['Race'] = chosen_race
+print(your_character)
 print('end of step one')
+
+print("Now you that you have chosen a race for your chracter it's time to pick a class")
+print('Please choose from one of the following classes.')
+print(classes_values)
+
+
+def second_choice():
+    """
+    users second choice
+    """
+    while yz == 1:
+        def select_class(prompt):
+            """
+            Return the users chosen class
+            """
+            return input(prompt)
+        global chosen_class
+        chosen_class = select_class('Type a class here to see their description and abilities: ')
+
+        def pull_class_traits(choosen_class):
+            """
+            Pull the relevent racial traits
+            """
+            global yz
+            try:
+                trait_sheet = SHEET.worksheet(choosen_class)
+                class_traits = trait_sheet.get_all_values()
+                print(class_traits)
+                yz += 1
+
+            except Exception:
+                print(f'{choosen_class} is not a playable class, please select again.')
+
+        pull_class_traits(chosen_class)
+
+
+second_choice()
+
+
+def confirm_class(prompt):
+    """
+    confirm the users chosen class
+    """
+    return input(prompt)
+
+
+confirmed_class = None
+while confirmed_class != 'Yes':
+    confirmed_class = confirm_class(f'Are you sure you want to choose {chosen_class}? Please answer "Yes" or "No" ')
+    if confirmed_class == 'Yes':
+        print(f'{chosen_class} confirmed!')
+    elif confirmed_class == 'No':
+        yz = 1
+        print('change decision')
+        second_choice()
+        confirmed_class = confirm_class(f'Are you sure you want to choose {chosen_class}? Please answer "Yes" or "No" ')
+        if confirmed_class == 'Yes':
+            print(f'{chosen_class} confirmed!')
+    else:
+        print('Please only type "Yes" or "No".')
+        confirmed_class = confirm_class(f'Are you sure you want to choose {chosen_class}? Please answer "Yes" or "No" ')
+        if confirmed_class == 'Yes':
+            print(f'{chosen_class} confirmed!')
+
+your_character['Class'] = chosen_class
+print(your_character)
+print('end of step two')
