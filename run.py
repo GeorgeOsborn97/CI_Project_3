@@ -1,6 +1,7 @@
 """
 # Write your code to expect a terminal of 80 characters wide and 24 rows high
 """
+import random
 import gspread
 from google.oauth2.service_account import Credentials
 
@@ -38,6 +39,59 @@ your_feats_and_traits = {
 your_spells_and_attacks = {
 
 }
+
+
+def dice_roller():
+    """
+    dice roller
+    """
+    def get_dice(prompt):
+        """
+        dice to roll
+        """
+        return input(prompt)
+
+    def get_roll_count(prompt):
+        """
+        how many dice?
+        """
+        return int(input(prompt))
+
+    dice = get_dice('dice to roll: ')
+    y = get_roll_count('How many dice? ')
+    print(dice)
+    print(y)
+
+    def rand_num(dice):
+        """
+        produce random numbers
+        """
+        if dice == 'd4':
+            roll = (random.randrange(1, 5))
+        elif dice == 'd6':
+            roll = (random.randrange(1, 7))
+        elif dice == 'd8':
+            roll = (random.randrange(1, 9))
+        elif dice == 'd10':
+            roll = (random.randrange(1, 11))
+        elif dice == 'd12':
+            roll = (random.randrange(1, 13))
+        elif dice == 'd20':
+            roll = (random.randrange(1, 21))
+        else:
+            roll = "not a dice"
+        return roll
+
+    x = 0
+    sum_dice = []
+    while x < y:
+        roll = rand_num(dice)
+        sum_dice.append(roll)
+        print(sum_dice)
+        x += 1
+        print(sum(sum_dice))
+    return sum(sum_dice)
+
 
 races = SHEET.worksheet('Races')
 race = races.get_all_values()
@@ -233,3 +287,16 @@ while confirmed_level != 'Yes':
 your_character['Level'] = chosen_level
 print(your_character)
 print('end of step 3')
+
+
+def forth_choice():
+    """
+    roll hit points
+    """
+    hit_points = dice_roller()
+    your_character['Hit points'] = hit_points
+
+
+forth_choice()
+
+print(your_character)
