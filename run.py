@@ -15,13 +15,25 @@ CREDS = Credentials.from_service_account_file('creds.json')
 SCOPED_CREDS = CREDS.with_scopes(SCOPE)
 GSPREAD_CLIENT = gspread.authorize(SCOPED_CREDS)
 SHEET = GSPREAD_CLIENT.open('project3_test_sheet')
-
+class_hit_dice = {  
+    'Barbarian': 'd12',
+    'Bard': 'd8',
+    'Cleric': 'd8',
+    'Druid': 'd8',
+    'Fighter': 'd10',
+    'Monk': 'd8',
+    'Paladin': 'd10',
+    'Rogue': 'd8',
+    'Sorcerer': 'd6',
+    'Warlock': 'd8',
+    'Wizard': 'd6',
+}
 your_character = {
     'Race': '',
     'Class': '',
     'Level': '',
     'Hit points': '',
-}    
+}
 your_ability_scores = {  
     'Strength': '',
     'Dexterity': '',
@@ -41,55 +53,41 @@ your_spells_and_attacks = {
 }
 
 
+def rand_num(dice):
+    """
+    produce random numbers
+    """
+    if dice == 'd4':
+        roll = (random.randrange(1, 5))
+    elif dice == 'd6':
+        roll = (random.randrange(1, 7))
+    elif dice == 'd8':
+        roll = (random.randrange(1, 9))
+    elif dice == 'd10':
+        roll = (random.randrange(1, 11))
+    elif dice == 'd12':
+        roll = (random.randrange(1, 13))
+    elif dice == 'd20':
+        roll = (random.randrange(1, 21))
+    return roll
+
+
 def dice_roller():
     """
     dice roller
     """
-    def get_dice(prompt):
-        """
-        dice to roll
-        """
-        return input(prompt)
 
-    def get_roll_count(prompt):
-        """
-        how many dice?
-        """
-        return int(input(prompt))
-
-    dice = get_dice('dice to roll: ')
-    y = get_roll_count('How many dice? ')
-    print(dice)
-    print(y)
-
-    def rand_num(dice):
-        """
-        produce random numbers
-        """
-        if dice == 'd4':
-            roll = (random.randrange(1, 5))
-        elif dice == 'd6':
-            roll = (random.randrange(1, 7))
-        elif dice == 'd8':
-            roll = (random.randrange(1, 9))
-        elif dice == 'd10':
-            roll = (random.randrange(1, 11))
-        elif dice == 'd12':
-            roll = (random.randrange(1, 13))
-        elif dice == 'd20':
-            roll = (random.randrange(1, 21))
-        else:
-            roll = "not a dice"
-        return roll
+    dice = class_hit_dice[(your_character['Class'])]
+    y = int(your_character['Level'])
+    print(f"{(your_character['Class'])}'s hit dice are: {dice}")
 
     x = 0
     sum_dice = []
     while x < y:
-        roll = rand_num(dice)
-        sum_dice.append(roll)
-        print(sum_dice)
+        result = rand_num(dice)
+        sum_dice.append(result)
         x += 1
-        print(sum(sum_dice))
+    print(f'You rolled {sum_dice} your constituation modifier will be added to this soon.')
     return sum(sum_dice)
 
 
