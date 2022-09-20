@@ -15,7 +15,7 @@ CREDS = Credentials.from_service_account_file('creds.json')
 SCOPED_CREDS = CREDS.with_scopes(SCOPE)
 GSPREAD_CLIENT = gspread.authorize(SCOPED_CREDS)
 SHEET = GSPREAD_CLIENT.open('project3_test_sheet')
-class_hit_dice = {  
+class_hit_dice = {
     'Barbarian': 'd12',
     'Bard': 'd8',
     'Cleric': 'd8',
@@ -44,6 +44,8 @@ your_ability_scores = {
 }
 your_skills_and_proficiencies = {
     'proficency_modifier': '',
+    'proficient skill 1': '',
+    'proficient skill 2': '',
 }
 your_feats_and_traits = {
 
@@ -298,3 +300,27 @@ def forth_choice():
 forth_choice()
 
 print(your_character)
+
+prof = SHEET.worksheet(your_character['Class'])
+print(prof.range('g6'))
+
+
+def select_prof(prompt):
+    """
+    Return the users chosen race
+    """
+    return input(prompt)
+
+
+def fifth_choice():
+    """
+    Choose proficiencies
+    """
+    prof_count = 0
+    while prof_count > 3:
+        chosen_prof = select_prof('Choose one of the skills above as a proficency: ')
+        if chosen_prof in f'{prof.range("g6")}':
+            your_skills_and_proficiencies[f'proficient skill {prof_count}'] = chosen_prof
+
+
+fifth_choice()
