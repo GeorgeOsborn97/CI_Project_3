@@ -58,7 +58,7 @@ your_skills_and_proficiencies = {
     'Medicine': '',
     'Nature': '',
     'Perception': '',
-    'Performance'
+    'Performance': '',
     'Persuasion': '',
     'Religion': '',
     'Sleight of Hand': '',
@@ -92,7 +92,7 @@ def rand_num(dice):
     return roll
 
 
-def dice_roller():
+def hit_dice_roller():
     """
     dice roller
     """
@@ -311,19 +311,84 @@ def forth_choice():
     """
     roll hit points
     """
-    hit_points = dice_roller()
+    hit_points = hit_dice_roller()
     your_character['Hit points'] = hit_points
 
 
 forth_choice()
 
 print(your_character)
-
-prof = SHEET.worksheet(your_character['Class'])
-print(prof.range('g6'))
+print("""now it's time to calculate your ability scores. 
+You will be shown the sum of 3 d6 rolls, 
+you will then be asked which ability to assign this score to. 
+This will be reapeated 6 times.""")
 
 
 def fifth_choice():
+    """
+    Calculate ability scores
+    """
+    rolls = []
+    for x in range(1, 4, 1):
+        x = rand_num('d6')
+        rolls.append(x)
+    print(rolls) 
+    global your_score   
+    your_score = sum(rolls)
+    print(your_score)
+
+
+while "" in your_ability_scores.values():
+    fifth_choice()
+
+    def select_ability(prompt):
+        """
+        Return the users chosen race
+        """
+        return input(prompt)
+
+    print(your_ability_scores)  
+    chosen_ability = select_ability("""Choose one of the abilities 
+    to add this score to: """)
+    while chosen_ability not in your_ability_scores:
+        print('please choose only one of the above abilities')
+        chosen_ability = select_ability("""Choose one of the abilities to add this score to: """)
+
+    def confirm_ability(prompt):
+        """
+        confirm the ability
+        """
+        return input(prompt)
+
+    confirmed_ability = confirm_ability(f'''Are you sure you want to add 
+    {your_score} to {chosen_ability}? ''')
+    while confirmed_ability != 'Yes':
+        if confirmed_ability == 'Yes':
+            print(f'{chosen_ability} confirmed')
+        elif confirmed_ability == 'No':
+            print('change decision')
+            chosen_ability = select_ability("""Choose one of the abilities to add the score to: """)
+            confirmed_ability = confirm_ability(f'''Are you sure you want to add {your_score} to {chosen_ability}? ''')
+            if confirmed_ability == 'Yes':
+                print(f'{chosen_ability} confirmed!')
+        else:
+            print('Please only type "Yes" or "No".')
+            confirmed_ability = confirm_ability(f'''Are you sure you want to add {your_score} to {chosen_ability}? ''')
+            if confirmed_level == 'Yes':
+                print(f'{chosen_level} confirmed!')
+
+    your_ability_scores[f'{chosen_ability}'] = your_score
+    print(your_ability_scores) 
+
+print(your_ability_scores) 
+
+# proficiency choice to be added after ability scores
+prof = SHEET.worksheet(your_character['Class'])
+prof_list = prof.get_values('h2:h8')
+print(prof_list)
+
+
+def sixth_choice():
     """
     Choose proficiencies
     """
@@ -336,10 +401,10 @@ def fifth_choice():
     prof_count = 1
     while prof_count < 3:
         chosen_prof = select_prof('Choose one of the skills above as a proficency: ')
-        if chosen_prof in f'{prof.range("g6")}':
+        if chosen_prof in f'{prof_list}':
             your_skills_and_proficiencies[f'proficient skill {prof_count}'] = chosen_prof
             prof_count += 1
 
 
-fifth_choice()
+sixth_choice()
 print(your_skills_and_proficiencies)
