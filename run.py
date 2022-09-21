@@ -46,6 +46,24 @@ your_skills_and_proficiencies = {
     'proficency_modifier': '',
     'proficient skill 1': '',
     'proficient skill 2': '',
+    'Acrobatics': '',
+    'Animal Handling': '',
+    'Arcana': '',
+    'Athletics': '',
+    'Deception': '',
+    'History': '',
+    'Insight': '',
+    'Intimidation': '',
+    'Investigation': '',
+    'Medicine': '',
+    'Nature': '',
+    'Perception': '',
+    'Performance'
+    'Persuasion': '',
+    'Religion': '',
+    'Sleight of Hand': '',
+    'Stealth': '',
+    'Survival': '',
 }
 your_feats_and_traits = {
 
@@ -305,22 +323,23 @@ prof = SHEET.worksheet(your_character['Class'])
 print(prof.range('g6'))
 
 
-def select_prof(prompt):
-    """
-    Return the users chosen race
-    """
-    return input(prompt)
-
-
 def fifth_choice():
     """
     Choose proficiencies
     """
-    prof_count = 0
-    while prof_count > 3:
+    def select_prof(prompt):
+        """
+        Return the users chosen race
+        """
+        return input(prompt)
+
+    prof_count = 1
+    while prof_count < 3:
         chosen_prof = select_prof('Choose one of the skills above as a proficency: ')
         if chosen_prof in f'{prof.range("g6")}':
             your_skills_and_proficiencies[f'proficient skill {prof_count}'] = chosen_prof
+            prof_count += 1
 
 
 fifth_choice()
+print(your_skills_and_proficiencies)
