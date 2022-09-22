@@ -410,12 +410,44 @@ while "" in your_ability_scores.values():
         confirm the ability
         """
         return input(prompt)
+        
+    def calc_prof_mod():    
+        if int(your_character['Level']) <= 4:
+            your_skills_and_proficiencies['proficency_bonus'] = 2 
+        elif int(your_character['Level']) > 4 and int(your_character['Level']) <= 8:
+            your_skills_and_proficiencies['proficency_bonus'] = 3
+        elif int(your_character['Level']) > 8 and int(your_character['Level']) <= 12:
+            your_skills_and_proficiencies['proficency_bonus'] = 4
+        elif int(your_character['Level']) > 12 and int(your_character['Level']) <= 6:
+            your_skills_and_proficiencies['proficency_bonus'] = 5
+        else:
+            your_skills_and_proficiencies['proficency_bonus'] = 6      
     
     def calc_mods():
         if your_score % 2 == 0:
             your_ability_scores_modifiers[f'{chosen_ability}'] = int(-4 + ((your_score / 2) - 1))
         else:
-            your_ability_scores_modifiers[f'{chosen_ability}'] = int(-4 + (((your_score - 1) / 2) - 1))    
+            your_ability_scores_modifiers[f'{chosen_ability}'] = int(-4 + (((your_score - 1) / 2) - 1))
+
+        your_skills_and_proficiencies['Acrobatics'] = your_ability_scores_modifiers['Dexterity']
+        your_skills_and_proficiencies['Animal Handling'] = your_ability_scores_modifiers['wisdom']
+        your_skills_and_proficiencies['Arcana'] = your_ability_scores_modifiers['Intellegence']
+        your_skills_and_proficiencies['Athletics'] = your_ability_scores_modifiers['Strength']
+        your_skills_and_proficiencies['Deception'] = your_ability_scores_modifiers['Charisma']
+        your_skills_and_proficiencies['History'] = your_ability_scores_modifiers['Intellegence']
+        your_skills_and_proficiencies['Insight'] = your_ability_scores_modifiers['wisdom']
+        your_skills_and_proficiencies['Intimidation'] = your_ability_scores_modifiers['Charisma']
+        your_skills_and_proficiencies['Investigation'] = your_ability_scores_modifiers['Intellegence']
+        your_skills_and_proficiencies['Medicine'] = your_ability_scores_modifiers['wisdom']
+        your_skills_and_proficiencies['Nature'] = your_ability_scores_modifiers['Intellegence']
+        your_skills_and_proficiencies['Perception'] = your_ability_scores_modifiers['wisdom']
+        your_skills_and_proficiencies['Performance'] = your_ability_scores_modifiers['Charisma']
+        your_skills_and_proficiencies['Persuasion'] = your_ability_scores_modifiers['Charisma']
+        your_skills_and_proficiencies['Religion'] = your_ability_scores_modifiers['Intellegence']
+        your_skills_and_proficiencies['Sleight of Hand'] = your_ability_scores_modifiers['Dexterity']
+        your_skills_and_proficiencies['Stealth'] = your_ability_scores_modifiers['Dexterity']
+        your_skills_and_proficiencies['Survival'] = your_ability_scores_modifiers['wisdom']
+        calc_prof_mod()
 
     confirmed_ability = confirm_ability(f'''Are you sure you want to add 
     {your_score} to {chosen_ability}? ''')
