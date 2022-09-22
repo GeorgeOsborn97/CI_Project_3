@@ -3,6 +3,7 @@
 """
 import random
 import gspread
+import os
 from google.oauth2.service_account import Credentials
 
 SCOPE = [
@@ -15,6 +16,9 @@ CREDS = Credentials.from_service_account_file('creds.json')
 SCOPED_CREDS = CREDS.with_scopes(SCOPE)
 GSPREAD_CLIENT = gspread.authorize(SCOPED_CREDS)
 SHEET = GSPREAD_CLIENT.open('project3_test_sheet')
+# Create the various dictionaries to hold all charcater information 
+# and that will be filled as the user progresses
+# Class hit dice to be rolled to calcuate hit points
 class_hit_dice = {
     'Barbarian': 'd12',
     'Bard': 'd8',
@@ -28,12 +32,14 @@ class_hit_dice = {
     'Warlock': 'd8',
     'Wizard': 'd6',
 }
+# Base infomation that will be filled in the first 4 choice functions
 your_character = {
     'Race': '',
     'Class': '',
     'Level': '',
     'Hit points': '',
 }
+# Ability scores that will be calculated in the fifth choice, these will affect the skill values
 your_ability_scores = {  
     'Strength': '',
     'Dexterity': '',
@@ -42,8 +48,17 @@ your_ability_scores = {
     'wisdom': '',
     'Charisma': '',
 }
+your_ability_scores_modifiers = {  
+    'Strength': '',
+    'Dexterity': '',
+    'Constitution': '',
+    'Intellegence': '',
+    'wisdom': '',
+    'Charisma': '',
+}
+# skills and proficencies that will be assigned in the sixth choice
 your_skills_and_proficiencies = {
-    'proficency_modifier': '',
+    'proficency_bonus': '',
     'proficient skill 1': '',
     'proficient skill 2': '',
     'Acrobatics': '',
@@ -72,6 +87,8 @@ your_spells_and_attacks = {
 
 }
 
+# the random number generator / dice roller
+
 
 def rand_num(dice):
     """
@@ -90,6 +107,8 @@ def rand_num(dice):
     elif dice == 'd20':
         roll = (random.randrange(1, 21))
     return roll
+
+# this function calculates the charcaters hit points using their class
 
 
 def hit_dice_roller():
@@ -121,6 +140,8 @@ print(race)
 xy = 1
 yz = 1
 
+# The users first choice taht willd efine the characters race
+
 
 def first_choice():
     """
@@ -131,18 +152,33 @@ def first_choice():
             """
             Return the users chosen race
             """
-            return input(prompt)
+            return input(prompt)    
         global chosen_race
         chosen_race = select_race('Type a race here to see their traits and starting abilities: ')
+# connects to google sheets to pull the information about each race 
 
         def pull_racial_traits(choosen_race):
             """
             Pull the relevent racial traits
             """
+            os.system('cls' if os.name == 'nt' else 'clear')
             global xy
             try:
                 trait_sheet = SHEET.worksheet(choosen_race)
                 racial_traits = trait_sheet.get_all_values()
+                info_count = trait_sheet.get_values('n1')
+                print(info_count[0])
+                global i
+                i = 1
+                while i < 5:
+                    def cycle_info(prompt):
+                        global i
+                        col_one = trait_sheet.col_values(i)
+                        print(col_one)
+                        i += 1
+                        return input(prompt)
+                    cycle_info('Click enter to cycle through info: ')
+                    os.system('cls' if os.name == 'nt' else 'clear') 
                 print(racial_traits)
                 xy += 1
 
@@ -153,6 +189,8 @@ def first_choice():
 
 
 first_choice()
+
+# The first confirmation that allows the user to confirm their chosen race or go back and select again
 
 
 def confirm_race(prompt):
@@ -166,20 +204,20 @@ confirmed_race = None
 while confirmed_race != 'Yes':
     confirmed_race = confirm_race(f'Are you sure you want to choose {chosen_race}? Please answer "Yes" or "No" ')
     if confirmed_race == 'Yes':
-        print(f'{chosen_race} confirmed!')
+        print(f'{chosen_race} confirmed! \n')
     elif confirmed_race == 'No':
         xy = 1
         print('change decision')
         first_choice()
         confirmed_race = confirm_race(f'Are you sure you want to choose {chosen_race}? Please answer "Yes" or "No" ')
         if confirmed_race == 'Yes':
-            print(f'{chosen_race} confirmed!')
+            print(f'{chosen_race} confirmed! \n')
     else:
         print('Please only type "Yes" or "No".')
         confirmed_race = confirm_race(f'Are you sure you want to choose {chosen_race}? Please answer "Yes" or "No" ')
         if confirmed_race == 'Yes':
-            print(f'{chosen_race} confirmed!')
-
+            print(f'{chosen_race} confirmed! \n')
+os.system('cls' if os.name == 'nt' else 'clear')
 your_character['Race'] = chosen_race
 print(your_character)
 print('end of step one')
@@ -187,6 +225,8 @@ print('end of step one')
 print("Now you that you have chosen a race for your chracter it's time to pick a class")
 print('Please choose from one of the following classes.')
 print(classes_values)
+
+# Second choice that allows the user to choose a class for the charcter this acts in the same way as the first function
 
 
 def second_choice():
@@ -221,6 +261,8 @@ def second_choice():
 
 second_choice()
 
+# confirm the class choice, allows the the user to say No and pick again.
+
 
 def confirm_class(prompt):
     """
@@ -254,6 +296,8 @@ print('end of step two')
 print("Now you that you have chosen a race and class for your chracter it's time to pick a level")
 print('Please choose from a level from 1 - 20')
 
+# choose the level of the character
+
 
 def third_choice():
     """
@@ -269,6 +313,8 @@ def third_choice():
 
 
 third_choice()
+
+# confirm level
 
 
 def confirm_level(prompt):
@@ -306,6 +352,8 @@ your_character['Level'] = chosen_level
 print(your_character)
 print('end of step 3')
 
+# hit points are rolled based on the level and class of the character
+
 
 def forth_choice():
     """
@@ -322,6 +370,8 @@ print("""now it's time to calculate your ability scores.
 You will be shown the sum of 3 d6 rolls, 
 you will then be asked which ability to assign this score to. 
 This will be reapeated 6 times.""")
+
+# calculate rolls and allow the user to asign the results to the 6 ability scores
 
 
 def fifth_choice():
@@ -343,7 +393,7 @@ while "" in your_ability_scores.values():
 
     def select_ability(prompt):
         """
-        Return the users chosen race
+        add the rolled score to any ability score
         """
         return input(prompt)
 
@@ -353,32 +403,44 @@ while "" in your_ability_scores.values():
     while chosen_ability not in your_ability_scores:
         print('please choose only one of the above abilities')
         chosen_ability = select_ability("""Choose one of the abilities to add this score to: """)
+# confirm the choice of ability scores
 
     def confirm_ability(prompt):
         """
         confirm the ability
         """
         return input(prompt)
+    
+    def calc_mods():
+        if your_score % 2 == 0:
+            your_ability_scores_modifiers[f'{chosen_ability}'] = int(-4 + ((your_score / 2) - 1))
+        else:
+            your_ability_scores_modifiers[f'{chosen_ability}'] = int(-4 + (((your_score - 1) / 2) - 1))    
 
     confirmed_ability = confirm_ability(f'''Are you sure you want to add 
     {your_score} to {chosen_ability}? ''')
     while confirmed_ability != 'Yes':
         if confirmed_ability == 'Yes':
+            calc_mods()
             print(f'{chosen_ability} confirmed')
         elif confirmed_ability == 'No':
             print('change decision')
             chosen_ability = select_ability("""Choose one of the abilities to add the score to: """)
             confirmed_ability = confirm_ability(f'''Are you sure you want to add {your_score} to {chosen_ability}? ''')
             if confirmed_ability == 'Yes':
+                calc_mods()
                 print(f'{chosen_ability} confirmed!')
         else:
             print('Please only type "Yes" or "No".')
             confirmed_ability = confirm_ability(f'''Are you sure you want to add {your_score} to {chosen_ability}? ''')
             if confirmed_level == 'Yes':
+                calc_mods()
                 print(f'{chosen_level} confirmed!')
-
+    calc_mods()
+    print(f'{chosen_ability} confirmed')
     your_ability_scores[f'{chosen_ability}'] = your_score
     print(your_ability_scores) 
+    print(your_ability_scores_modifiers)
 
 print(your_ability_scores) 
 
@@ -401,9 +463,11 @@ def sixth_choice():
     prof_count = 1
     while prof_count < 3:
         chosen_prof = select_prof('Choose one of the skills above as a proficency: ')
-        if chosen_prof in f'{prof_list}':
-            your_skills_and_proficiencies[f'proficient skill {prof_count}'] = chosen_prof
-            prof_count += 1
+        while chosen_prof not in your_skills_and_proficiencies:
+            print('Please only choose one of the skills above as a proficency: ')
+            chosen_prof = select_prof("""'Choose one of the skills above as a proficency: '""")
+        your_skills_and_proficiencies[f'proficient skill {prof_count}'] = chosen_prof
+        prof_count += 1
 
 
 sixth_choice()
