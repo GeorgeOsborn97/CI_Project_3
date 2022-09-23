@@ -14,6 +14,29 @@ class_hit_dice = {
     'Warlock': 'd8',
     'Wizard': 'd6',
 }
+race_info = {
+    'Human': 6,
+    'Dwarf': 11,
+    'Elf': 10,
+    'Half Elf': 9,
+    'Half Orc': 10,
+    'Dragonborn': 10,
+    'Tiefling': 9,
+    'Gnome': 8,
+}
+class_info = {
+    'Barbarian': '6',
+    'Bard': '8',
+    'Cleric': '8',
+    'Druid': '8',
+    'Fighter': '10',
+    'Monk': '8',
+    'Paladin': '10',
+    'Rogue': '8',
+    'Sorcerer': '6',
+    'Warlock': '8',
+    'Wizard': '6',
+}
 your_character = {
     'Race': '',
     'Class': '',

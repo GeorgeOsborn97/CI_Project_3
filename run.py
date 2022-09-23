@@ -5,6 +5,8 @@ import random
 import gspread
 import os
 from character_sheet import class_hit_dice
+from character_sheet import class_info
+from character_sheet import race_info
 from character_sheet import your_character
 from character_sheet import your_ability_scores
 from character_sheet import your_ability_scores_modifiers
@@ -23,9 +25,6 @@ CREDS = Credentials.from_service_account_file('creds.json')
 SCOPED_CREDS = CREDS.with_scopes(SCOPE)
 GSPREAD_CLIENT = gspread.authorize(SCOPED_CREDS)
 SHEET = GSPREAD_CLIENT.open('project3_test_sheet')
-# Create the various dictionaries to hold all charcater information 
-# and that will be filled as the user progresses
-# Class hit dice to be rolled to calcuate hit points
 
 
 def create_title():
@@ -125,12 +124,12 @@ def first_choice():
             try:
                 trait_sheet = SHEET.worksheet(choosen_race)
                 racial_traits = trait_sheet.get_all_values()
-                info_count = trait_sheet.get_values('n1')
+                info_count = race_info[f'{chosen_race}']
                 create_title()
                 print(info_count)
                 global i
                 i = 1
-                while i < 6:
+                while i < info_count:
                     def cycle_info(prompt):
                         global i
                         col_one = trait_sheet.col_values(i)
