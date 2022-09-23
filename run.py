@@ -4,6 +4,13 @@
 import random
 import gspread
 import os
+from character_sheet import class_hit_dice
+from character_sheet import your_character
+from character_sheet import your_ability_scores
+from character_sheet import your_ability_scores_modifiers
+from character_sheet import your_skills_and_proficiencies
+from character_sheet import your_feats_and_traits
+from character_sheet import your_spells_and_attacks
 from google.oauth2.service_account import Credentials
 
 SCOPE = [
@@ -19,73 +26,16 @@ SHEET = GSPREAD_CLIENT.open('project3_test_sheet')
 # Create the various dictionaries to hold all charcater information 
 # and that will be filled as the user progresses
 # Class hit dice to be rolled to calcuate hit points
-class_hit_dice = {
-    'Barbarian': 'd12',
-    'Bard': 'd8',
-    'Cleric': 'd8',
-    'Druid': 'd8',
-    'Fighter': 'd10',
-    'Monk': 'd8',
-    'Paladin': 'd10',
-    'Rogue': 'd8',
-    'Sorcerer': 'd6',
-    'Warlock': 'd8',
-    'Wizard': 'd6',
-}
-# Base infomation that will be filled in the first 4 choice functions
-your_character = {
-    'Race': '',
-    'Class': '',
-    'Level': '',
-    'Hit points': '',
-}
-# Ability scores that will be calculated in the fifth choice, these will affect the skill values
-your_ability_scores = {  
-    'Strength': '',
-    'Dexterity': '',
-    'Constitution': '',
-    'Intellegence': '',
-    'wisdom': '',
-    'Charisma': '',
-}
-your_ability_scores_modifiers = {  
-    'Strength': '',
-    'Dexterity': '',
-    'Constitution': '',
-    'Intellegence': '',
-    'wisdom': '',
-    'Charisma': '',
-}
-# skills and proficencies that will be assigned in the sixth choice
-your_skills_and_proficiencies = {
-    'proficency_bonus': '',
-    'proficient skill 1': '',
-    'proficient skill 2': '',
-    'Acrobatics': '',
-    'Animal Handling': '',
-    'Arcana': '',
-    'Athletics': '',
-    'Deception': '',
-    'History': '',
-    'Insight': '',
-    'Intimidation': '',
-    'Investigation': '',
-    'Medicine': '',
-    'Nature': '',
-    'Perception': '',
-    'Performance': '',
-    'Persuasion': '',
-    'Religion': '',
-    'Sleight of Hand': '',
-    'Stealth': '',
-    'Survival': '',
-}
-your_feats_and_traits = {
 
-}
-your_spells_and_attacks = {
 
-}
+def create_title():
+    """
+    Create title
+    """
+    print("\033[1;34m")
+    print('DND Character Creator'.center(80, '-'))
+    print('\n')
+
 
 # the random number generator / dice roller
 
@@ -130,17 +80,26 @@ def hit_dice_roller():
     return sum(sum_dice)
 
 
-races = SHEET.worksheet('Races')
-race = races.get_all_values()
-classes = SHEET.worksheet('Classes')
-classes_values = classes.get_all_values()
-print('Welcome to the Dungeons and Drgaons character creator!')
-print('To begin please choose from one of the following races.')
-print(race)
-xy = 1
-yz = 1
+def create_initial_conditions():
+    create_title()
+    races = SHEET.worksheet('Races')
+    race = races.get_all_values()
+    classes = SHEET.worksheet('Classes')
+    global classes_values
+    classes_values = classes.get_all_values()
+    print('Welcome to the Dungeons and Drgaons character creator!'.center(80))
+    print('To begin please choose from one of the following races.'.center(80))
+    print('\n')
+    print(race)
+    global xy
+    xy = 1
+    global yz
+    yz = 1
 
-# The users first choice taht willd efine the characters race
+
+create_initial_conditions()
+
+# The users first choice that will define the characters race
 
 
 def first_choice():
@@ -152,10 +111,10 @@ def first_choice():
             """
             Return the users chosen race
             """
-            return input(prompt)    
+            return input(prompt)
         global chosen_race
         chosen_race = select_race('Type a race here to see their traits and starting abilities: ')
-# connects to google sheets to pull the information about each race 
+# connects to google sheets to pull the information about each race
 
         def pull_racial_traits(choosen_race):
             """
@@ -167,10 +126,11 @@ def first_choice():
                 trait_sheet = SHEET.worksheet(choosen_race)
                 racial_traits = trait_sheet.get_all_values()
                 info_count = trait_sheet.get_values('n1')
-                print(info_count[0])
+                create_title()
+                print(info_count)
                 global i
                 i = 1
-                while i < 5:
+                while i < 6:
                     def cycle_info(prompt):
                         global i
                         col_one = trait_sheet.col_values(i)
@@ -178,7 +138,8 @@ def first_choice():
                         i += 1
                         return input(prompt)
                     cycle_info('Click enter to cycle through info: ')
-                    os.system('cls' if os.name == 'nt' else 'clear') 
+                    os.system('cls' if os.name == 'nt' else 'clear')
+                    create_title()
                 print(racial_traits)
                 xy += 1
 
@@ -221,7 +182,8 @@ os.system('cls' if os.name == 'nt' else 'clear')
 your_character['Race'] = chosen_race
 print(your_character)
 print('end of step one')
-
+os.system('cls' if os.name == 'nt' else 'clear')
+create_title()
 print("Now you that you have chosen a race for your chracter it's time to pick a class")
 print('Please choose from one of the following classes.')
 print(classes_values)
