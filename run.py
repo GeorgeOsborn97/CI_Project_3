@@ -450,17 +450,11 @@ while "" in your_ability_scores.values():
                 calc_mods()
                 print(f'{chosen_level} confirmed!')
     calc_mods()
-    print(f'{chosen_ability} confirmed')
     your_ability_scores[f'{chosen_ability}'] = your_score
-    print(your_ability_scores)
-    print(your_ability_scores_modifiers)
-
+    os.system('cls' if os.name == 'nt' else 'clear')
 print(your_ability_scores)
 
 # proficiency choice to be added after ability scores
-prof = SHEET.worksheet(your_character['Class'])
-prof_list = prof.get_values('h2:h8')
-print(prof_list)
 
 
 def sixth_choice():
@@ -472,7 +466,12 @@ def sixth_choice():
         Return the users chosen race
         """
         return input(prompt)
-
+    os.system('cls' if os.name == 'nt' else 'clear')
+    prof = SHEET.worksheet(your_character['Class'])
+    prof_list = prof.get_values('h2:h8')
+    print("""Now we have your ability Scores 
+    it's time to Choose 2 proficiancies from the list below: \n""")
+    print(prof_list)
     prof_count = 1
     while prof_count < 3:
         chosen_prof = select_prof('Choose one of the skills above as a proficency: ')
