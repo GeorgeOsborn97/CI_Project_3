@@ -211,6 +211,21 @@ def second_choice():
             try:
                 trait_sheet = SHEET.worksheet(choosen_class)
                 class_traits = trait_sheet.get_all_values()
+                info_count = class_info[f'{chosen_class}']
+                create_title()
+                print(info_count)
+                global i
+                i = 1
+                while i < info_count:
+                    def cycle_info(prompt):
+                        global i
+                        col_one = trait_sheet.col_values(i)
+                        print(col_one)
+                        i += 1
+                        return input(prompt)
+                    cycle_info('Click enter to cycle through info: ')
+                    os.system('cls' if os.name == 'nt' else 'clear')
+                    create_title()
                 print(class_traits)
                 yz += 1
 

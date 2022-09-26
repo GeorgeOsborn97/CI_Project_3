@@ -34,7 +34,7 @@ class_info = {
     'Paladin': '10',
     'Rogue': '8',
     'Sorcerer': '6',
-    'Warlock': '8',
+    'Warlock': 4,
     'Wizard': '6',
 }
 your_character = {
