@@ -110,7 +110,7 @@ def first_choice():
             """
             Return the users chosen race
             """
-            return input(prompt)
+            return input(prompt).capitalize()
         global chosen_race
         chosen_race = select_race('Type a race here to see their traits and starting abilities: ')
 # connects to google sheets to pull the information about each race
@@ -156,7 +156,7 @@ def confirm_race(prompt):
     """
     confirm the users chosen race
     """
-    return input(prompt)
+    return input(prompt).capitalize()
 
 
 os.system('cls' if os.name == 'nt' else 'clear')
@@ -199,7 +199,7 @@ def second_choice():
             """
             Return the users chosen class
             """
-            return input(prompt)
+            return input(prompt).capitalize()
         global chosen_class
         chosen_class = select_class('Type a class here to see their description and abilities: ')
 
@@ -244,7 +244,7 @@ def confirm_class(prompt):
     """
     confirm the users chosen class
     """
-    return input(prompt)
+    return input(prompt).capitalize()
 
 
 os.system('cls' if os.name == 'nt' else 'clear')
@@ -297,7 +297,7 @@ def confirm_level(prompt):
     """
     confirm the users chosen level
     """
-    return input(prompt)
+    return input(prompt).capitalize()
 
 
 os.system('cls' if os.name == 'nt' else 'clear')
@@ -376,7 +376,7 @@ while "" in your_ability_scores.values():
         """
         add the rolled score to any ability score
         """
-        return input(prompt)
+        return input(prompt).capitalize()
 
     print(your_ability_scores)
     chosen_ability = select_ability("""Choose one of the abilities
@@ -390,7 +390,7 @@ while "" in your_ability_scores.values():
         """
         confirm the ability
         """
-        return input(prompt)
+        return input(prompt).capitalize()
 
     def calc_prof_mod():
         if int(your_character['Level']) <= 4:
@@ -465,7 +465,7 @@ def sixth_choice():
         """
         Return the users chosen race
         """
-        return input(prompt)
+        return input(prompt).capitalize()
     os.system('cls' if os.name == 'nt' else 'clear')
     prof = SHEET.worksheet(your_character['Class'])
     prof_list = prof.get_values('h2:h8')

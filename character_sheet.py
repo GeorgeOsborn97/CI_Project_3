@@ -50,7 +50,7 @@ your_ability_scores = {
     'Dexterity': '',
     'Constitution': '',
     'Intellegence': '',
-    'wisdom': '',
+    'Wisdom': '',
     'Charisma': '',
 }
 your_ability_scores_modifiers = {
