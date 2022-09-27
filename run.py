@@ -96,6 +96,8 @@ def create_initial_conditions():
     xy = 1
     global yz
     yz = 1
+    global old_score
+    old_score = None
 
 
 create_initial_conditions()
@@ -380,7 +382,14 @@ def fifth_choice():
 
 
 while "" in your_ability_scores.values():
-    fifth_choice()
+    if old_score is None:
+        global reassign_check
+        reassign_check = None
+        fifth_choice()
+    else:
+        your_score = old_score
+        print(f'Please Re-assign {your_score}')
+        reassign_check = 1
 
     def select_ability(prompt):
         """
@@ -394,6 +403,8 @@ while "" in your_ability_scores.values():
     while chosen_ability not in your_ability_scores:
         print('please choose only one of the above abilities')
         chosen_ability = select_ability("""Choose one of the abilities to add this score to: """)
+    if your_ability_scores[f'{chosen_ability}'] != "":
+        old_score = your_ability_scores[f'{chosen_ability}']
 # confirm the choice of ability scores
 
     def confirm_ability(prompt):
@@ -461,6 +472,9 @@ while "" in your_ability_scores.values():
                 print(f'{chosen_level} confirmed!')
     calc_mods()
     your_ability_scores[f'{chosen_ability}'] = your_score
+    if reassign_check == 1:
+        old_score = None
+        reassign_check = None
     os.system('cls' if os.name == 'nt' else 'clear')
 print(your_ability_scores)
 
