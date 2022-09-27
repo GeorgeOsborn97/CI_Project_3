@@ -4,10 +4,10 @@
 import random
 import gspread
 import os
-from character_sheet import class_hit_dice
-from character_sheet import class_info
-from character_sheet import race_info
-from character_sheet import colour_scheme
+from class_info import class_hit_dice
+from class_info import class_info
+from class_info import race_info
+from class_info import colour_scheme
 from character_sheet import your_character
 from character_sheet import your_ability_scores
 from character_sheet import your_ability_scores_modifiers
@@ -433,23 +433,23 @@ while "" in your_ability_scores.values():
             your_ability_scores_modifiers[f'{chosen_ability}'] = int(-4 + (((your_score - 1) / 2) - 1))
 
         your_skills_and_proficiencies['Acrobatics'] = your_ability_scores_modifiers['Dexterity']
-        your_skills_and_proficiencies['Animal Handling'] = your_ability_scores_modifiers['wisdom']
+        your_skills_and_proficiencies['Animal Handling'] = your_ability_scores_modifiers['Wisdom']
         your_skills_and_proficiencies['Arcana'] = your_ability_scores_modifiers['Intellegence']
         your_skills_and_proficiencies['Athletics'] = your_ability_scores_modifiers['Strength']
         your_skills_and_proficiencies['Deception'] = your_ability_scores_modifiers['Charisma']
         your_skills_and_proficiencies['History'] = your_ability_scores_modifiers['Intellegence']
-        your_skills_and_proficiencies['Insight'] = your_ability_scores_modifiers['wisdom']
+        your_skills_and_proficiencies['Insight'] = your_ability_scores_modifiers['Wisdom']
         your_skills_and_proficiencies['Intimidation'] = your_ability_scores_modifiers['Charisma']
         your_skills_and_proficiencies['Investigation'] = your_ability_scores_modifiers['Intellegence']
-        your_skills_and_proficiencies['Medicine'] = your_ability_scores_modifiers['wisdom']
+        your_skills_and_proficiencies['Medicine'] = your_ability_scores_modifiers['Wisdom']
         your_skills_and_proficiencies['Nature'] = your_ability_scores_modifiers['Intellegence']
-        your_skills_and_proficiencies['Perception'] = your_ability_scores_modifiers['wisdom']
+        your_skills_and_proficiencies['Perception'] = your_ability_scores_modifiers['Wisdom']
         your_skills_and_proficiencies['Performance'] = your_ability_scores_modifiers['Charisma']
         your_skills_and_proficiencies['Persuasion'] = your_ability_scores_modifiers['Charisma']
         your_skills_and_proficiencies['Religion'] = your_ability_scores_modifiers['Intellegence']
         your_skills_and_proficiencies['Sleight of Hand'] = your_ability_scores_modifiers['Dexterity']
         your_skills_and_proficiencies['Stealth'] = your_ability_scores_modifiers['Dexterity']
-        your_skills_and_proficiencies['Survival'] = your_ability_scores_modifiers['wisdom']
+        your_skills_and_proficiencies['Survival'] = your_ability_scores_modifiers['Wisdom']
         your_ability_saving_throws['Strength'] = your_ability_scores_modifiers['Strength']
         your_ability_saving_throws['Dexterity'] = your_ability_scores_modifiers['Dexterity']
         your_ability_saving_throws['Constitution'] = your_ability_scores_modifiers['Constitution']
