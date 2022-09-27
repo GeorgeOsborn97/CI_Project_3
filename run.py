@@ -7,6 +7,7 @@ import os
 from character_sheet import class_hit_dice
 from character_sheet import class_info
 from character_sheet import race_info
+from character_sheet import colour_scheme
 from character_sheet import your_character
 from character_sheet import your_ability_scores
 from character_sheet import your_ability_scores_modifiers
@@ -31,7 +32,7 @@ def create_title():
     """
     Create title
     """
-    print("\033[1;34m")
+    print("\033[1;31m")
     print('DND Character Creator'.center(80, '-'))
     print('\n')
 
@@ -67,7 +68,7 @@ def hit_dice_roller():
 
     dice = class_hit_dice[(your_character['Class'])]
     y = int(your_character['Level'])
-    print("It's time to roll hit points for your charcter!")
+    print("\033[38;5;231mIt's time to roll hit points for your charcter!")
     print(f"{(your_character['Class'])}'s hit dice are: {dice}\n")
 
     x = 0
@@ -83,11 +84,12 @@ def hit_dice_roller():
 def create_initial_conditions():
     create_title()
     races = SHEET.worksheet('Races')
+    global race
     race = races.get_all_values()
     classes = SHEET.worksheet('Classes')
     global classes_values
     classes_values = classes.get_all_values()
-    print('Welcome to the Dungeons and Drgaons character creator!'.center(80))
+    print('\033[38;5;231mWelcome to the Dungeons and Drgaons character creator!'.center(80))
     print('To begin please choose from one of the following races.\n'.center(80))
     print(f'{race}\n')
     global xy
@@ -115,34 +117,35 @@ def first_choice():
         chosen_race = select_race('Type a race here to see their traits and starting abilities: ')
 # connects to google sheets to pull the information about each race
 
-        def pull_racial_traits(choosen_race):
+        def pull_racial_traits(chosen_race):
             """
             Pull the relevent racial traits
             """
             os.system('cls' if os.name == 'nt' else 'clear')
             global xy
             try:
-                trait_sheet = SHEET.worksheet(choosen_race)
+                trait_sheet = SHEET.worksheet(chosen_race)
                 info_count = race_info[f'{chosen_race}']
+                text_colour = colour_scheme[f'{chosen_race}']
                 create_title()
-                print(f'{choosen_race}'.center(80))
+                print(f'{text_colour}{chosen_race}'.center(80))
                 global i
                 i = 1
                 while i < info_count:
                     def cycle_info(prompt):
                         global i
                         col_one = trait_sheet.col_values(i)
-                        print(f'{col_one}')
+                        print(f'{text_colour}{col_one}')
                         i += 1
                         return input(prompt)
                     cycle_info('Click enter to cycle through info: ')
                     os.system('cls' if os.name == 'nt' else 'clear')
                     create_title()
-                    print(f'{choosen_race}'.center(80))
+                    print(f'{text_colour}{chosen_race}'.center(80))
                 xy += 1
 
             except Exception:
-                print(f'{choosen_race} is not a playable Race, please select again.')
+                print(f'{chosen_race} is not a playable Race, please select again.')
 
         pull_racial_traits(chosen_race)
 
@@ -154,39 +157,47 @@ first_choice()
 
 def confirm_race(prompt):
     """
-    confirm the users chosen race
+    get the user to manually confirm or deny the chosen race
     """
     return input(prompt).capitalize()
 
 
-os.system('cls' if os.name == 'nt' else 'clear')
-confirmed_race = None
-while confirmed_race != 'Yes':
-    confirmed_race = confirm_race(f'Are you sure you want to choose {chosen_race}? Please answer "Yes" or "No" ')
-    if confirmed_race == 'Yes':
-        print(f'{chosen_race} confirmed! \n')
-    elif confirmed_race == 'No':
-        xy = 1
-        print('change decision')
-        first_choice()
+def race_confirmation():
+    """
+    Test the users input to either move on or allow the user to choose again.
+    """
+    os.system('cls' if os.name == 'nt' else 'clear')
+    confirmed_race = None
+    while confirmed_race != 'Yes':
         confirmed_race = confirm_race(f'Are you sure you want to choose {chosen_race}? Please answer "Yes" or "No" ')
         if confirmed_race == 'Yes':
             print(f'{chosen_race} confirmed! \n')
-    else:
-        print('Please only type "Yes" or "No".')
-        confirmed_race = confirm_race(f'Are you sure you want to choose {chosen_race}? Please answer "Yes" or "No" ')
-        if confirmed_race == 'Yes':
-            print(f'{chosen_race} confirmed! \n')
-os.system('cls' if os.name == 'nt' else 'clear')
-your_character['Race'] = chosen_race
-print(your_character)
-print('end of step one')
-os.system('cls' if os.name == 'nt' else 'clear')
-create_title()
-print("Now you that you have chosen a race for your chracter it's time to pick a class")
-print('Please choose from one of the following classes.\n')
-print(f'{classes_values}\n')
+        elif confirmed_race == 'No':
+            global xy
+            xy = 1
+            print('change decision')
+            print(f'{race}\n')
+            first_choice()
+            confirmed_race = confirm_race(f'Are you sure you want to choose {chosen_race}? Please answer "Yes" or "No" ')
+            if confirmed_race == 'Yes':
+                print(f'{chosen_race} confirmed! \n')
+        else:
+            print('Please only type "Yes" or "No".')
+            confirmed_race = confirm_race(f'Are you sure you want to choose {chosen_race}? Please answer "Yes" or "No" ')
+            if confirmed_race == 'Yes':
+                print(f'{chosen_race} confirmed! \n')
+    os.system('cls' if os.name == 'nt' else 'clear')
+    your_character['Race'] = chosen_race
+    print(your_character)
+    print('end of step one')
+    os.system('cls' if os.name == 'nt' else 'clear')
+    create_title()
+    print("\033[38;5;231mNow you that you have chosen a race for your chracter it's time to pick a class")
+    print('Please choose from one of the following classes.\n')
+    print(f'{classes_values}\n')
 
+
+race_confirmation()
 # Second choice that allows the user to choose a class for the charcter this acts in the same way as the first function
 
 
@@ -212,21 +223,23 @@ def second_choice():
             try:
                 trait_sheet = SHEET.worksheet(chosen_class)
                 info_count = class_info[f'{chosen_class}']
+                global class_colour
+                class_colour = colour_scheme[f'{chosen_class}']
                 create_title()
-                print(f'{chosen_class}\n'.center(80))
+                print(f'{class_colour}{chosen_class}\n'.center(80))
                 global i
                 i = 1
                 while i < info_count:
                     def cycle_info(prompt):
                         global i
                         col_one = trait_sheet.col_values(i)
-                        print(f'{col_one}')
+                        print(f'{class_colour}{col_one}')
                         i += 1
                         return input(prompt)
                     cycle_info('Click enter to cycle through info: ')
                     os.system('cls' if os.name == 'nt' else 'clear')
                     create_title()
-                    print(f'{chosen_class}\n'.center(80))
+                    print(f'{class_colour}{chosen_class}\n'.center(80))
                 yz += 1
 
             except Exception:
@@ -242,36 +255,44 @@ second_choice()
 
 def confirm_class(prompt):
     """
-    confirm the users chosen class
+    Get the users to manually confirm or deny the chosen class
     """
     return input(prompt).capitalize()
 
 
-os.system('cls' if os.name == 'nt' else 'clear')
-confirmed_class = None
-while confirmed_class != 'Yes':
-    confirmed_class = confirm_class(f'Are you sure you want to choose {chosen_class}? Please answer "Yes" or "No" ')
-    if confirmed_class == 'Yes':
-        print(f'{chosen_class} confirmed!')
-    elif confirmed_class == 'No':
-        yz = 1
-        print('change decision')
-        second_choice()
+def class_confirmation():
+    """
+    Test the users input to either move on or allow the user to choose again.
+    """
+    os.system('cls' if os.name == 'nt' else 'clear')
+    confirmed_class = None
+    while confirmed_class != 'Yes':
         confirmed_class = confirm_class(f'Are you sure you want to choose {chosen_class}? Please answer "Yes" or "No" ')
         if confirmed_class == 'Yes':
             print(f'{chosen_class} confirmed!')
-    else:
-        print('Please only type "Yes" or "No".')
-        confirmed_class = confirm_class(f'Are you sure you want to choose {chosen_class}? Please answer "Yes" or "No" ')
-        if confirmed_class == 'Yes':
-            print(f'{chosen_class} confirmed!')
+        elif confirmed_class == 'No':
+            global yz
+            yz = 1
+            print('change decision')
+            print(f'{classes_values}\n')
+            second_choice()
+            confirmed_class = confirm_class(f'Are you sure you want to choose {chosen_class}? Please answer "Yes" or "No" ')
+            if confirmed_class == 'Yes':
+                print(f'{chosen_class} confirmed!')
+        else:
+            print('Please only type "Yes" or "No".')
+            confirmed_class = confirm_class(f'Are you sure you want to choose {chosen_class}? Please answer "Yes" or "No" ')
+            if confirmed_class == 'Yes':
+                print(f'{chosen_class} confirmed!')
 
-your_character['Class'] = chosen_class
-print('end of step two')
-os.system('cls' if os.name == 'nt' else 'clear')
-print("Now you that you have chosen a race and class for your chracter it's time to pick a level")
-print('Please choose from a level from 1 - 20')
+    your_character['Class'] = chosen_class
+    print('end of step two')
+    os.system('cls' if os.name == 'nt' else 'clear')
+    print("\033[38;5;231mNow you that you have chosen a race and class for your chracter it's time to pick a level")
+    print('Please choose from a level from 1 - 20')
 
+
+class_confirmation()
 # choose the level of the character
 
 
@@ -339,7 +360,7 @@ def forth_choice(prompt):
     hit_points = hit_dice_roller()
     your_character['Hit points'] = hit_points
     print('Lets see how your charcter is looking! \n')
-    print(your_character)
+    print(f'{class_colour}{your_character}')
     return input(prompt)
 
 
@@ -347,7 +368,8 @@ forth_choice("Please press 'Enter' to move on: ")
 
 
 os.system('cls' if os.name == 'nt' else 'clear')
-print("""now it's time to calculate your ability scores.
+create_title()
+print("""\033[38;5;231mnow it's time to calculate your ability scores.
 You will be shown the sum of 3 d6 rolls,
 you will then be asked which ability to assign this score to.
 This will be reapeated 6 times.""")
@@ -469,7 +491,7 @@ def sixth_choice():
     os.system('cls' if os.name == 'nt' else 'clear')
     prof = SHEET.worksheet(your_character['Class'])
     prof_list = prof.get_values('h2:h8')
-    print("""Now we have your ability Scores 
+    print("""Now we have your ability Scores
     it's time to Choose 2 proficiancies from the list below: \n""")
     print(prof_list)
     prof_count = 1
@@ -484,7 +506,7 @@ def sixth_choice():
 
 sixth_choice()
 os.system('cls' if os.name == 'nt' else 'clear')
-print(f'{your_character}\n')
+print(f'{class_colour}{your_character}\n')
 print(f'{your_ability_scores}\n')
 print(f'{your_ability_scores_modifiers}\n')
 print(f'{your_skills_and_proficiencies}\n')
