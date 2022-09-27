@@ -34,7 +34,7 @@ class_info = {
     'Paladin': 4,
     'Rogue': 4,
     'Sorcerer': 4,
-    'Warlock': 5,
+    'Warlock': 6,
     'Wizard': 4,
 }
 colour_scheme = {
