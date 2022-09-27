@@ -3,6 +3,7 @@
 """
 import random
 import gspread
+import pandas
 import os
 from class_info import class_hit_dice
 from class_info import class_info
