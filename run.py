@@ -406,6 +406,8 @@ while "" in your_ability_scores.values():
         chosen_ability = select_ability("""Choose one of the abilities to add this score to: """)
     if your_ability_scores[f'{chosen_ability}'] != "":
         old_score = your_ability_scores[f'{chosen_ability}']
+        if reassign_check == 1:
+            reassign_check = 2
 # confirm the choice of ability scores
 
     def confirm_ability(prompt):
@@ -482,6 +484,8 @@ while "" in your_ability_scores.values():
     if reassign_check == 1:
         old_score = None
         reassign_check = None
+    elif reassign_check == 2:
+        reassign_check = 1
     os.system('cls' if os.name == 'nt' else 'clear')
 print(your_ability_scores)
 
