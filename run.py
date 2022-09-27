@@ -11,6 +11,7 @@ from character_sheet import colour_scheme
 from character_sheet import your_character
 from character_sheet import your_ability_scores
 from character_sheet import your_ability_scores_modifiers
+from character_sheet import your_ability_saving_throws
 from character_sheet import your_skills_and_proficiencies
 from character_sheet import your_feats_and_traits
 from character_sheet import your_spells_and_attacks
@@ -449,6 +450,12 @@ while "" in your_ability_scores.values():
         your_skills_and_proficiencies['Sleight of Hand'] = your_ability_scores_modifiers['Dexterity']
         your_skills_and_proficiencies['Stealth'] = your_ability_scores_modifiers['Dexterity']
         your_skills_and_proficiencies['Survival'] = your_ability_scores_modifiers['wisdom']
+        your_ability_saving_throws['Strength'] = your_ability_scores_modifiers['Strength']
+        your_ability_saving_throws['Dexterity'] = your_ability_scores_modifiers['Dexterity']
+        your_ability_saving_throws['Constitution'] = your_ability_scores_modifiers['Constitution']
+        your_ability_saving_throws['Intellegence'] = your_ability_scores_modifiers['Intellegence']
+        your_ability_saving_throws['Wisdom'] = your_ability_scores_modifiers['Wisdom']
+        your_ability_saving_throws['Charisma'] = your_ability_scores_modifiers['Charisma']
         calc_prof_mod()
 
     confirmed_ability = confirm_ability(f'''Are you sure you want to add

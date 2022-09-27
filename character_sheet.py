@@ -34,7 +34,7 @@ class_info = {
     'Paladin': 4,
     'Rogue': 4,
     'Sorcerer': 4,
-    'Warlock': 4,
+    'Warlock': 5,
     'Wizard': 4,
 }
 colour_scheme = {
@@ -72,6 +72,14 @@ your_ability_scores = {
     'Constitution': '',
     'Intellegence': '',
     'Wisdom': '',
+    'Charisma': '',
+}
+your_ability_saving_throws = {
+    'Strength': '',
+    'Dexterity': '',
+    'Constitution': '',
+    'Intellegence': '',
+    'wisdom': '',
     'Charisma': '',
 }
 your_ability_scores_modifiers = {
