@@ -146,6 +146,7 @@ def first_choice():
 
             except Exception:
                 print(f'{chosen_race} is not a playable Race, please select again.')
+                print(race)
 
         pull_racial_traits(chosen_race)
 
@@ -178,18 +179,11 @@ def race_confirmation():
             print('change decision')
             print(f'{race}\n')
             first_choice()
-            confirmed_race = confirm_race(f'Are you sure you want to choose {chosen_race}? Please answer "Yes" or "No" ')
-            if confirmed_race == 'Yes':
-                print(f'{chosen_race} confirmed! \n')
         else:
             print('Please only type "Yes" or "No".')
-            confirmed_race = confirm_race(f'Are you sure you want to choose {chosen_race}? Please answer "Yes" or "No" ')
-            if confirmed_race == 'Yes':
-                print(f'{chosen_race} confirmed! \n')
     os.system('cls' if os.name == 'nt' else 'clear')
     your_character['Race'] = chosen_race
     print(your_character)
-    print('end of step one')
     os.system('cls' if os.name == 'nt' else 'clear')
     create_title()
     print("\033[38;5;231mNow you that you have chosen a race for your chracter it's time to pick a class")
@@ -244,6 +238,7 @@ def second_choice():
 
             except Exception:
                 print(f'{chosen_class} is not a playable class, please select again.')
+                print(classes_values)
 
         pull_class_traits(chosen_class)
 
@@ -276,17 +271,9 @@ def class_confirmation():
             print('change decision')
             print(f'{classes_values}\n')
             second_choice()
-            confirmed_class = confirm_class(f'Are you sure you want to choose {chosen_class}? Please answer "Yes" or "No" ')
-            if confirmed_class == 'Yes':
-                print(f'{chosen_class} confirmed!')
         else:
             print('Please only type "Yes" or "No".')
-            confirmed_class = confirm_class(f'Are you sure you want to choose {chosen_class}? Please answer "Yes" or "No" ')
-            if confirmed_class == 'Yes':
-                print(f'{chosen_class} confirmed!')
-
     your_character['Class'] = chosen_class
-    print('end of step two')
     os.system('cls' if os.name == 'nt' else 'clear')
     print("\033[38;5;231mNow you that you have chosen a race and class for your chracter it's time to pick a level")
     print('Please choose from a level from 1 - 20')
@@ -321,34 +308,32 @@ def confirm_level(prompt):
     return input(prompt).capitalize()
 
 
-os.system('cls' if os.name == 'nt' else 'clear')
-if int(chosen_level) < 0:
-    print(f'{chosen_level} is not a valid character level please select again')
-    third_choice()
-elif int(chosen_level) > 20:
-    print(f'{chosen_level} exceeds the maximun level, please pick again')
-    third_choice()
-
-confirmed_level = None
-while confirmed_level != 'Yes':
-    confirmed_level = confirm_level(f'Are you sure you want to choose {chosen_level}? Please answer "Yes" or "No" ')
-    if confirmed_level == 'Yes':
-        print(f'{chosen_level} confirmed!')
-    elif confirmed_level == 'No':
-        yz = 1
-        print('change decision')
+def level_confirmation():
+    os.system('cls' if os.name == 'nt' else 'clear')
+    if int(chosen_level) < 0:
+        print(f'{chosen_level} is not a valid character level please select again')
         third_choice()
+    elif int(chosen_level) > 20:
+        print(f'{chosen_level} exceeds the maximun level, please pick again')
+        third_choice()
+
+    confirmed_level = None
+    while confirmed_level != 'Yes':
         confirmed_level = confirm_level(f'Are you sure you want to choose {chosen_level}? Please answer "Yes" or "No" ')
         if confirmed_level == 'Yes':
             print(f'{chosen_level} confirmed!')
-    else:
-        print('Please only type "Yes" or "No".')
-        confirmed_level = confirm_level(f'Are you sure you want to choose {chosen_level}? Please answer "Yes" or "No" ')
-        if confirmed_level == 'Yes':
-            print(f'{chosen_level} confirmed!')
-your_character['Level'] = chosen_level
-print('end of step 3')
-os.system('cls' if os.name == 'nt' else 'clear')
+        elif confirmed_level == 'No':
+            global yz
+            yz = 1
+            print('change decision')
+            third_choice()
+        else:
+            print('Please only type "Yes" or "No".')
+    your_character['Level'] = chosen_level
+    os.system('cls' if os.name == 'nt' else 'clear')
+
+
+level_confirmation()    
 # hit points are rolled based on the level and class of the character
 
 
@@ -367,13 +352,16 @@ def forth_choice(prompt):
 forth_choice("Please press 'Enter' to move on: ")
 
 
-os.system('cls' if os.name == 'nt' else 'clear')
-create_title()
-print("""\033[38;5;231mnow it's time to calculate your ability scores.
-You will be shown the sum of 3 d6 rolls,
-you will then be asked which ability to assign this score to.
-This will be reapeated 6 times.""")
+def ability_score_intro():
+    os.system('cls' if os.name == 'nt' else 'clear')
+    create_title()
+    print("""\033[38;5;231mnow it's time to calculate your ability scores.
+    You will be shown the sum of 3 d6 rolls,
+    you will then be asked which ability to assign this score to.
+    This will be reapeated 6 times.""")
 
+
+ability_score_intro()
 # calculate rolls and allow the user to asign the results to the 6 ability scores
 
 
@@ -468,7 +456,7 @@ while "" in your_ability_scores.values():
         else:
             print('Please only type "Yes" or "No".')
             confirmed_ability = confirm_ability(f'''Are you sure you want to add {your_score} to {chosen_ability}? ''')
-            if confirmed_level == 'Yes':
+            if confirmed_ability == 'Yes':
                 calc_mods()
                 print(f'{chosen_level} confirmed!')
     calc_mods()
@@ -491,7 +479,8 @@ def sixth_choice():
     os.system('cls' if os.name == 'nt' else 'clear')
     prof = SHEET.worksheet(your_character['Class'])
     prof_list = prof.get_values('h2:h8')
-    print("""Now we have your ability Scores
+    create_title()
+    print("""\033[38;5;231mNow we have your ability Scores
     it's time to Choose 2 proficiancies from the list below: \n""")
     print(prof_list)
     prof_count = 1
@@ -506,6 +495,7 @@ def sixth_choice():
 
 sixth_choice()
 os.system('cls' if os.name == 'nt' else 'clear')
+create_title()
 print(f'{class_colour}{your_character}\n')
 print(f'{your_ability_scores}\n')
 print(f'{your_ability_scores_modifiers}\n')
