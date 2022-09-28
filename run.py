@@ -3,7 +3,7 @@
 """
 import random
 import gspread
-import pandas
+import pandas as pd
 import os
 from class_info import class_hit_dice
 from class_info import class_info
@@ -84,16 +84,21 @@ def hit_dice_roller():
 
 
 def create_initial_conditions():
+    """
+    Creates the title and sets a few global variables.
+    """
     create_title()
     races = SHEET.worksheet('Races')
     global race
     race = races.get_all_values()
+    global classes
     classes = SHEET.worksheet('Classes')
     global classes_values
     classes_values = classes.get_all_values()
     print('\033[38;5;231mWelcome to the Dungeons and Drgaons character creator!'.center(80))
     print('To begin please choose from one of the following races.\n'.center(80))
-    print(f'{race}\n')
+    df_race = pd.DataFrame(races.row_values(1))
+    print(f'{df_race.to_string(index=False, header=None)}\n')
     global xy
     xy = 1
     global yz
@@ -138,8 +143,8 @@ def first_choice():
                 while i < info_count:
                     def cycle_info(prompt):
                         global i
-                        col_one = trait_sheet.col_values(i)
-                        print(f'{text_colour}{col_one}')
+                        df_race_info = pd.DataFrame(trait_sheet.col_values(i)).iloc[1:2]
+                        print(f'{text_colour}{df_race_info.to_string(index=False, header=None)}\n')
                         i += 1
                         return input(prompt)
                     cycle_info('Click enter to cycle through info: ')
@@ -192,7 +197,8 @@ def race_confirmation():
     create_title()
     print("\033[38;5;231mNow you that you have chosen a race for your chracter it's time to pick a class")
     print('Please choose from one of the following classes.\n')
-    print(f'{classes_values}\n')
+    df_class = pd.DataFrame(classes.row_values(1))
+    print(f'{df_class.to_string(index=False, header=None)}\n')
 
 
 race_confirmation()
@@ -230,8 +236,8 @@ def second_choice():
                 while i < info_count:
                     def cycle_info(prompt):
                         global i
-                        col_one = trait_sheet.col_values(i)
-                        print(f'{class_colour}{col_one}')
+                        df_class_info = pd.DataFrame(trait_sheet.col_values(i))
+                        print(f'{class_colour}{df_class_info.to_string(index=False, header=None)}\n')
                         i += 1
                         return input(prompt)
                     cycle_info('Click enter to cycle through info: ')
@@ -504,15 +510,15 @@ def sixth_choice():
         return input(prompt).capitalize()
     os.system('cls' if os.name == 'nt' else 'clear')
     prof = SHEET.worksheet(your_character['Class'])
-    prof_list = prof.get_values('h2:h8')
     create_title()
     print("""\033[38;5;231mNow we have your ability Scores
     it's time to Choose 2 proficiancies from the list below: \n""")
-    print(prof_list)
+    df_prof_info = pd.DataFrame(prof.col_values(8))
+    print(f'{df_prof_info.to_string(index=False, header=None)}\n')
     prof_count = 1
     while prof_count < 3:
         chosen_prof = select_prof('Choose one of the skills above as a proficency: ')
-        while chosen_prof not in your_skills_and_proficiencies:
+        while chosen_prof.capitalize() not in str(df_prof_info):
             print('Please only choose one of the skills above as a proficency: ')
             chosen_prof = select_prof("""'Choose one of the skills above as a proficency: '""")
         your_skills_and_proficiencies[f'proficient skill {prof_count}'] = chosen_prof
