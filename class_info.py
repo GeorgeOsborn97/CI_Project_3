@@ -26,17 +26,17 @@ race_info = {
     'Gnome': 8,
 }
 class_info = {
-    'Barbarian': 4,
-    'Bard': 4,
-    'Cleric': 4,
-    'Druid': 4,
-    'Fighter': 4,
-    'Monk': 4,
-    'Paladin': 4,
-    'Rogue': 4,
-    'Sorcerer': 4,
-    'Warlock': 6,
-    'Wizard': 4,
+    'Barbarian': 26,
+    'Bard': 22,
+    'Cleric': 16,
+    'Druid': 18,
+    'Fighter': 18,
+    'Monk': 22,
+    'Paladin': 23,
+    'Rogue': 19,
+    'Sorcerer': 20,
+    'Warlock': 18,
+    'Wizard': 15,
 }
 colour_scheme = {
     'Human': '\033[38;5;3m',

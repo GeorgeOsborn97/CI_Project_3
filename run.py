@@ -513,7 +513,7 @@ def sixth_choice():
     create_title()
     print("""\033[38;5;231mNow we have your ability Scores
     it's time to Choose 2 proficiancies from the list below: \n""")
-    df_prof_info = pd.DataFrame(prof.col_values(8))
+    df_prof_info = pd.DataFrame(prof.col_values(26))
     print(f'{df_prof_info.to_string(index=False, header=None)}\n')
     prof_count = 1
     while prof_count < 3:
