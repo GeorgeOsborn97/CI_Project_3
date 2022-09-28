@@ -186,7 +186,9 @@ def race_confirmation():
             global xy
             xy = 1
             print('change decision')
-            print(f'{race}\n')
+            races = SHEET.worksheet('Races')
+            df_race = pd.DataFrame(races.row_values(1))
+            print(f'{df_race.to_string(index=False, header=None)}\n')
             first_choice()
         else:
             print('Please only type "Yes" or "No".')
@@ -279,7 +281,8 @@ def class_confirmation():
             global yz
             yz = 1
             print('change decision')
-            print(f'{classes_values}\n')
+            df_class = pd.DataFrame(classes.row_values(1))
+            print(f'{df_class.to_string(index=False, header=None)}\n')
             second_choice()
         else:
             print('Please only type "Yes" or "No".')
@@ -532,3 +535,13 @@ print(f'{class_colour}{your_character}\n')
 print(f'{your_ability_scores}\n')
 print(f'{your_ability_scores_modifiers}\n')
 print(f'{your_skills_and_proficiencies}\n')
+
+
+def find_racial_feats_and_mods():
+    os.system('cls' if os.name == 'nt' else 'clear')
+    bonuses_info = SHEET.worksheet(your_character['Race']).get_values('m1:n7')
+    df_racial_feats_info = pd.DataFrame(bonuses_info)
+    print(f'{df_racial_feats_info.to_string(index=False, header=None)}\n')
+
+
+find_racial_feats_and_mods()
