@@ -105,7 +105,8 @@ warlock_data2 = [[2, 2, 1, '1st', 0],
                  ]
 
 warlock_col_names1 = ['Level', 'Proficiency Bonus', 'Features']
-warlock_col_names2 = ['Cantrips', 'Spells Known', 'Spell Slots', 'Slot Level', 'Invocations']
+warlock_col_names2 = ['Cantrips', 'Spells Known', 'Spell Slots', 'Slot Level',
+                      'Invocations']
 warlock1 = tabulate(warlock_data1, headers=warlock_col_names1, tablefmt='grid')
 warlock2 = tabulate(warlock_data2, headers=warlock_col_names2, tablefmt='grid')
 Warlock = f'{warlock1}{warlock2}'

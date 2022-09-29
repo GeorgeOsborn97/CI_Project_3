@@ -1,10 +1,11 @@
 """
 # Write your code to expect a terminal of 80 characters wide and 24 rows high
 """
+import os
 import random
 import gspread
 import pandas as pd
-import os
+from google.oauth2.service_account import Credentials
 from class_info import class_hit_dice
 from class_info import class_info
 from class_info import race_info
@@ -16,7 +17,7 @@ from character_sheet import your_ability_saving_throws
 from character_sheet import your_skills_and_proficiencies
 from character_sheet import your_feats_and_traits
 from character_sheet import your_spells_and_attacks
-from google.oauth2.service_account import Credentials
+
 
 SCOPE = [
     "https://www.googleapis.com/auth/spreadsheets",
@@ -79,7 +80,10 @@ def hit_dice_roller():
         result = rand_num(dice)
         sum_dice.append(result)
         x += 1
-    print(f'You rolled {sum_dice} your constituation modifier will be added to this soon.\n')
+    print(
+        f'You rolled {sum_dice}'
+        ' your constituation modifier will be added to this soon.\n'
+    )
     return sum(sum_dice)
 
 
@@ -95,8 +99,13 @@ def create_initial_conditions():
     classes = SHEET.worksheet('Classes')
     global classes_values
     classes_values = classes.get_all_values()
-    print('\033[38;5;231mWelcome to the Dungeons and Drgaons character creator!'.center(80))
-    print('To begin please choose from one of the following races.\n'.center(80))
+    print(
+        '\033[38;5;231mWelcome to'
+        ' the Dungeons and Drgaons character creator!'.center(80)
+    )
+    print(
+        'To begin please choose from one of the following races.\n'.center(80)
+    )
     df_race = pd.DataFrame(races.row_values(1))
     print(f'{df_race.to_string(index=False, header=None)}\n')
     global xy
@@ -123,7 +132,9 @@ def first_choice():
             """
             return input(prompt).capitalize()
         global chosen_race
-        chosen_race = select_race('Type a race here to see their traits and starting abilities: ')
+        chosen_race = select_race(
+            'Type a race here to see their traits and starting abilities: '
+        )
 # connects to google sheets to pull the information about each race
 
         def pull_racial_traits(chosen_race):
@@ -143,8 +154,13 @@ def first_choice():
                 while i < info_count:
                     def cycle_info(prompt):
                         global i
-                        df_race_info = pd.DataFrame(trait_sheet.col_values(i)).iloc[1:2]
-                        print(f'{text_colour}{df_race_info.to_string(index=False, header=None)}\n')
+                        df_race_info = pd.DataFrame(
+                            trait_sheet.col_values(i)
+                        ).iloc[1:2]
+                        print(
+                            f'{text_colour}'
+                            f'{df_race_info.to_string(index=False, header=None)}\n'
+                        )
                         i += 1
                         return input(prompt)
                     cycle_info('Click enter to cycle through info: ')
@@ -154,7 +170,10 @@ def first_choice():
                 xy += 1
 
             except Exception:
-                print(f'{chosen_race} is not a playable Race, please select again.')
+                print(
+                    f'{chosen_race} is not a playable Race,'
+                    ' please select again.'
+                )
                 print(race)
 
         pull_racial_traits(chosen_race)
@@ -162,7 +181,8 @@ def first_choice():
 
 first_choice()
 
-# The first confirmation that allows the user to confirm their chosen race or go back and select again
+# The first confirmation that allows the user to confirm their chosen race
+#  or go back and select again
 
 
 def confirm_race(prompt):
@@ -179,7 +199,10 @@ def race_confirmation():
     os.system('cls' if os.name == 'nt' else 'clear')
     confirmed_race = None
     while confirmed_race != 'Yes':
-        confirmed_race = confirm_race(f'Are you sure you want to choose {chosen_race}? Please answer "Yes" or "No" ')
+        confirmed_race = confirm_race(
+            f'Are you sure you want to choose {chosen_race}?'
+            ' Please answer "Yes" or "No" '
+        )
         if confirmed_race == 'Yes':
             print(f'{chosen_race} confirmed! \n')
         elif confirmed_race == 'No':
@@ -197,14 +220,18 @@ def race_confirmation():
     print(your_character)
     os.system('cls' if os.name == 'nt' else 'clear')
     create_title()
-    print("\033[38;5;231mNow you that you have chosen a race for your chracter it's time to pick a class")
+    print(
+        "\033[38;5;231mNow you that you have chosen a race for your chracter"
+        " it's time to pick a class"
+    )
     print('Please choose from one of the following classes.\n')
     df_class = pd.DataFrame(classes.row_values(1))
     print(f'{df_class.to_string(index=False, header=None)}\n')
 
 
 race_confirmation()
-# Second choice that allows the user to choose a class for the charcter this acts in the same way as the first function
+# Second choice that allows the user to choose a class for the charcter
+#  this acts in the same way as the first function
 
 
 def second_choice():
@@ -218,7 +245,9 @@ def second_choice():
             """
             return input(prompt).capitalize()
         global chosen_class
-        chosen_class = select_class('Type a class here to see their description and abilities: ')
+        chosen_class = select_class(
+            'Type a class here to see their description and abilities: '
+        )
 
         def pull_class_traits(chosen_class):
             """
@@ -239,7 +268,10 @@ def second_choice():
                     def cycle_info(prompt):
                         global i
                         df_class_info = pd.DataFrame(trait_sheet.col_values(i))
-                        print(f'{class_colour}{df_class_info.to_string(index=False, header=None)}\n')
+                        print(
+                            f'{class_colour}'
+                            f'{df_class_info.to_string(index=False, header=None)}\n'
+                        )
                         i += 1
                         return input(prompt)
                     cycle_info('Click enter to cycle through info: ')
@@ -249,7 +281,10 @@ def second_choice():
                 yz += 1
 
             except Exception:
-                print(f'{chosen_class} is not a playable class, please select again.')
+                print(
+                    f'{chosen_class}'
+                    ' is not a playable class, please select again.'
+                )
                 print(classes_values)
 
         pull_class_traits(chosen_class)
@@ -274,7 +309,10 @@ def class_confirmation():
     os.system('cls' if os.name == 'nt' else 'clear')
     confirmed_class = None
     while confirmed_class != 'Yes':
-        confirmed_class = confirm_class(f'Are you sure you want to choose {chosen_class}? Please answer "Yes" or "No" ')
+        confirmed_class = confirm_class(
+            f'Are you sure you want to choose {chosen_class}? '
+            'Please answer "Yes" or "No" '
+        )
         if confirmed_class == 'Yes':
             print(f'{chosen_class} confirmed!')
         elif confirmed_class == 'No':
@@ -288,7 +326,10 @@ def class_confirmation():
             print('Please only type "Yes" or "No".')
     your_character['Class'] = chosen_class
     os.system('cls' if os.name == 'nt' else 'clear')
-    print("\033[38;5;231mNow you that you have chosen a race and class for your chracter it's time to pick a level")
+    print(
+        "\033[38;5;231mNow you that you have chosen a race and class"
+        " for your character it's time to pick a level"
+    )
     print('Please choose from a level from 1 - 20')
 
 
@@ -322,17 +363,29 @@ def confirm_level(prompt):
 
 
 def level_confirmation():
-    os.system('cls' if os.name == 'nt' else 'clear')
-    if int(chosen_level) < 0:
-        print(f'{chosen_level} is not a valid character level please select again')
-        third_choice()
-    elif int(chosen_level) > 20:
-        print(f'{chosen_level} exceeds the maximun level, please pick again')
-        third_choice()
+    level_loop = 1
+    while level_loop == 1:
+        os.system('cls' if os.name == 'nt' else 'clear')
+        if int(chosen_level) <= 0:
+            print(
+                f'{chosen_level} is not a valid character level'
+                ' please select again'
+            )
+            third_choice()
+        elif int(chosen_level) > 20:
+            print(
+                f'{chosen_level} exceeds the maximun level, please pick again'
+            )
+            third_choice()
+        else:
+            level_loop += 1
 
     confirmed_level = None
     while confirmed_level != 'Yes':
-        confirmed_level = confirm_level(f'Are you sure you want to choose {chosen_level}? Please answer "Yes" or "No" ')
+        confirmed_level = confirm_level(
+            f'Are you sure you want to choose {chosen_level}? '
+            'Please answer "Yes" or "No" '
+        )
         if confirmed_level == 'Yes':
             print(f'{chosen_level} confirmed!')
         elif confirmed_level == 'No':
@@ -375,7 +428,7 @@ def ability_score_intro():
 
 
 ability_score_intro()
-# calculate rolls and allow the user to asign the results to the 6 ability scores
+# calculate rolls and allow the user to asign the results to the 6 abilities
 
 
 def fifth_choice():
@@ -413,7 +466,9 @@ while "" in your_ability_scores.values():
     to add this score to: """)
     while chosen_ability not in your_ability_scores:
         print('please choose only one of the above abilities')
-        chosen_ability = select_ability("""Choose one of the abilities to add this score to: """)
+        chosen_ability = select_ability(
+            "Choose one of the abilities to add this score to: "
+        )
     if your_ability_scores[f'{chosen_ability}'] != "":
         old_score = your_ability_scores[f'{chosen_ability}']
         if reassign_check == 1:
@@ -429,45 +484,103 @@ while "" in your_ability_scores.values():
     def calc_prof_mod():
         if int(your_character['Level']) <= 4:
             your_skills_and_proficiencies['proficency_bonus'] = 2
-        elif int(your_character['Level']) > 4 and int(your_character['Level']) <= 8:
+        elif int(your_character[
+            'Level'
+        ]) > 4 and int(your_character['Level']) <= 8:
             your_skills_and_proficiencies['proficency_bonus'] = 3
-        elif int(your_character['Level']) > 8 and int(your_character['Level']) <= 12:
+        elif int(your_character[
+            'Level'
+        ]) > 8 and int(your_character['Level']) <= 12:
             your_skills_and_proficiencies['proficency_bonus'] = 4
-        elif int(your_character['Level']) > 12 and int(your_character['Level']) <= 6:
+        elif int(your_character[
+            'Level'
+        ]) > 12 and int(your_character['Level']) <= 6:
             your_skills_and_proficiencies['proficency_bonus'] = 5
         else:
             your_skills_and_proficiencies['proficency_bonus'] = 6
 
     def calc_mods():
         if your_score % 2 == 0:
-            your_ability_scores_modifiers[f'{chosen_ability}'] = int(-4 + ((your_score / 2) - 1))
+            your_ability_scores_modifiers[
+                f'{chosen_ability}'
+            ] = int(-4 + ((your_score / 2) - 1))
         else:
-            your_ability_scores_modifiers[f'{chosen_ability}'] = int(-4 + (((your_score - 1) / 2) - 1))
+            your_ability_scores_modifiers[
+                f'{chosen_ability}'
+            ] = int(-4 + (((your_score - 1) / 2) - 1))
 
-        your_skills_and_proficiencies['Acrobatics'] = your_ability_scores_modifiers['Dexterity']
-        your_skills_and_proficiencies['Animal Handling'] = your_ability_scores_modifiers['Wisdom']
-        your_skills_and_proficiencies['Arcana'] = your_ability_scores_modifiers['Intellegence']
-        your_skills_and_proficiencies['Athletics'] = your_ability_scores_modifiers['Strength']
-        your_skills_and_proficiencies['Deception'] = your_ability_scores_modifiers['Charisma']
-        your_skills_and_proficiencies['History'] = your_ability_scores_modifiers['Intellegence']
-        your_skills_and_proficiencies['Insight'] = your_ability_scores_modifiers['Wisdom']
-        your_skills_and_proficiencies['Intimidation'] = your_ability_scores_modifiers['Charisma']
-        your_skills_and_proficiencies['Investigation'] = your_ability_scores_modifiers['Intellegence']
-        your_skills_and_proficiencies['Medicine'] = your_ability_scores_modifiers['Wisdom']
-        your_skills_and_proficiencies['Nature'] = your_ability_scores_modifiers['Intellegence']
-        your_skills_and_proficiencies['Perception'] = your_ability_scores_modifiers['Wisdom']
-        your_skills_and_proficiencies['Performance'] = your_ability_scores_modifiers['Charisma']
-        your_skills_and_proficiencies['Persuasion'] = your_ability_scores_modifiers['Charisma']
-        your_skills_and_proficiencies['Religion'] = your_ability_scores_modifiers['Intellegence']
-        your_skills_and_proficiencies['Sleight of Hand'] = your_ability_scores_modifiers['Dexterity']
-        your_skills_and_proficiencies['Stealth'] = your_ability_scores_modifiers['Dexterity']
-        your_skills_and_proficiencies['Survival'] = your_ability_scores_modifiers['Wisdom']
-        your_ability_saving_throws['Strength'] = your_ability_scores_modifiers['Strength']
-        your_ability_saving_throws['Dexterity'] = your_ability_scores_modifiers['Dexterity']
-        your_ability_saving_throws['Constitution'] = your_ability_scores_modifiers['Constitution']
-        your_ability_saving_throws['Intellegence'] = your_ability_scores_modifiers['Intellegence']
-        your_ability_saving_throws['Wisdom'] = your_ability_scores_modifiers['Wisdom']
-        your_ability_saving_throws['Charisma'] = your_ability_scores_modifiers['Charisma']
+        your_skills_and_proficiencies[
+            'Acrobatics'
+        ] = your_ability_scores_modifiers['Dexterity']
+        your_skills_and_proficiencies[
+            'Animal Handling'
+        ] = your_ability_scores_modifiers['Wisdom']
+        your_skills_and_proficiencies[
+            'Arcana'
+        ] = your_ability_scores_modifiers['Intellegence']
+        your_skills_and_proficiencies[
+            'Athletics'
+        ] = your_ability_scores_modifiers['Strength']
+        your_skills_and_proficiencies[
+            'Deception'
+        ] = your_ability_scores_modifiers['Charisma']
+        your_skills_and_proficiencies[
+            'History'
+        ] = your_ability_scores_modifiers['Intellegence']
+        your_skills_and_proficiencies[
+            'Insight'
+        ] = your_ability_scores_modifiers['Wisdom']
+        your_skills_and_proficiencies[
+            'Intimidation'
+        ] = your_ability_scores_modifiers['Charisma']
+        your_skills_and_proficiencies[
+            'Investigation'
+        ] = your_ability_scores_modifiers['Intellegence']
+        your_skills_and_proficiencies[
+            'Medicine'
+        ] = your_ability_scores_modifiers['Wisdom']
+        your_skills_and_proficiencies[
+            'Nature'
+        ] = your_ability_scores_modifiers['Intellegence']
+        your_skills_and_proficiencies[
+            'Perception'
+        ] = your_ability_scores_modifiers['Wisdom']
+        your_skills_and_proficiencies[
+            'Performance'
+        ] = your_ability_scores_modifiers['Charisma']
+        your_skills_and_proficiencies[
+            'Persuasion'
+        ] = your_ability_scores_modifiers['Charisma']
+        your_skills_and_proficiencies[
+            'Religion'
+        ] = your_ability_scores_modifiers['Intellegence']
+        your_skills_and_proficiencies[
+            'Sleight of Hand'
+        ] = your_ability_scores_modifiers['Dexterity']
+        your_skills_and_proficiencies[
+            'Stealth'
+        ] = your_ability_scores_modifiers['Dexterity']
+        your_skills_and_proficiencies[
+            'Survival'
+        ] = your_ability_scores_modifiers['Wisdom']
+        your_ability_saving_throws[
+            'Strength'
+        ] = your_ability_scores_modifiers['Strength']
+        your_ability_saving_throws[
+            'Dexterity'
+        ] = your_ability_scores_modifiers['Dexterity']
+        your_ability_saving_throws[
+            'Constitution'
+        ] = your_ability_scores_modifiers['Constitution']
+        your_ability_saving_throws[
+            'Intellegence'
+        ] = your_ability_scores_modifiers['Intellegence']
+        your_ability_saving_throws[
+            'Wisdom'
+        ] = your_ability_scores_modifiers['Wisdom']
+        your_ability_saving_throws[
+            'Charisma'
+        ] = your_ability_scores_modifiers['Charisma']
         calc_prof_mod()
 
     confirmed_ability = confirm_ability(f'''Are you sure you want to add
@@ -478,14 +591,22 @@ while "" in your_ability_scores.values():
             print(f'{chosen_ability} confirmed')
         elif confirmed_ability == 'No':
             print('change decision')
-            chosen_ability = select_ability("""Choose one of the abilities to add the score to: """)
-            confirmed_ability = confirm_ability(f'''Are you sure you want to add {your_score} to {chosen_ability}? ''')
+            chosen_ability = select_ability(
+                "Choose one of the abilities to add the score to: "
+            )
+            confirmed_ability = confirm_ability(
+                f'Are you sure you want to add {your_score}'
+                f' to {chosen_ability}? '
+                )
             if confirmed_ability == 'Yes':
                 calc_mods()
                 print(f'{chosen_ability} confirmed!')
         else:
             print('Please only type "Yes" or "No".')
-            confirmed_ability = confirm_ability(f'''Are you sure you want to add {your_score} to {chosen_ability}? ''')
+            confirmed_ability = confirm_ability(
+                f'Are you sure you want to add {your_score}'
+                f' to {chosen_ability}? '
+            )
             if confirmed_ability == 'Yes':
                 calc_mods()
                 print(f'{chosen_level} confirmed!')
@@ -520,11 +641,19 @@ def sixth_choice():
     print(f'{df_prof_info.to_string(index=False, header=None)}\n')
     prof_count = 1
     while prof_count < 3:
-        chosen_prof = select_prof('Choose one of the skills above as a proficency: ')
+        chosen_prof = select_prof(
+            'Choose one of the skills above as a proficency: '
+        )
         while chosen_prof.capitalize() not in str(df_prof_info):
-            print('Please only choose one of the skills above as a proficency: ')
-            chosen_prof = select_prof("""'Choose one of the skills above as a proficency: '""")
-        your_skills_and_proficiencies[f'proficient skill {prof_count}'] = chosen_prof
+            print(
+                'Please only choose one of the skills above as a proficency: '
+            )
+            chosen_prof = select_prof(
+                "Choose one of the skills above as a proficency: "
+            )
+        your_skills_and_proficiencies[
+            f'proficient skill {prof_count}'
+        ] = chosen_prof
         prof_count += 1
 
 
@@ -537,11 +666,12 @@ print(f'{your_ability_scores_modifiers}\n')
 print(f'{your_skills_and_proficiencies}\n')
 
 
-def find_racial_feats_and_mods():
-    os.system('cls' if os.name == 'nt' else 'clear')
-    bonuses_info = SHEET.worksheet(your_character['Race']).get_values('m1:n7')
-    df_racial_feats_info = pd.DataFrame(bonuses_info)
-    print(f'{df_racial_feats_info.to_string(index=False, header=None)}\n')
+# def find_racial_feats_and_mods():
+
+# os.system('cls' if os.name == 'nt' else 'clear')
+# bonuses_info = SHEET.worksheet(your_character['Race']).get_values('m1:n8')
+# df_racial_feats_info = pd.DataFrame(bonuses_info)
+# print(f'{df_racial_feats_info.to_string(index=False, header=None)}\n')
 
 
-find_racial_feats_and_mods()
+# find_racial_feats_and_mods()
