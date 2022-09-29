@@ -5,6 +5,7 @@ import os
 import random
 import gspread
 import pandas as pd
+from tabulate import tabulate
 from google.oauth2.service_account import Credentials
 from class_info import class_hit_dice
 from class_info import class_info
@@ -92,6 +93,7 @@ def create_initial_conditions():
     Creates the title and sets a few global variables.
     """
     create_title()
+    global races
     races = SHEET.worksheet('Races')
     global race
     race = races.get_all_values()
@@ -108,10 +110,10 @@ def create_initial_conditions():
     )
     df_race = pd.DataFrame(races.row_values(1))
     print(f'{df_race.to_string(index=False, header=None)}\n')
-    global xy
-    xy = 1
-    global yz
-    yz = 1
+    global race_loop
+    race_loop = 1
+    global class_loop
+    class_loop = 1
     global old_score
     old_score = None
 
@@ -125,7 +127,7 @@ def first_choice():
     """
     users first choice
     """
-    while xy == 1:
+    while race_loop == 1:
         def select_race(prompt):
             """
             Return the users chosen race
@@ -142,7 +144,6 @@ def first_choice():
             Pull the relevent racial traits
             """
             os.system('cls' if os.name == 'nt' else 'clear')
-            global xy
             try:
                 trait_sheet = SHEET.worksheet(chosen_race)
                 info_count = race_info[f'{chosen_race}']
@@ -167,14 +168,16 @@ def first_choice():
                     os.system('cls' if os.name == 'nt' else 'clear')
                     create_title()
                     print(f'{text_colour}{chosen_race}'.center(80))
-                xy += 1
+                global race_loop    
+                race_loop += 1
 
             except Exception:
                 print(
                     f'{chosen_race} is not a playable Race,'
                     ' please select again.'
                 )
-                print(race)
+                df_race = pd.DataFrame(races.row_values(1))
+                print(f'{df_race.to_string(index=False, header=None)}\n')
 
         pull_racial_traits(chosen_race)
 
@@ -206,8 +209,8 @@ def race_confirmation():
         if confirmed_race == 'Yes':
             print(f'{chosen_race} confirmed! \n')
         elif confirmed_race == 'No':
-            global xy
-            xy = 1
+            global race_loop
+            race_loop = 1
             print('change decision')
             races = SHEET.worksheet('Races')
             df_race = pd.DataFrame(races.row_values(1))
@@ -238,7 +241,7 @@ def second_choice():
     """
     users second choice
     """
-    while yz == 1:
+    while class_loop == 1:
         def select_class(prompt):
             """
             Return the users chosen class
@@ -254,14 +257,14 @@ def second_choice():
             Pull the relevent racial traits
             """
             os.system('cls' if os.name == 'nt' else 'clear')
-            global yz
+            global class_loop
             try:
                 trait_sheet = SHEET.worksheet(chosen_class)
                 info_count = class_info[f'{chosen_class}']
                 global class_colour
                 class_colour = colour_scheme[f'{chosen_class}']
                 create_title()
-                print(f'{class_colour}{chosen_class}\n'.center(80))
+                print(f'{class_colour}{chosen_class}\n')
                 global i
                 i = 1
                 while i < info_count:
@@ -272,13 +275,14 @@ def second_choice():
                             f'{class_colour}'
                             f'{df_class_info.to_string(index=False, header=None)}\n'
                         )
+                        print(table_test)
                         i += 1
                         return input(prompt)
                     cycle_info('Click enter to cycle through info: ')
                     os.system('cls' if os.name == 'nt' else 'clear')
                     create_title()
-                    print(f'{class_colour}{chosen_class}\n'.center(80))
-                yz += 1
+                    print(f'{class_colour}{chosen_class}\n')
+                class_loop += 1
 
             except Exception:
                 print(
@@ -316,8 +320,8 @@ def class_confirmation():
         if confirmed_class == 'Yes':
             print(f'{chosen_class} confirmed!')
         elif confirmed_class == 'No':
-            global yz
-            yz = 1
+            global class_loop
+            class_loop = 1
             print('change decision')
             df_class = pd.DataFrame(classes.row_values(1))
             print(f'{df_class.to_string(index=False, header=None)}\n')
