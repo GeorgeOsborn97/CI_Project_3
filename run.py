@@ -11,6 +11,7 @@ from class_info import class_hit_dice
 from class_info import class_info
 from class_info import race_info
 from class_info import colour_scheme
+from class_info import dragonborn
 from character_sheet import your_character
 from character_sheet import your_ability_scores
 from character_sheet import your_ability_scores_modifiers
@@ -163,12 +164,14 @@ def first_choice():
                             f'{df_race_info.to_string(index=False, header=None)}\n'
                         )
                         i += 1
+                        if i == 10 and chosen_race == 'Dragonborn':
+                            print(dragonborn)
                         return input(prompt)
                     cycle_info('Click enter to cycle through info: ')
                     os.system('cls' if os.name == 'nt' else 'clear')
                     create_title()
                     print(f'{text_colour}{chosen_race}'.center(80))
-                global race_loop    
+                global race_loop
                 race_loop += 1
 
             except Exception:
@@ -212,7 +215,6 @@ def race_confirmation():
             global race_loop
             race_loop = 1
             print('change decision')
-            races = SHEET.worksheet('Races')
             df_race = pd.DataFrame(races.row_values(1))
             print(f'{df_race.to_string(index=False, header=None)}\n')
             first_choice()
@@ -224,7 +226,7 @@ def race_confirmation():
     os.system('cls' if os.name == 'nt' else 'clear')
     create_title()
     print(
-        "\033[38;5;231mNow you that you have chosen a race for your chracter"
+        "\033[38;5;231mNow that you have chosen a race for your chracter"
         " it's time to pick a class"
     )
     print('Please choose from one of the following classes.\n')
@@ -264,24 +266,25 @@ def second_choice():
                 global class_colour
                 class_colour = colour_scheme[f'{chosen_class}']
                 create_title()
-                print(f'{class_colour}{chosen_class}\n')
+                print(f'{class_colour}{chosen_class}\n'.center(80))
                 global i
                 i = 1
                 while i < info_count:
                     def cycle_info(prompt):
                         global i
-                        df_class_info = pd.DataFrame(trait_sheet.col_values(i))
+                        df_class_info = pd.DataFrame(
+                            trait_sheet.col_values(i)
+                        ).iloc[1:2]
                         print(
                             f'{class_colour}'
                             f'{df_class_info.to_string(index=False, header=None)}\n'
                         )
-                        print(table_test)
                         i += 1
                         return input(prompt)
                     cycle_info('Click enter to cycle through info: ')
                     os.system('cls' if os.name == 'nt' else 'clear')
                     create_title()
-                    print(f'{class_colour}{chosen_class}\n')
+                    print(f'{class_colour}{chosen_class}\n'.center(80))
                 class_loop += 1
 
             except Exception:
@@ -331,7 +334,7 @@ def class_confirmation():
     your_character['Class'] = chosen_class
     os.system('cls' if os.name == 'nt' else 'clear')
     print(
-        "\033[38;5;231mNow you that you have chosen a race and class"
+        "\033[38;5;231mNow that you have chosen a race and class"
         " for your character it's time to pick a level"
     )
     print('Please choose from a level from 1 - 20')
@@ -350,7 +353,7 @@ def third_choice():
         pick a level
         """
         return input(prompt)
-    global chosen_level    
+    global chosen_level
     chosen_level = choose_level('Please choose your level: ')
 
 
@@ -367,6 +370,10 @@ def confirm_level(prompt):
 
 
 def level_confirmation():
+    """
+    confirm level
+    """
+    global level_loop
     level_loop = 1
     while level_loop == 1:
         os.system('cls' if os.name == 'nt' else 'clear')
@@ -393,8 +400,7 @@ def level_confirmation():
         if confirmed_level == 'Yes':
             print(f'{chosen_level} confirmed!')
         elif confirmed_level == 'No':
-            global yz
-            yz = 1
+            level_loop = 1
             print('change decision')
             third_choice()
         else:
@@ -403,7 +409,7 @@ def level_confirmation():
     os.system('cls' if os.name == 'nt' else 'clear')
 
 
-level_confirmation()    
+level_confirmation()
 # hit points are rolled based on the level and class of the character
 
 
@@ -423,12 +429,17 @@ forth_choice("Please press 'Enter' to move on: ")
 
 
 def ability_score_intro():
+    """
+    print a paragraph to the terminal
+    """
     os.system('cls' if os.name == 'nt' else 'clear')
     create_title()
-    print("""\033[38;5;231mnow it's time to calculate your ability scores.
-    You will be shown the sum of 3 d6 rolls,
-    you will then be asked which ability to assign this score to.
-    This will be reapeated 6 times.""")
+    print(
+        "\033[38;5;231mNow it's time to calculate your ability scores. "
+        "You will be shown the sum of 3 d6 rolls, "
+        "you will then be asked which ability to assign this score to. "
+        "This will be reapeated 6 times."
+    )
 
 
 ability_score_intro()
@@ -504,6 +515,9 @@ while "" in your_ability_scores.values():
             your_skills_and_proficiencies['proficency_bonus'] = 6
 
     def calc_mods():
+        """
+        calculate ability score modifiers
+        """
         if your_score % 2 == 0:
             your_ability_scores_modifiers[
                 f'{chosen_ability}'
@@ -587,8 +601,10 @@ while "" in your_ability_scores.values():
         ] = your_ability_scores_modifiers['Charisma']
         calc_prof_mod()
 
-    confirmed_ability = confirm_ability(f'''Are you sure you want to add
-    {your_score} to {chosen_ability}? ''')
+    confirmed_ability = confirm_ability(
+        f'Are you sure you want to add'
+        f' {your_score} to {chosen_ability}? '
+    )
     while confirmed_ability != 'Yes':
         if confirmed_ability == 'Yes':
             calc_mods()
@@ -639,8 +655,10 @@ def sixth_choice():
     os.system('cls' if os.name == 'nt' else 'clear')
     prof = SHEET.worksheet(your_character['Class'])
     create_title()
-    print("""\033[38;5;231mNow we have your ability Scores
-    it's time to Choose 2 proficiancies from the list below: \n""")
+    print(
+        "\033[38;5;231mNow we have your ability Scores"
+        "it's time to Choose 2 proficiancies from the list below: \n"
+    )
     df_prof_info = pd.DataFrame(prof.col_values(26))
     print(f'{df_prof_info.to_string(index=False, header=None)}\n')
     prof_count = 1
@@ -664,18 +682,34 @@ def sixth_choice():
 sixth_choice()
 os.system('cls' if os.name == 'nt' else 'clear')
 create_title()
-print(f'{class_colour}{your_character}\n')
-print(f'{your_ability_scores}\n')
-print(f'{your_ability_scores_modifiers}\n')
-print(f'{your_skills_and_proficiencies}\n')
-
-
-# def find_racial_feats_and_mods():
-
-# os.system('cls' if os.name == 'nt' else 'clear')
-# bonuses_info = SHEET.worksheet(your_character['Race']).get_values('m1:n8')
-# df_racial_feats_info = pd.DataFrame(bonuses_info)
-# print(f'{df_racial_feats_info.to_string(index=False, header=None)}\n')
-
-
-# find_racial_feats_and_mods()
+character_header = ['Your Character', '']
+character_header = ['Your Ability Scores', '']
+character_header = ['Your Modifiers', '']
+character_header = ['Your Saving throws', '']
+character_header = ['Your Skills', '']
+character = tabulate(
+    your_character.items(), headers=character_header, tablefmt='grid'
+)
+abiliity_header = ['Your ability scores', '']
+character_ability = tabulate(
+    your_ability_scores.items(), headers=character_header, tablefmt='grid'
+)
+abiility_mods_header = ['Your ability score modifiers', '']
+character_mods = tabulate(
+    your_ability_scores_modifiers.items(),
+    headers=character_header, tablefmt='grid'
+)
+saving_throws = ['Your ability score modifiers', '']
+character_saves = tabulate(
+    your_ability_saving_throws.items(),
+    headers=character_header, tablefmt='grid'
+)
+prof_header = ['Your skills and profs', '']
+character_prof = tabulate(
+    your_skills_and_proficiencies.items(),
+    headers=character_header, tablefmt='grid'
+)
+print(
+    f'{character}{character_ability}'
+    f'{character_mods}{character_saves}{character_prof}'
+)

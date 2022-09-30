@@ -110,3 +110,20 @@ warlock_col_names2 = ['Cantrips', 'Spells Known', 'Spell Slots', 'Slot Level',
 warlock1 = tabulate(warlock_data1, headers=warlock_col_names1, tablefmt='grid')
 warlock2 = tabulate(warlock_data2, headers=warlock_col_names2, tablefmt='grid')
 Warlock = f'{warlock1}{warlock2}'
+
+
+breath_col_names1 = ['Dragon', 'Damage type', 'Breath Weapon']
+breath_data1 = [
+    ['Black', 'Acid', '5 by 30 ft. line (Dex. save)'],
+    ['Blue', 'Lightning', '5 by 30 ft. line (Dex. save)'],
+    ['Brass', 'Fire', '5 by 30 ft. line (Dex. save)'],
+    ['Bronze', 'Lightning', '5 by 30 ft. line (Dex. save)'],
+    ['Copper', 'Acid', '5 by 30 ft. line (Dex. save)'],
+    ['Gold', 'Fire', '15 ft. cone (Dex. save)'],
+    ['Green', 'Poisen', '15 ft. cone (Con. save)'],
+    ['Red', 'Fire', '15 ft. cone (Dex. save)'],
+    ['Silver', 'Cold', '15 ft. cone (Con. save)'],
+    ['White', 'Cold', '15 ft. cone (Con. save)']
+]
+
+dragonborn = tabulate(breath_data1, headers=breath_col_names1, tablefmt='grid')
