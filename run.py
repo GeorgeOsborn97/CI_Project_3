@@ -239,6 +239,47 @@ race_confirmation()
 #  this acts in the same way as the first function
 
 
+def pull_class_traits(chosen_class):
+    """
+    Pull the relevent racial traits
+    """
+    os.system('cls' if os.name == 'nt' else 'clear')
+    global class_loop
+    try:
+        trait_sheet = SHEET.worksheet(chosen_class)
+        info_count = class_info[f'{chosen_class}']
+        global class_colour
+        class_colour = colour_scheme[f'{chosen_class}']
+        create_title()
+        print(f'{class_colour}{chosen_class}\n'.center(80))
+        global i
+        i = 1
+        while i < info_count:
+            def cycle_info(prompt):
+                global i
+                df_class_info = pd.DataFrame(
+                    trait_sheet.col_values(i)
+                ).iloc[1:2]
+                print(
+                    f'{class_colour}'
+                    f'{df_class_info.to_string(index=False, header=None)}\n'
+                )
+                i += 1
+                return input(prompt)
+            cycle_info('Click enter to cycle through info: ')
+            os.system('cls' if os.name == 'nt' else 'clear')
+            create_title()
+            print(f'{class_colour}{chosen_class}\n'.center(80))
+        class_loop += 1
+
+    except Exception:
+        print(
+            f'{chosen_class}'
+            ' is not a playable class, please select again.'
+        )
+        print(classes_values)
+
+
 def second_choice():
     """
     users second choice
@@ -253,46 +294,6 @@ def second_choice():
         chosen_class = select_class(
             'Type a class here to see their description and abilities: '
         )
-
-        def pull_class_traits(chosen_class):
-            """
-            Pull the relevent racial traits
-            """
-            os.system('cls' if os.name == 'nt' else 'clear')
-            global class_loop
-            try:
-                trait_sheet = SHEET.worksheet(chosen_class)
-                info_count = class_info[f'{chosen_class}']
-                global class_colour
-                class_colour = colour_scheme[f'{chosen_class}']
-                create_title()
-                print(f'{class_colour}{chosen_class}\n'.center(80))
-                global i
-                i = 1
-                while i < info_count:
-                    def cycle_info(prompt):
-                        global i
-                        df_class_info = pd.DataFrame(
-                            trait_sheet.col_values(i)
-                        ).iloc[1:2]
-                        print(
-                            f'{class_colour}'
-                            f'{df_class_info.to_string(index=False, header=None)}\n'
-                        )
-                        i += 1
-                        return input(prompt)
-                    cycle_info('Click enter to cycle through info: ')
-                    os.system('cls' if os.name == 'nt' else 'clear')
-                    create_title()
-                    print(f'{class_colour}{chosen_class}\n'.center(80))
-                class_loop += 1
-
-            except Exception:
-                print(
-                    f'{chosen_class}'
-                    ' is not a playable class, please select again.'
-                )
-                print(classes_values)
 
         pull_class_traits(chosen_class)
 
