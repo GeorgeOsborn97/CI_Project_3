@@ -124,6 +124,49 @@ create_initial_conditions()
 # The users first choice that will define the characters race
 
 
+def pull_racial_traits(chosen_race):
+    """
+    Pull the relevent racial traits
+    """
+    os.system('cls' if os.name == 'nt' else 'clear')
+    try:
+        trait_sheet = SHEET.worksheet(chosen_race)
+        info_count = race_info[f'{chosen_race}']
+        text_colour = colour_scheme[f'{chosen_race}']
+        create_title()
+        print(f'{text_colour}{chosen_race}'.center(80))
+        global i
+        i = 1
+        while i < info_count:
+            def cycle_info(prompt):
+                global i
+                df_race_info = pd.DataFrame(
+                    trait_sheet.col_values(i)
+                ).iloc[1:2]
+                print(
+                    f'{text_colour}'
+                    f'{df_race_info.to_string(index=False, header=None)}\n'
+                )
+                i += 1
+                if i == 10 and chosen_race == 'Dragonborn':
+                    print(dragonborn)
+                return input(prompt)
+            cycle_info('Click enter to cycle through info: ')
+            os.system('cls' if os.name == 'nt' else 'clear')
+            create_title()
+            print(f'{text_colour}{chosen_race}'.center(80))
+        global race_loop
+        race_loop += 1
+
+    except Exception:
+        print(
+            f'{chosen_race} is not a playable Race,'
+            ' please select again.'
+        )
+        df_race = pd.DataFrame(races.row_values(1))
+        print(f'{df_race.to_string(index=False, header=None)}\n')
+
+
 def first_choice():
     """
     users first choice
@@ -139,49 +182,6 @@ def first_choice():
             'Type a race here to see their traits and starting abilities: '
         )
 # connects to google sheets to pull the information about each race
-
-        def pull_racial_traits(chosen_race):
-            """
-            Pull the relevent racial traits
-            """
-            os.system('cls' if os.name == 'nt' else 'clear')
-            try:
-                trait_sheet = SHEET.worksheet(chosen_race)
-                info_count = race_info[f'{chosen_race}']
-                text_colour = colour_scheme[f'{chosen_race}']
-                create_title()
-                print(f'{text_colour}{chosen_race}'.center(80))
-                global i
-                i = 1
-                while i < info_count:
-                    def cycle_info(prompt):
-                        global i
-                        df_race_info = pd.DataFrame(
-                            trait_sheet.col_values(i)
-                        ).iloc[1:2]
-                        print(
-                            f'{text_colour}'
-                            f'{df_race_info.to_string(index=False, header=None)}\n'
-                        )
-                        i += 1
-                        if i == 10 and chosen_race == 'Dragonborn':
-                            print(dragonborn)
-                        return input(prompt)
-                    cycle_info('Click enter to cycle through info: ')
-                    os.system('cls' if os.name == 'nt' else 'clear')
-                    create_title()
-                    print(f'{text_colour}{chosen_race}'.center(80))
-                global race_loop
-                race_loop += 1
-
-            except Exception:
-                print(
-                    f'{chosen_race} is not a playable Race,'
-                    ' please select again.'
-                )
-                df_race = pd.DataFrame(races.row_values(1))
-                print(f'{df_race.to_string(index=False, header=None)}\n')
-
         pull_racial_traits(chosen_race)
 
 
