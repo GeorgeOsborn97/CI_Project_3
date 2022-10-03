@@ -17,8 +17,8 @@ from character_sheet import your_ability_scores
 from character_sheet import your_ability_scores_modifiers
 from character_sheet import your_ability_saving_throws
 from character_sheet import your_skills_and_proficiencies
-from character_sheet import your_feats_and_traits
-from character_sheet import your_spells_and_attacks
+# from character_sheet import your_feats_and_traits
+# from character_sheet import your_spells_and_attacks
 
 
 SCOPE = [
@@ -683,32 +683,28 @@ def sixth_choice():
 sixth_choice()
 os.system('cls' if os.name == 'nt' else 'clear')
 create_title()
-character_header = ['Your Character', '']
-character_header = ['Your Ability Scores', '']
-character_header = ['Your Modifiers', '']
-character_header = ['Your Saving throws', '']
-character_header = ['Your Skills', '']
+character_header1 = ['Your Character', '']
+character_header2 = ['Your Ability Scores', '']
+character_header3 = ['Your Modifiers', '']
+character_header4 = ['Your Saving throws', '']
+character_header5 = ['Your Skills', '']
 character = tabulate(
-    your_character.items(), headers=character_header, tablefmt='grid'
+    your_character.items(), headers=character_header1, tablefmt='grid'
 )
-abiliity_header = ['Your ability scores', '']
 character_ability = tabulate(
-    your_ability_scores.items(), headers=character_header, tablefmt='grid'
+    your_ability_scores.items(), headers=character_header2, tablefmt='grid'
 )
-abiility_mods_header = ['Your ability score modifiers', '']
 character_mods = tabulate(
     your_ability_scores_modifiers.items(),
-    headers=character_header, tablefmt='grid'
+    headers=character_header3, tablefmt='grid'
 )
-saving_throws = ['Your ability score modifiers', '']
 character_saves = tabulate(
     your_ability_saving_throws.items(),
-    headers=character_header, tablefmt='grid'
+    headers=character_header4, tablefmt='grid'
 )
-prof_header = ['Your skills and profs', '']
 character_prof = tabulate(
     your_skills_and_proficiencies.items(),
-    headers=character_header, tablefmt='grid'
+    headers=character_header5, tablefmt='grid'
 )
 print(
     f'{character}{character_ability}'

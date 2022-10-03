@@ -23,7 +23,7 @@ your_ability_saving_throws = {
     'Dexterity': '',
     'Constitution': '',
     'Intellegence': '',
-    'wisdom': '',
+    'Wisdom': '',
     'Charisma': '',
 }
 your_ability_scores_modifiers = {
