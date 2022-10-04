@@ -89,19 +89,29 @@ def hit_dice_roller():
     return sum(sum_dice)
 
 
+RACES = None
+RACE = None
+CLASSES = None
+CLASSES_VALUES = None
+race_loop = None
+class_loop = None
+old_score = None
+spell_loop = None
+
+
 def create_initial_conditions():
     """
     Creates the title and sets a few global variables.
     """
     create_title()
-    global races
-    races = SHEET.worksheet('Races')
-    global race
-    race = races.get_all_values()
-    global classes
-    classes = SHEET.worksheet('Classes')
-    global classes_values
-    classes_values = classes.get_all_values()
+    global RACES
+    RACES = SHEET.worksheet('Races')
+    global RACE
+    RACE = RACES.get_all_values()
+    global CLASSES
+    CLASSES = SHEET.worksheet('Classes')
+    global CLASSES_VALUES
+    CLASSES_VALUES = CLASSES.get_all_values()
     print(
         '\033[38;5;231mWelcome to'
         ' the Dungeons and Drgaons character creator!'.center(80)
@@ -109,7 +119,7 @@ def create_initial_conditions():
     print(
         'To begin please choose from one of the following races.\n'.center(80)
     )
-    df_race = pd.DataFrame(races.row_values(1))
+    df_race = pd.DataFrame(RACES.row_values(1))
     print(f'{df_race.to_string(index=False, header=None)}\n')
     global race_loop
     race_loop = 1
@@ -163,7 +173,7 @@ def pull_racial_traits(chosen_race):
             f'{chosen_race} is not a playable Race,'
             ' please select again.'
         )
-        df_race = pd.DataFrame(races.row_values(1))
+        df_race = pd.DataFrame(RACES.row_values(1))
         print(f'{df_race.to_string(index=False, header=None)}\n')
 
 
@@ -215,7 +225,7 @@ def race_confirmation():
             global race_loop
             race_loop = 1
             print('change decision')
-            df_race = pd.DataFrame(races.row_values(1))
+            df_race = pd.DataFrame(RACES.row_values(1))
             print(f'{df_race.to_string(index=False, header=None)}\n')
             first_choice()
         else:
@@ -230,7 +240,7 @@ def race_confirmation():
         " it's time to pick a class"
     )
     print('Please choose from one of the following classes.\n')
-    df_class = pd.DataFrame(classes.row_values(1))
+    df_class = pd.DataFrame(CLASSES.row_values(1))
     print(f'{df_class.to_string(index=False, header=None)}\n')
 
 
@@ -277,7 +287,8 @@ def pull_class_traits(chosen_class):
             f'{chosen_class}'
             ' is not a playable class, please select again.'
         )
-        print(classes_values)
+        df_class = pd.DataFrame(CLASSES.row_values(1))
+        print(f'{df_class.to_string(index=False, header=None)}\n')
 
 
 def second_choice():
@@ -327,7 +338,7 @@ def class_confirmation():
             global class_loop
             class_loop = 1
             print('change decision')
-            df_class = pd.DataFrame(classes.row_values(1))
+            df_class = pd.DataFrame(CLASSES.row_values(1))
             print(f'{df_class.to_string(index=False, header=None)}\n')
             second_choice()
         else:
@@ -681,32 +692,165 @@ def sixth_choice():
 
 
 sixth_choice()
-os.system('cls' if os.name == 'nt' else 'clear')
-create_title()
-character_header1 = ['Your Character', '']
-character_header2 = ['Your Ability Scores', '']
-character_header3 = ['Your Modifiers', '']
-character_header4 = ['Your Saving throws', '']
-character_header5 = ['Your Skills', '']
-character = tabulate(
-    your_character.items(), headers=character_header1, tablefmt='grid'
-)
-character_ability = tabulate(
-    your_ability_scores.items(), headers=character_header2, tablefmt='grid'
-)
-character_mods = tabulate(
-    your_ability_scores_modifiers.items(),
-    headers=character_header3, tablefmt='grid'
-)
-character_saves = tabulate(
-    your_ability_saving_throws.items(),
-    headers=character_header4, tablefmt='grid'
-)
-character_prof = tabulate(
-    your_skills_and_proficiencies.items(),
-    headers=character_header5, tablefmt='grid'
-)
-print(
-    f'{character}{character_ability}'
-    f'{character_mods}{character_saves}{character_prof}'
-)
+
+
+##############################################################################
+def choose_spells():
+    """
+    Choose spells to add to character sheet
+    """
+    global spell_loop
+    spell_loop = 1
+    global spell_sheet
+    spell_sheet = SHEET.worksheet('Spells')
+    print(
+        'To begin please choose from one of the following spells.\n'.center(80)
+    )
+    df_spell = pd.DataFrame(spell_sheet.col_values(1))
+    print(f'{df_spell.to_string(index=False, header=None)}\n')
+
+
+choose_spells()
+
+
+def pull_spell_traits(chosen_spell):
+    """
+    Pull the relevent racial traits
+    """
+    os.system('cls' if os.name == 'nt' else 'clear')
+    try:
+        create_title()
+        print(f'{chosen_spell}'.center(80))
+        c = 1
+        df_spell_name = None
+        while df_spell_name != f'{chosen_spell}':
+            df_spell = pd.DataFrame(
+                spell_sheet.col_values(1)
+            ).iloc[c]
+            df_spell_name = df_spell.to_string(index=False, header=None)
+            c += 1
+            print('not done')
+        print('DONE')
+        print(c)
+        print(
+            f'{df_spell_name}\n'
+        )
+        df_spell_info = pd.DataFrame(spell_sheet.col_values(2)).iloc[c - 1]
+        df_spell_desc = df_spell_info.to_string(index=False, header=None)
+        print(df_spell_desc)
+        global spell_loop
+        spell_loop += 1
+
+    except Exception:
+        print(
+            f'{chosen_spell} is not a spell,'
+            ' please select again.'
+        )
+        df_spell = pd.DataFrame(spell_sheet.col_values(1))
+        print(f'{df_spell.to_string(index=False, header=None)}\n')
+
+
+def seventh_choice():
+    """
+    users first choice
+    """
+    while spell_loop == 1:
+        def select_spell(prompt):
+            """
+            Return the users chosen race
+            """
+            return input(prompt).capitalize()
+        global chosen_spell
+        chosen_spell = select_spell(
+            'Type a spell here to see their traits and starting abilities: '
+        )
+# connects to google sheets to pull the information about each race
+        pull_spell_traits(chosen_spell)
+
+
+seventh_choice()
+print('past spell choice')
+# The first confirmation that allows the user to confirm their chosen race
+#  or go back and select again
+
+
+# def confirm_race(prompt):
+#    """
+#    get the user to manually confirm or deny the chosen race
+#    """
+#    return input(prompt).capitalize()
+
+
+# def race_confirmation():
+#    """
+#    Test the users input to either move on or allow the user to choose again.
+#    """
+#    os.system('cls' if os.name == 'nt' else 'clear')
+#    confirmed_race = None
+#    while confirmed_race != 'Yes':
+#        confirmed_race = confirm_race(
+#            f'Are you sure you want to choose {chosen_race}?'
+#            ' Please answer "Yes" or "No" '
+#        )
+#        if confirmed_race == 'Yes':
+#            print(f'{chosen_race} confirmed! \n')
+#        elif confirmed_race == 'No':
+#            global race_loop
+#            race_loop = 1
+#            print('change decision')
+#            df_race = pd.DataFrame(RACES.row_values(1))
+#            print(f'{df_race.to_string(index=False, header=None)}\n')
+#            first_choice()
+#        else:
+#            print('Please only type "Yes" or "No".')
+#    os.system('cls' if os.name == 'nt' else 'clear')
+#    your_character['Race'] = chosen_race
+#    print(your_character)
+#    os.system('cls' if os.name == 'nt' else 'clear')
+#    create_title()
+#    print(
+#        "\033[38;5;231mNow that you have chosen a race for your chracter"
+#        " it's time to pick a class"
+#    )
+#    print('Please choose from one of the following classes.\n')
+#    df_class = pd.DataFrame(CLASSES.row_values(1))
+#    print(f'{df_class.to_string(index=False, header=None)}\n')
+
+
+# race_confirmation()
+##############################################################################
+
+
+def final_print():
+    os.system('cls' if os.name == 'nt' else 'clear')
+    create_title()
+    character_header1 = ['Your Character', '']
+    character_header2 = ['Your Ability Scores', '']
+    character_header3 = ['Your Modifiers', '']
+    character_header4 = ['Your Saving throws', '']
+    character_header5 = ['Your Skills', '']
+    character = tabulate(
+        your_character.items(), headers=character_header1, tablefmt='grid'
+    )
+    character_ability = tabulate(
+        your_ability_scores.items(), headers=character_header2, tablefmt='grid'
+    )
+    character_mods = tabulate(
+        your_ability_scores_modifiers.items(),
+        headers=character_header3, tablefmt='grid'
+    )
+    character_saves = tabulate(
+        your_ability_saving_throws.items(),
+        headers=character_header4, tablefmt='grid'
+    )
+    character_prof = tabulate(
+        your_skills_and_proficiencies.items(),
+        headers=character_header5, tablefmt='grid'
+    )
+    print(
+        f'{character}\n{character_ability}\n'
+        f'{character_mods}\n{character_saves}\n{character_prof}\n'.center(80)
+    )
+
+
+#final_print()    
