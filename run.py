@@ -18,7 +18,7 @@ from character_sheet import your_ability_scores_modifiers
 from character_sheet import your_ability_saving_throws
 from character_sheet import your_skills_and_proficiencies
 # from character_sheet import your_feats_and_traits
-# from character_sheet import your_spells_and_attacks
+from character_sheet import your_spells_and_attacks
 
 
 SCOPE = [
@@ -729,12 +729,6 @@ def pull_spell_traits(chosen_spell):
             ).iloc[c]
             df_spell_name = df_spell.to_string(index=False, header=None)
             c += 1
-            print('not done')
-        print('DONE')
-        print(c)
-        print(
-            f'{df_spell_name}\n'
-        )
         df_spell_info = pd.DataFrame(spell_sheet.col_values(2)).iloc[c - 1]
         df_spell_desc = df_spell_info.to_string(index=False, header=None)
         print(df_spell_desc)
@@ -774,50 +768,39 @@ print('past spell choice')
 #  or go back and select again
 
 
-# def confirm_race(prompt):
-#    """
-#    get the user to manually confirm or deny the chosen race
-#    """
-#    return input(prompt).capitalize()
+def confirm_spell(prompt):
+    """
+    get the user to manually confirm or deny the chosen race
+    """
+    return input(prompt).capitalize()
 
 
-# def race_confirmation():
-#    """
-#    Test the users input to either move on or allow the user to choose again.
-#    """
-#    os.system('cls' if os.name == 'nt' else 'clear')
-#    confirmed_race = None
-#    while confirmed_race != 'Yes':
-#        confirmed_race = confirm_race(
-#            f'Are you sure you want to choose {chosen_race}?'
-#            ' Please answer "Yes" or "No" '
-#        )
-#        if confirmed_race == 'Yes':
-#            print(f'{chosen_race} confirmed! \n')
-#        elif confirmed_race == 'No':
-#            global race_loop
-#            race_loop = 1
-#            print('change decision')
-#            df_race = pd.DataFrame(RACES.row_values(1))
-#            print(f'{df_race.to_string(index=False, header=None)}\n')
-#            first_choice()
-#        else:
-#            print('Please only type "Yes" or "No".')
-#    os.system('cls' if os.name == 'nt' else 'clear')
-#    your_character['Race'] = chosen_race
-#    print(your_character)
-#    os.system('cls' if os.name == 'nt' else 'clear')
-#    create_title()
-#    print(
-#        "\033[38;5;231mNow that you have chosen a race for your chracter"
-#        " it's time to pick a class"
-#    )
-#    print('Please choose from one of the following classes.\n')
-#    df_class = pd.DataFrame(CLASSES.row_values(1))
-#    print(f'{df_class.to_string(index=False, header=None)}\n')
+def spell_confirmation():
+    """
+    Test the users input to either move on or allow the user to choose again.
+    """
+    confirmed_spell = None
+    while confirmed_spell != 'Yes':
+        confirmed_spell = confirm_spell(
+            f'Are you sure you want to choose {chosen_spell}?'
+            ' Please answer "Yes" or "No" '
+        )
+        if confirmed_spell == 'Yes':
+            print(f'{chosen_spell} confirmed! \n')
+        elif confirmed_spell == 'No':
+            global spell_loop
+            spell_loop = 1
+            print('change decision')
+            df_spell = pd.DataFrame(spell_sheet.col_values(1))
+            print(f'{df_spell.to_string(index=False, header=None)}\n')
+            seventh_choice()
+        else:
+            print('Please only type "Yes" or "No".')
+    your_spells_and_attacks['cantrips'].append(chosen_spell)
+    print(your_spells_and_attacks)
 
 
-# race_confirmation()
+spell_confirmation()
 ##############################################################################
 
 
