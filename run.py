@@ -12,7 +12,7 @@ from class_info import class_info
 from class_info import race_info
 from class_info import colour_scheme
 from class_info import dragonborn
-from class_info import warlock_data2
+from class_info import warlock_spell_data
 from character_sheet import your_character
 from character_sheet import your_ability_scores
 from character_sheet import your_ability_scores_modifiers
@@ -105,10 +105,10 @@ def create_initial_conditions():
     Creates the title and sets a few global variables.
     """
     create_title()
-    warlock_spell = pd.DataFrame.from_dict(warlock_data2) 
-    cantrip_count = warlock_spell.iloc[1, 5]
-    print(warlock_spell) 
-    print(cantrip_count)
+   # warlock_spell = pd.DataFrame.from_dict(warlock_data2) 
+   # cantrip_count = warlock_spell.iloc[1, 5]
+   # print(warlock_spell) 
+   # print(cantrip_count)
     global RACES
     RACES = SHEET.worksheet('Races')
     global RACE
@@ -514,6 +514,9 @@ while "" in your_ability_scores.values():
         return input(prompt).capitalize()
 
     def calc_prof_mod():
+        """
+        calculate ability score modifiers 
+        """
         if int(your_character['Level']) <= 4:
             your_skills_and_proficiencies['proficency_bonus'] = 2
         elif int(your_character[
@@ -746,75 +749,75 @@ def pull_cantrip_traits(chosen_cantrip):
         print(f'{df_cantrip.to_string(index=False, header=None)}\n')
 
 
-warlock_spell = pd.DataFrame(warlock2)
-cantrip_count = warlock_spell.loc[warlock_spell["Level"] == your_character['Level'], "Cantrips"]
+warlock_spell = pd.DataFrame.from_dict(warlock_spell_data)
+cantrip_count = warlock_spell.iloc[1, int(your_character['Level'])]
+print(warlock_spell)
 print(cantrip_count)
 
+cantrips_chosen = 0
+while cantrips_chosen != cantrip_count:
+    def seventh_choice():
+        """
+        users first choice
+        """
+        choose_cantrips()
+        while cantrip_loop == 1:
+            def select_cantrip(prompt):
+                """
+                Return the users chosen race
+                """
+                return input(prompt).capitalize()
+            global chosen_cantrip
+            chosen_cantrip = select_cantrip(
+                'Type a spell here to see their traits and starting abilities: '
+            )
+            pull_cantrip_traits(chosen_cantrip)
 
-def seventh_choice():
-    """
-    users first choice
-    """
-    choose_cantrips()
-    while cantrip_loop == 1:
-        def select_cantrip(prompt):
-            """
-            Return the users chosen race
-            """
-            return input(prompt).capitalize()
-        global chosen_cantrip
-        chosen_cantrip = select_cantrip(
-            'Type a spell here to see their traits and starting abilities: '
-        )
-        pull_cantrip_traits(chosen_cantrip)
+    if your_character['Class'] in ['Barbarian', 'Rogue', 'Fighter', 'Monk']:
+        print('no spells')
+    elif your_character['Class'] in [
+        'Bard', 'Cleric', 'Druid', 'Paladin', 'Sorcerer', 'Warlock', 'Wizard'
+    ]:
+        seventh_choice()
 
+    def confirm_cantrip(prompt):
+        """
+        get the user to manually confirm or deny the chosen race
+        """
+        return input(prompt).capitalize()
 
-if your_character['Class'] in ['Barbarian', 'Rogue', 'Fighter', 'Monk']:
-    print('no spells')
-elif your_character['Class'] in [
-    'Bard', 'Cleric', 'Druid', 'Paladin', 'Sorcerer', 'Warlock', 'Wizard'
-]:
-    seventh_choice()
+    def cantrip_confirmation():
+        """
+        Test the users input to either move on or allow the user to choose again.
+        """
+        confirmed_cantrip = None
+        while confirmed_cantrip != 'Yes':
+            confirmed_cantrip = confirm_cantrip(
+                f'Are you sure you want to choose {chosen_cantrip}?'
+                ' Please answer "Yes" or "No" '
+            )
+            if confirmed_cantrip == 'Yes':
+                print(f'{chosen_cantrip} confirmed! \n')
+                global cantrips_chosen
+                cantrips_chosen += 1
+            elif confirmed_cantrip == 'No':
+                global cantrip_loop
+                cantrip_loop = 1
+                print('change decision')
+                df_cantrip = pd.DataFrame(spell_sheet.col_values(1))
+                print(f'{df_cantrip.to_string(index=False, header=None)}\n')
+                seventh_choice()
+            else:
+                print('Please only type "Yes" or "No".')
+        your_spells_and_attacks['cantrips'].append(chosen_cantrip)
+        print(your_spells_and_attacks)
 
-
-def confirm_cantrip(prompt):
-    """
-    get the user to manually confirm or deny the chosen race
-    """
-    return input(prompt).capitalize()
-
-
-def cantrip_confirmation():
-    """
-    Test the users input to either move on or allow the user to choose again.
-    """
-    confirmed_cantrip = None
-    while confirmed_cantrip != 'Yes':
-        confirmed_cantrip = confirm_cantrip(
-            f'Are you sure you want to choose {chosen_cantrip}?'
-            ' Please answer "Yes" or "No" '
-        )
-        if confirmed_cantrip == 'Yes':
-            print(f'{chosen_cantrip} confirmed! \n')
-        elif confirmed_cantrip == 'No':
-            global cantrip_loop
-            cantrip_loop = 1
-            print('change decision')
-            df_cantrip = pd.DataFrame(spell_sheet.col_values(1))
-            print(f'{df_cantrip.to_string(index=False, header=None)}\n')
-            seventh_choice()
-        else:
-            print('Please only type "Yes" or "No".')
-    your_spells_and_attacks['cantrips'].append(chosen_cantrip)
-    print(your_spells_and_attacks)
-
-
-if your_character['Class'] in ['Barbarian', 'Rogue', 'Fighter', 'Monk']:
-    print('you have no spells')
-elif your_character['Class'] in [
-    'Bard', 'Cleric', 'Druid', 'Paladin', 'Sorcerer', 'Warlock', 'Wizard'
-]:      
-    cantrip_confirmation()
+    if your_character['Class'] in ['Barbarian', 'Rogue', 'Fighter', 'Monk']:
+        print('you have no spells')
+    elif your_character['Class'] in [
+        'Bard', 'Cleric', 'Druid', 'Paladin', 'Sorcerer', 'Warlock', 'Wizard'
+    ]:      
+        cantrip_confirmation()
 ##############################################################################
 
 
