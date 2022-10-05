@@ -710,9 +710,6 @@ def choose_spells():
     print(f'{df_spell.to_string(index=False, header=None)}\n')
 
 
-choose_spells()
-
-
 def pull_spell_traits(chosen_spell):
     """
     Pull the relevent racial traits
@@ -748,6 +745,7 @@ def seventh_choice():
     """
     users first choice
     """
+    choose_spells()
     while spell_loop == 1:
         def select_spell(prompt):
             """
@@ -758,14 +756,13 @@ def seventh_choice():
         chosen_spell = select_spell(
             'Type a spell here to see their traits and starting abilities: '
         )
-# connects to google sheets to pull the information about each race
         pull_spell_traits(chosen_spell)
 
 
-seventh_choice()
-print('past spell choice')
-# The first confirmation that allows the user to confirm their chosen race
-#  or go back and select again
+if your_character['Class'] in ['Barbarian', 'Rogue', 'Fighter', 'Monk']:
+    print('no spells')
+elif your_character['Class'] in ['Bard', 'Cleric', 'Druid', 'Paladin', 'Sorcerer', 'Warlock', 'Wizard']:
+    seventh_choice()
 
 
 def confirm_spell(prompt):
@@ -800,7 +797,10 @@ def spell_confirmation():
     print(your_spells_and_attacks)
 
 
-spell_confirmation()
+if your_character['Class'] in ['Barbarian', 'Rogue', 'Fighter', 'Monk']:
+    print('you have no spells')
+elif your_character['Class'] in ['Bard', 'Cleric', 'Druid', 'Paladin', 'Sorcerer', 'Warlock', 'Wizard']:      
+    spell_confirmation()
 ##############################################################################
 
 
@@ -836,4 +836,4 @@ def final_print():
     )
 
 
-#final_print()    
+# final_print()    
