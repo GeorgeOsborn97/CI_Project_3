@@ -12,6 +12,7 @@ from class_info import class_info
 from class_info import race_info
 from class_info import colour_scheme
 from class_info import dragonborn
+from class_info import warlock_data2
 from character_sheet import your_character
 from character_sheet import your_ability_scores
 from character_sheet import your_ability_scores_modifiers
@@ -96,7 +97,7 @@ CLASSES_VALUES = None
 race_loop = None
 class_loop = None
 old_score = None
-spell_loop = None
+cantrip_loop = None
 
 
 def create_initial_conditions():
@@ -104,6 +105,10 @@ def create_initial_conditions():
     Creates the title and sets a few global variables.
     """
     create_title()
+    warlock_spell = pd.DataFrame.from_dict(warlock_data2) 
+    cantrip_count = warlock_spell.iloc[1, 5]
+    print(warlock_spell) 
+    print(cantrip_count)
     global RACES
     RACES = SHEET.worksheet('Races')
     global RACE
@@ -695,112 +700,121 @@ sixth_choice()
 
 
 ##############################################################################
-def choose_spells():
+def choose_cantrips():
     """
     Choose spells to add to character sheet
     """
-    global spell_loop
-    spell_loop = 1
+    global cantrip_loop
+    cantrip_loop = 1
     global spell_sheet
     spell_sheet = SHEET.worksheet('Spells')
     print(
         'To begin please choose from one of the following spells.\n'.center(80)
     )
-    df_spell = pd.DataFrame(spell_sheet.col_values(1))
-    print(f'{df_spell.to_string(index=False, header=None)}\n')
+    df_cantrip = pd.DataFrame(spell_sheet.col_values(1))
+    print(f'{df_cantrip.to_string(index=False, header=None)}\n')
 
 
-def pull_spell_traits(chosen_spell):
+def pull_cantrip_traits(chosen_cantrip):
     """
     Pull the relevent racial traits
     """
     os.system('cls' if os.name == 'nt' else 'clear')
     try:
         create_title()
-        print(f'{chosen_spell}'.center(80))
+        print(f'{chosen_cantrip}'.center(80))
         c = 1
-        df_spell_name = None
-        while df_spell_name != f'{chosen_spell}':
-            df_spell = pd.DataFrame(
+        df_cantrip_name = None
+        while df_cantrip_name != f'{chosen_cantrip}':
+            df_cantrip = pd.DataFrame(
                 spell_sheet.col_values(1)
             ).iloc[c]
-            df_spell_name = df_spell.to_string(index=False, header=None)
+            df_cantrip_name = df_cantrip.to_string(index=False, header=None)
             c += 1
-        df_spell_info = pd.DataFrame(spell_sheet.col_values(2)).iloc[c - 1]
-        df_spell_desc = df_spell_info.to_string(index=False, header=None)
-        print(df_spell_desc)
-        global spell_loop
-        spell_loop += 1
+        df_cantrip_info = pd.DataFrame(spell_sheet.col_values(2)).iloc[c - 1]
+        df_cantrip_desc = df_cantrip_info.to_string(index=False, header=None)
+        print(df_cantrip_desc)
+        global cantrip_loop
+        cantrip_loop += 1
 
     except Exception:
         print(
-            f'{chosen_spell} is not a spell,'
+            f'{chosen_cantrip} is not a cantrip,'
             ' please select again.'
         )
-        df_spell = pd.DataFrame(spell_sheet.col_values(1))
-        print(f'{df_spell.to_string(index=False, header=None)}\n')
+        df_cantrip = pd.DataFrame(spell_sheet.col_values(1))
+        print(f'{df_cantrip.to_string(index=False, header=None)}\n')
+
+
+warlock_spell = pd.DataFrame(warlock2)
+cantrip_count = warlock_spell.loc[warlock_spell["Level"] == your_character['Level'], "Cantrips"]
+print(cantrip_count)
 
 
 def seventh_choice():
     """
     users first choice
     """
-    choose_spells()
-    while spell_loop == 1:
-        def select_spell(prompt):
+    choose_cantrips()
+    while cantrip_loop == 1:
+        def select_cantrip(prompt):
             """
             Return the users chosen race
             """
             return input(prompt).capitalize()
-        global chosen_spell
-        chosen_spell = select_spell(
+        global chosen_cantrip
+        chosen_cantrip = select_cantrip(
             'Type a spell here to see their traits and starting abilities: '
         )
-        pull_spell_traits(chosen_spell)
+        pull_cantrip_traits(chosen_cantrip)
 
 
 if your_character['Class'] in ['Barbarian', 'Rogue', 'Fighter', 'Monk']:
     print('no spells')
-elif your_character['Class'] in ['Bard', 'Cleric', 'Druid', 'Paladin', 'Sorcerer', 'Warlock', 'Wizard']:
+elif your_character['Class'] in [
+    'Bard', 'Cleric', 'Druid', 'Paladin', 'Sorcerer', 'Warlock', 'Wizard'
+]:
     seventh_choice()
 
 
-def confirm_spell(prompt):
+def confirm_cantrip(prompt):
     """
     get the user to manually confirm or deny the chosen race
     """
     return input(prompt).capitalize()
 
 
-def spell_confirmation():
+def cantrip_confirmation():
     """
     Test the users input to either move on or allow the user to choose again.
     """
-    confirmed_spell = None
-    while confirmed_spell != 'Yes':
-        confirmed_spell = confirm_spell(
-            f'Are you sure you want to choose {chosen_spell}?'
+    confirmed_cantrip = None
+    while confirmed_cantrip != 'Yes':
+        confirmed_cantrip = confirm_cantrip(
+            f'Are you sure you want to choose {chosen_cantrip}?'
             ' Please answer "Yes" or "No" '
         )
-        if confirmed_spell == 'Yes':
-            print(f'{chosen_spell} confirmed! \n')
-        elif confirmed_spell == 'No':
-            global spell_loop
-            spell_loop = 1
+        if confirmed_cantrip == 'Yes':
+            print(f'{chosen_cantrip} confirmed! \n')
+        elif confirmed_cantrip == 'No':
+            global cantrip_loop
+            cantrip_loop = 1
             print('change decision')
-            df_spell = pd.DataFrame(spell_sheet.col_values(1))
-            print(f'{df_spell.to_string(index=False, header=None)}\n')
+            df_cantrip = pd.DataFrame(spell_sheet.col_values(1))
+            print(f'{df_cantrip.to_string(index=False, header=None)}\n')
             seventh_choice()
         else:
             print('Please only type "Yes" or "No".')
-    your_spells_and_attacks['cantrips'].append(chosen_spell)
+    your_spells_and_attacks['cantrips'].append(chosen_cantrip)
     print(your_spells_and_attacks)
 
 
 if your_character['Class'] in ['Barbarian', 'Rogue', 'Fighter', 'Monk']:
     print('you have no spells')
-elif your_character['Class'] in ['Bard', 'Cleric', 'Druid', 'Paladin', 'Sorcerer', 'Warlock', 'Wizard']:      
-    spell_confirmation()
+elif your_character['Class'] in [
+    'Bard', 'Cleric', 'Druid', 'Paladin', 'Sorcerer', 'Warlock', 'Wizard'
+]:      
+    cantrip_confirmation()
 ##############################################################################
 
 
