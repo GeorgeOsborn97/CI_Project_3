@@ -811,7 +811,8 @@ def pull_cantrip_traits(chosen_cantrip):
         df_cantrip = df_cantrip_col
         print(f'{df_cantrip.to_string(index=False, header=None)}\n')
 
-
+if your_character['Class'] in ['Barbarian', 'Rogue', 'Fighter', 'Monk']:
+    cantrip_count = 0
 cantrips_chosen = 0
 while cantrips_chosen != cantrip_count:
     def seventh_choice():
@@ -958,7 +959,8 @@ elif your_character['Class'] in [
 ]:
     find_spell_list()
 
-
+if your_character['Class'] in ['Barbarian', 'Rogue', 'Fighter', 'Monk']:
+    total_spell_count = 0
 global total_chosen_spell
 total_chosen_spell = 0
 while total_chosen_spell != total_spell_count:
