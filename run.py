@@ -13,6 +13,7 @@ from class_info import race_info
 from class_info import colour_scheme
 from class_info import dragonborn
 from class_info import warlock_spell_data
+from class_info import bard_spell_data
 from character_sheet import your_character
 from character_sheet import your_ability_scores
 from character_sheet import your_ability_scores_modifiers
@@ -703,18 +704,52 @@ sixth_choice()
 
 
 ##############################################################################
+# place into a def, build spell dicts for all classes if 
+# your_character['class'] = x spell_list = y, cantrip_count
+#  = spell_list.iloc[1, int(your_character['level'])]
+
+
+def find_spell_list():
+    global cantrip_count
+    cantrip_count = None
+    global df_cantrip_col
+    df_cantrip_col = None
+    global df_cantrip_info_col
+    df_cantrip_info_col = None
+    global spell_sheet
+    spell_sheet = SHEET.worksheet('Spells')
+
+    if your_character['Class'] == 'Warlock':
+        your_spell_list = pd.DataFrame.from_dict(warlock_spell_data)
+        cantrip_count = your_spell_list.iloc[1, int(your_character['Level'])]
+
+        df_cantrip_col = pd.DataFrame(spell_sheet.col_values(11))
+
+        df_cantrip_info_col = pd.DataFrame(spell_sheet.col_values(12))
+
+    elif your_character['class'] == 'Bard':
+        your_spell_list = pd.DataFrame.from_dict(bard_spell_data)
+        cantrip_count = your_spell_list.iloc[1, int(your_character['Level'])]    
+        df_cantrip_col = pd.DataFrame(spell_sheet.col_values(1))
+
+        df_cantrip_info_col = pd.DataFrame(spell_sheet.col_values(2))
+    print(your_spell_list)
+    print(cantrip_count)
+
+
+find_spell_list()
+
+
 def choose_cantrips():
     """
     Choose spells to add to character sheet
     """
     global cantrip_loop
     cantrip_loop = 1
-    global spell_sheet
-    spell_sheet = SHEET.worksheet('Spells')
     print(
         'To begin please choose from one of the following spells.\n'.center(80)
     )
-    df_cantrip = pd.DataFrame(spell_sheet.col_values(1))
+    df_cantrip = df_cantrip_col
     print(f'{df_cantrip.to_string(index=False, header=None)}\n')
 
 
@@ -728,13 +763,13 @@ def pull_cantrip_traits(chosen_cantrip):
         print(f'{chosen_cantrip}'.center(80))
         c = 1
         df_cantrip_name = None
+        print('in the try')
         while df_cantrip_name != f'{chosen_cantrip}':
-            df_cantrip = pd.DataFrame(
-                spell_sheet.col_values(1)
-            ).iloc[c]
+            print('in the while')
+            df_cantrip = df_cantrip_col.iloc[c]
             df_cantrip_name = df_cantrip.to_string(index=False, header=None)
             c += 1
-        df_cantrip_info = pd.DataFrame(spell_sheet.col_values(2)).iloc[c - 1]
+        df_cantrip_info = df_cantrip_info_col.iloc[c - 1]
         df_cantrip_desc = df_cantrip_info.to_string(index=False, header=None)
         print(df_cantrip_desc)
         global cantrip_loop
@@ -745,14 +780,9 @@ def pull_cantrip_traits(chosen_cantrip):
             f'{chosen_cantrip} is not a cantrip,'
             ' please select again.'
         )
-        df_cantrip = pd.DataFrame(spell_sheet.col_values(1))
+        df_cantrip = df_cantrip_col
         print(f'{df_cantrip.to_string(index=False, header=None)}\n')
 
-
-warlock_spell = pd.DataFrame.from_dict(warlock_spell_data)
-cantrip_count = warlock_spell.iloc[1, int(your_character['Level'])]
-print(warlock_spell)
-print(cantrip_count)
 
 cantrips_chosen = 0
 while cantrips_chosen != cantrip_count:
@@ -769,7 +799,7 @@ while cantrips_chosen != cantrip_count:
                 return input(prompt).capitalize()
             global chosen_cantrip
             chosen_cantrip = select_cantrip(
-                'Type a spell here to see their traits and starting abilities: '
+                'Type a spell here: '
             )
             pull_cantrip_traits(chosen_cantrip)
 
@@ -788,7 +818,8 @@ while cantrips_chosen != cantrip_count:
 
     def cantrip_confirmation():
         """
-        Test the users input to either move on or allow the user to choose again.
+        Test the users input to either move on or 
+        allow the user to choose again.
         """
         confirmed_cantrip = None
         while confirmed_cantrip != 'Yes':
@@ -804,7 +835,7 @@ while cantrips_chosen != cantrip_count:
                 global cantrip_loop
                 cantrip_loop = 1
                 print('change decision')
-                df_cantrip = pd.DataFrame(spell_sheet.col_values(1))
+                df_cantrip = df_cantrip_col
                 print(f'{df_cantrip.to_string(index=False, header=None)}\n')
                 seventh_choice()
             else:
