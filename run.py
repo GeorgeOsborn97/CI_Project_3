@@ -704,12 +704,15 @@ sixth_choice()
 
 
 ##############################################################################
-# place into a def, build spell dicts for all classes if 
+# place into a def, build spell dicts for all classes if
 # your_character['class'] = x spell_list = y, cantrip_count
 #  = spell_list.iloc[1, int(your_character['level'])]
 
 
-def find_spell_list():
+def find_cantrip_list():
+    """
+    Find the correct dictionary for the chosen class 
+    """
     global cantrip_count
     cantrip_count = None
     global df_cantrip_col
@@ -717,27 +720,52 @@ def find_spell_list():
     global df_cantrip_info_col
     df_cantrip_info_col = None
     global spell_sheet
-    spell_sheet = SHEET.worksheet('Spells')
-
-    if your_character['Class'] == 'Warlock':
+    spell_sheet = SHEET.worksheet('Cantrips')
+    if your_character['Class'] == 'Bard':
+        your_spell_list = pd.DataFrame.from_dict(bard_spell_data)
+        cantrip_count = your_spell_list.iloc[0, int(your_character['Level']) - 1]    
+        df_cantrip_col = pd.DataFrame(spell_sheet.col_values(1))
+        df_cantrip_info_col = pd.DataFrame(spell_sheet.col_values(2))
+    elif your_character['Class'] == 'Cleric':
         your_spell_list = pd.DataFrame.from_dict(warlock_spell_data)
         cantrip_count = your_spell_list.iloc[1, int(your_character['Level'])]
-
+        df_cantrip_col = pd.DataFrame(spell_sheet.col_values(3))
+        df_cantrip_info_col = pd.DataFrame(spell_sheet.col_values(4))
+    elif your_character['Class'] == 'Druid':
+        your_spell_list = pd.DataFrame.from_dict(warlock_spell_data)
+        cantrip_count = your_spell_list.iloc[1, int(your_character['Level'])]
+        df_cantrip_col = pd.DataFrame(spell_sheet.col_values(5))
+        df_cantrip_info_col = pd.DataFrame(spell_sheet.col_values(6))
+    elif your_character['Class'] == 'Paladin':
+        your_spell_list = pd.DataFrame.from_dict(warlock_spell_data)
+        cantrip_count = your_spell_list.iloc[1, int(your_character['Level'])]
+        df_cantrip_col = pd.DataFrame(spell_sheet.col_values(7))
+        df_cantrip_info_col = pd.DataFrame(spell_sheet.col_values(8))
+    elif your_character['Class'] == 'Sorcerer':
+        your_spell_list = pd.DataFrame.from_dict(warlock_spell_data)
+        cantrip_count = your_spell_list.iloc[1, int(your_character['Level'])]
+        df_cantrip_col = pd.DataFrame(spell_sheet.col_values(9))
+        df_cantrip_info_col = pd.DataFrame(spell_sheet.col_values(10))                
+    elif your_character['Class'] == 'Warlock':
+        your_spell_list = pd.DataFrame.from_dict(warlock_spell_data)
+        cantrip_count = your_spell_list.iloc[1, int(your_character['Level'])]
         df_cantrip_col = pd.DataFrame(spell_sheet.col_values(11))
-
         df_cantrip_info_col = pd.DataFrame(spell_sheet.col_values(12))
-
-    elif your_character['class'] == 'Bard':
-        your_spell_list = pd.DataFrame.from_dict(bard_spell_data)
-        cantrip_count = your_spell_list.iloc[1, int(your_character['Level'])]    
-        df_cantrip_col = pd.DataFrame(spell_sheet.col_values(1))
-
-        df_cantrip_info_col = pd.DataFrame(spell_sheet.col_values(2))
+    elif your_character['Class'] == 'Wizard':
+        your_spell_list = pd.DataFrame.from_dict(warlock_spell_data)
+        cantrip_count = your_spell_list.iloc[1, int(your_character['Level'])]
+        df_cantrip_col = pd.DataFrame(spell_sheet.col_values(13))
+        df_cantrip_info_col = pd.DataFrame(spell_sheet.col_values(14))    
     print(your_spell_list)
     print(cantrip_count)
 
 
-find_spell_list()
+if your_character['Class'] in ['Barbarian', 'Rogue', 'Fighter', 'Monk']:
+    print('no spells')
+elif your_character['Class'] in [
+    'Bard', 'Cleric', 'Druid', 'Paladin', 'Sorcerer', 'Warlock', 'Wizard'
+]:
+    find_cantrip_list()
 
 
 def choose_cantrips():
@@ -850,6 +878,209 @@ while cantrips_chosen != cantrip_count:
     ]:      
         cantrip_confirmation()
 ##############################################################################
+##############################################################################
+# place into a def, build spell dicts for all classes if
+# your_character['class'] = x spell_list = y, cantrip_count
+#  = spell_list.iloc[1, int(your_character['level'])]
+
+
+def find_spell_list():
+    """
+    Find the correct dictionary for the chosen class 
+    """
+    global spell_count
+    spell_count = None
+    global df_spell_col
+    df_spell_col = None
+    global df_spell_info_col
+    df_spell_info_col = None
+    global levelled_spells_allowed
+    levelled_spells_allowed = 4
+    global Total_spell_count
+    Total_spell_count = None
+    global spell_row_name
+    spell_row_name = None
+    global spell_row_desc
+    spell_row_desc = None
+    global spell_sheet
+    spell_sheet = SHEET.worksheet('Spells')
+    if your_character['Class'] == 'Bard':
+        spell_row_name = 1
+        spell_row_desc = 2
+        your_spell_list = pd.DataFrame.from_dict(bard_spell_data)
+        Total_spell_count = your_spell_list.iloc[1, int(your_character['Level']) - 1]
+        spell_count = your_spell_list.iloc[levelled_spells_allowed, int(your_character['Level']) - 1]    
+        df_spell_col = pd.DataFrame(spell_sheet.row_values(spell_row_name))
+        df_spell_info_col = pd.DataFrame(spell_sheet.row_values(spell_row_desc))
+    elif your_character['Class'] == 'Cleric':
+        your_spell_list = pd.DataFrame.from_dict(warlock_spell_data)
+        spell_count = your_spell_list.iloc[1, int(your_character['Level'])]
+        df_spell_col = pd.DataFrame(spell_sheet.col_values(3))
+        df_spell_info_col = pd.DataFrame(spell_sheet.col_values(4))
+    elif your_character['Class'] == 'Druid':
+        your_spell_list = pd.DataFrame.from_dict(warlock_spell_data)
+        spell_count = your_spell_list.iloc[1, int(your_character['Level'])]
+        df_spell_col = pd.DataFrame(spell_sheet.col_values(5))
+        df_spell_info_col = pd.DataFrame(spell_sheet.col_values(6))
+    elif your_character['Class'] == 'Paladin':
+        your_spell_list = pd.DataFrame.from_dict(warlock_spell_data)
+        spell_count = your_spell_list.iloc[1, int(your_character['Level'])]
+        df_spell_col = pd.DataFrame(spell_sheet.col_values(7))
+        df_spell_info_col = pd.DataFrame(spell_sheet.col_values(8))
+    elif your_character['Class'] == 'Sorcerer':
+        your_spell_list = pd.DataFrame.from_dict(warlock_spell_data)
+        spell_count = your_spell_list.iloc[1, int(your_character['Level'])]
+        df_spell_col = pd.DataFrame(spell_sheet.col_values(9))
+        df_spell_info_col = pd.DataFrame(spell_sheet.col_values(10))                
+    elif your_character['Class'] == 'Warlock':
+        spell_row_name = 11
+        spell_row_desc = 12
+        your_spell_list = pd.DataFrame.from_dict(bard_spell_data)
+        Total_spell_count = your_spell_list.iloc[1, int(your_character['Level']) - 1]
+        spell_count = your_spell_list.iloc[levelled_spells_allowed, int(your_character['Level']) - 1]    
+        df_spell_col = pd.DataFrame(spell_sheet.row_values(spell_row_name))
+        df_spell_info_col = pd.DataFrame(spell_sheet.row_values(spell_row_desc))
+    elif your_character['Class'] == 'Wizard':
+        your_spell_list = pd.DataFrame.from_dict(warlock_spell_data)
+        spell_count = your_spell_list.iloc[1, int(your_character['Level']) - 1]
+        df_spell_col = pd.DataFrame(spell_sheet.col_values(13))
+        df_spell_info_col = pd.DataFrame(spell_sheet.col_values(14))    
+
+
+if your_character['Class'] in ['Barbarian', 'Rogue', 'Fighter', 'Monk']:
+    print('no spells')
+elif your_character['Class'] in [
+    'Bard', 'Cleric', 'Druid', 'Paladin', 'Sorcerer', 'Warlock', 'Wizard'
+]:
+    find_spell_list()
+
+
+global Total_chosen_spell
+total_chosen_spell = 0
+while total_chosen_spell != Total_spell_count:
+
+    def choose_spell():
+        """
+        Choose spells to add to character sheet
+        """
+        global spell_loop
+        spell_loop = 1
+        print(
+            'To begin please choose from one of the following spells.\n'.center(80)
+        )
+        df_spell = df_spell_col
+        print(f'{df_spell.to_string(index=False, header=None)}\n')
+
+    def pull_spell_traits(chosen_spell):
+        """
+        Pull the relevent racial traits
+        """
+        os.system('cls' if os.name == 'nt' else 'clear')
+        try:
+            create_title()
+            print(f'{chosen_spell}'.center(80))
+            c = 0
+            df_spell_name = None
+            print('in the try')
+            while df_spell_name != f'{chosen_spell}':
+                print('in the while')
+                df_spell = df_spell_col.iloc[c]
+                df_spell_name = df_spell.to_string(index=False, header=None)
+                c += 1
+            df_spell_info = df_spell_info_col.iloc[c - 1]
+            df_spell_desc = df_spell_info.to_string(index=False, header=None)
+            print(df_spell_desc)
+            global spell_loop
+            spell_loop += 1
+
+        except Exception:
+            print(
+                f'{chosen_spell} is not a cantrip,'
+                ' please select again.'
+            )
+            df_spell = df_spell_col
+            print(f'{df_spell.to_string(index=False, header=None)}\n')
+
+    spell_chosen = 0
+    while spell_chosen != spell_count:
+        def eighth_choice():
+            """
+            users first choice
+            """
+            choose_spell()
+            while spell_loop == 1:
+                def select_spell(prompt):
+                    """
+                    Return the users chosen race
+                    """
+                    return input(prompt).capitalize()
+                global chosen_spell
+                chosen_spell = select_spell(
+                    'Type a spell here: '
+                )
+                pull_spell_traits(chosen_spell)
+
+        if your_character['Class'] in [
+            'Barbarian', 'Rogue', 'Fighter', 'Monk'
+        ]:
+            print('no spells')
+        elif your_character['Class'] in [
+            'Bard', 'Cleric', 'Druid', 'Paladin',
+            'Sorcerer', 'Warlock', 'Wizard'
+        ]:
+            eighth_choice()
+
+        def confirm_spell(prompt):
+            """
+            get the user to manually confirm or deny the chosen race
+            """
+            return input(prompt).capitalize()
+
+        def spell_confirmation():
+            """
+            Test the users input to either move on or 
+            allow the user to choose again.
+            """
+            confirmed_spell = None
+            while confirmed_spell != 'Yes':
+                confirmed_spell = confirm_spell(
+                    f'Are you sure you want to choose {chosen_spell}?'
+                    ' Please answer "Yes" or "No" '
+                )
+                if confirmed_spell == 'Yes':
+                    print(f'{chosen_spell} confirmed! \n')
+                    global spell_chosen
+                    spell_chosen += 1
+                    global total_chosen_spell
+                    total_chosen_spell += 1
+                elif confirmed_spell == 'No':
+                    global spell_loop
+                    spell_loop = 1
+                    print('change decision')
+                    df_spell = df_spell_col
+                    print(f'{df_spell.to_string(index=False, header=None)}\n')
+                    eighth_choice()
+                else:
+                    print('Please only type "Yes" or "No".')
+            your_spells_and_attacks['spells'].append(chosen_spell)
+            print(your_spells_and_attacks)
+
+        if your_character['Class'] in [
+            'Barbarian', 'Rogue', 'Fighter', 'Monk'
+        ]:
+            print('you have no spells')
+            total_chosen_spell = 1
+            Total_cantrip_spell = 1
+        elif your_character['Class'] in [
+            'Bard', 'Cleric', 'Druid', 'Paladin', 'Sorcerer',
+            'Warlock', 'Wizard'
+        ]:
+            spell_confirmation()
+    levelled_spells_allowed += 1
+    spell_row_name += 1
+    spell_row_desc += 1              
+##############################################################################
+print(your_spells_and_attacks)
 
 
 def final_print():
