@@ -896,8 +896,10 @@ def find_spell_list():
     df_spell_info_col = None
     global levelled_spells_allowed
     levelled_spells_allowed = 4
-    global Total_spell_count
-    Total_spell_count = None
+    global total_spell_count
+    total_spell_count = None
+    global your_spell_list
+    your_spell_list = None
     global spell_row_name
     spell_row_name = None
     global spell_row_desc
@@ -908,7 +910,7 @@ def find_spell_list():
         spell_row_name = 1
         spell_row_desc = 2
         your_spell_list = pd.DataFrame.from_dict(bard_spell_data)
-        Total_spell_count = your_spell_list.iloc[1, int(your_character['Level']) - 1]
+        total_spell_count = your_spell_list.iloc[1, int(your_character['Level']) - 1]
         spell_count = your_spell_list.iloc[levelled_spells_allowed, int(your_character['Level']) - 1]    
         df_spell_col = pd.DataFrame(spell_sheet.row_values(spell_row_name))
         df_spell_info_col = pd.DataFrame(spell_sheet.row_values(spell_row_desc))
@@ -936,7 +938,7 @@ def find_spell_list():
         spell_row_name = 11
         spell_row_desc = 12
         your_spell_list = pd.DataFrame.from_dict(bard_spell_data)
-        Total_spell_count = your_spell_list.iloc[1, int(your_character['Level']) - 1]
+        total_spell_count = your_spell_list.iloc[1, int(your_character['Level']) - 1]
         spell_count = your_spell_list.iloc[levelled_spells_allowed, int(your_character['Level']) - 1]    
         df_spell_col = pd.DataFrame(spell_sheet.row_values(spell_row_name))
         df_spell_info_col = pd.DataFrame(spell_sheet.row_values(spell_row_desc))
@@ -955,9 +957,9 @@ elif your_character['Class'] in [
     find_spell_list()
 
 
-global Total_chosen_spell
+global total_chosen_spell
 total_chosen_spell = 0
-while total_chosen_spell != Total_spell_count:
+while total_chosen_spell != total_spell_count:
 
     def choose_spell():
         """
@@ -1053,6 +1055,13 @@ while total_chosen_spell != Total_spell_count:
                     spell_chosen += 1
                     global total_chosen_spell
                     total_chosen_spell += 1
+                    print(f'spell_chosen = {spell_chosen}')
+                    print(f'spell_count = {spell_count}')
+                    print(f'total_spell_chosen = {total_chosen_spell}')
+                    print(f'total_spell_count = {total_spell_count}')
+                    print(f'levveled spells = {levelled_spells_allowed}')
+                    print(f'spell row name = {spell_row_name}')
+                    print(f'spell row desc = {spell_row_desc}')
                 elif confirmed_spell == 'No':
                     global spell_loop
                     spell_loop = 1
@@ -1070,15 +1079,18 @@ while total_chosen_spell != Total_spell_count:
         ]:
             print('you have no spells')
             total_chosen_spell = 1
-            Total_cantrip_spell = 1
+            total_spell_count = 1
         elif your_character['Class'] in [
             'Bard', 'Cleric', 'Druid', 'Paladin', 'Sorcerer',
             'Warlock', 'Wizard'
         ]:
             spell_confirmation()
     levelled_spells_allowed += 1
-    spell_row_name += 1
-    spell_row_desc += 1              
+    spell_row_name += 2
+    spell_row_desc += 2  
+    spell_count = your_spell_list.iloc[levelled_spells_allowed, int(your_character['Level']) - 1]    
+    df_spell_col = pd.DataFrame(spell_sheet.row_values(spell_row_name))
+    df_spell_info_col = pd.DataFrame(spell_sheet.row_values(spell_row_desc))         
 ##############################################################################
 print(your_spells_and_attacks)
 
