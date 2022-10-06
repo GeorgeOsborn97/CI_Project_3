@@ -63,7 +63,6 @@ your_feats_and_traits = {
 }
 your_spells_and_attacks = {
     'cantrips': [],
-    'spells': [],
     1: [],
     2: [],
     3: [],

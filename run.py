@@ -904,6 +904,8 @@ def find_spell_list():
     spell_row_name = None
     global spell_row_desc
     spell_row_desc = None
+    global spell_level
+    spell_level = 1
     global spell_sheet
     spell_sheet = SHEET.worksheet('Spells')
     if your_character['Class'] == 'Bard':
@@ -997,7 +999,7 @@ while total_chosen_spell != total_spell_count:
 
         except Exception:
             print(
-                f'{chosen_spell} is not a cantrip,'
+                f'{chosen_spell} is not a spell,'
                 ' please select again.'
             )
             df_spell = df_spell_col
@@ -1070,8 +1072,8 @@ while total_chosen_spell != total_spell_count:
                     print(f'{df_spell.to_string(index=False, header=None)}\n')
                     eighth_choice()
                 else:
-                    print('Please only type "Yes" or "No".')
-            your_spells_and_attacks['spells'].append(chosen_spell)
+                    print('Please only type "Yes" or "No".')        
+            your_spells_and_attacks[spell_level].append(chosen_spell)
             print(your_spells_and_attacks)
 
         if your_character['Class'] in [
@@ -1087,7 +1089,8 @@ while total_chosen_spell != total_spell_count:
             spell_confirmation()
     levelled_spells_allowed += 1
     spell_row_name += 2
-    spell_row_desc += 2  
+    spell_row_desc += 2
+    spell_level += 1  
     spell_count = your_spell_list.iloc[levelled_spells_allowed, int(your_character['Level']) - 1]    
     df_spell_col = pd.DataFrame(spell_sheet.row_values(spell_row_name))
     df_spell_info_col = pd.DataFrame(spell_sheet.row_values(spell_row_desc))         
