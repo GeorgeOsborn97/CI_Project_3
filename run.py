@@ -106,10 +106,6 @@ def create_initial_conditions():
     Creates the title and sets a few global variables.
     """
     create_title()
-   # warlock_spell = pd.DataFrame.from_dict(warlock_data2) 
-   # cantrip_count = warlock_spell.iloc[1, 5]
-   # print(warlock_spell) 
-   # print(cantrip_count)
     global RACES
     RACES = SHEET.worksheet('Races')
     global RACE
@@ -219,6 +215,7 @@ def race_confirmation():
     Test the users input to either move on or allow the user to choose again.
     """
     os.system('cls' if os.name == 'nt' else 'clear')
+    create_title()
     confirmed_race = None
     while confirmed_race != 'Yes':
         confirmed_race = confirm_race(
@@ -332,6 +329,7 @@ def class_confirmation():
     Test the users input to either move on or allow the user to choose again.
     """
     os.system('cls' if os.name == 'nt' else 'clear')
+    create_title()
     confirmed_class = None
     while confirmed_class != 'Yes':
         confirmed_class = confirm_class(
@@ -351,6 +349,7 @@ def class_confirmation():
             print('Please only type "Yes" or "No".')
     your_character['Class'] = chosen_class
     os.system('cls' if os.name == 'nt' else 'clear')
+    create_title()
     print(
         "\033[38;5;231mNow that you have chosen a race and class"
         " for your character it's time to pick a level"
@@ -395,6 +394,7 @@ def level_confirmation():
     level_loop = 1
     while level_loop == 1:
         os.system('cls' if os.name == 'nt' else 'clear')
+        create_title()
         if int(chosen_level) <= 0:
             print(
                 f'{chosen_level} is not a valid character level'
@@ -659,6 +659,7 @@ while "" in your_ability_scores.values():
     elif reassign_check == 2:
         reassign_check = 1
     os.system('cls' if os.name == 'nt' else 'clear')
+    create_title()
 print(your_ability_scores)
 
 # proficiency choice to be added after ability scores
@@ -694,6 +695,16 @@ def sixth_choice():
             chosen_prof = select_prof(
                 "Choose one of the skills above as a proficency: "
             )
+            if chosen_prof == your_skills_and_proficiencies[
+                'proficient skill 1'
+            ]:
+                print(
+                    f'You have akready picked {chosen_prof}'
+                    ' please choose a different skill'
+                )
+                chosen_prof = select_prof(
+                    'Type a skill here: '
+                )
         your_skills_and_proficiencies[
             f'proficient skill {prof_count}'
         ] = chosen_prof
@@ -772,6 +783,8 @@ def choose_cantrips():
     """
     Choose spells to add to character sheet
     """
+    os.system('cls' if os.name == 'nt' else 'clear')
+    create_title()
     global cantrip_loop
     cantrip_loop = 1
     print(
@@ -799,7 +812,7 @@ def pull_cantrip_traits(chosen_cantrip):
             c += 1
         df_cantrip_info = df_cantrip_info_col.iloc[c - 1]
         df_cantrip_desc = df_cantrip_info.to_string(index=False, header=None)
-        print(df_cantrip_desc)
+        print(f'{df_cantrip_desc}\n')
         global cantrip_loop
         cantrip_loop += 1
 
@@ -810,6 +823,7 @@ def pull_cantrip_traits(chosen_cantrip):
         )
         df_cantrip = df_cantrip_col
         print(f'{df_cantrip.to_string(index=False, header=None)}\n')
+
 
 if your_character['Class'] in ['Barbarian', 'Rogue', 'Fighter', 'Monk']:
     cantrip_count = 0
@@ -830,6 +844,11 @@ while cantrips_chosen != cantrip_count:
             chosen_cantrip = select_cantrip(
                 'Type a spell here: '
             )
+            if chosen_cantrip in your_spells_and_attacks['cantrips']:
+                print(f'You have akready picked {chosen_cantrip} please choose a different spell')
+                chosen_cantrip = select_cantrip(
+                    'Type a spell here: '
+                )
             pull_cantrip_traits(chosen_cantrip)
 
     if your_character['Class'] in ['Barbarian', 'Rogue', 'Fighter', 'Monk']:
@@ -871,6 +890,7 @@ while cantrips_chosen != cantrip_count:
                 print('Please only type "Yes" or "No".')
         your_spells_and_attacks['cantrips'].append(chosen_cantrip)
         print(your_spells_and_attacks)
+        os.system('cls' if os.name == 'nt' else 'clear')
 
     if your_character['Class'] in ['Barbarian', 'Rogue', 'Fighter', 'Monk']:
         print('you have no spells')
@@ -971,6 +991,8 @@ while total_chosen_spell != total_spell_count:
         """
         global spell_loop
         spell_loop = 1
+        os.system('cls' if os.name == 'nt' else 'clear')
+        create_title()
         print(
             'To begin please choose from one of the following spells.\n'.center(80)
         )
@@ -1024,6 +1046,11 @@ while total_chosen_spell != total_spell_count:
                 chosen_spell = select_spell(
                     'Type a spell here: '
                 )
+                if chosen_spell in your_spells_and_attacks[spell_level]:
+                    print(f'You have akready picked {chosen_spell} please choose a different spell')
+                    chosen_spell = select_spell(
+                        'Type a spell here: '
+                    )
                 pull_spell_traits(chosen_spell)
 
         if your_character['Class'] in [
@@ -1063,7 +1090,7 @@ while total_chosen_spell != total_spell_count:
                     print(f'spell_count = {spell_count}')
                     print(f'total_spell_chosen = {total_chosen_spell}')
                     print(f'total_spell_count = {total_spell_count}')
-                    print(f'levveled spells = {levelled_spells_allowed}')
+                    print(f'levelled spells = {levelled_spells_allowed}')
                     print(f'spell row name = {spell_row_name}')
                     print(f'spell row desc = {spell_row_desc}')
                 elif confirmed_spell == 'No':
@@ -1077,6 +1104,7 @@ while total_chosen_spell != total_spell_count:
                     print('Please only type "Yes" or "No".')        
             your_spells_and_attacks[spell_level].append(chosen_spell)
             print(your_spells_and_attacks)
+            os.system('cls' if os.name == 'nt' else 'clear')
 
         if your_character['Class'] in [
             'Barbarian', 'Rogue', 'Fighter', 'Monk'
@@ -1089,13 +1117,14 @@ while total_chosen_spell != total_spell_count:
             'Warlock', 'Wizard'
         ]:
             spell_confirmation()
-    levelled_spells_allowed += 1
-    spell_row_name += 2
-    spell_row_desc += 2
-    spell_level += 1  
-    spell_count = your_spell_list.iloc[levelled_spells_allowed, int(your_character['Level']) - 1]    
-    df_spell_col = pd.DataFrame(spell_sheet.row_values(spell_row_name))
-    df_spell_info_col = pd.DataFrame(spell_sheet.row_values(spell_row_desc))         
+    if int(your_character['Level']) >= 3:        
+        levelled_spells_allowed += 1
+        spell_row_name += 2
+        spell_row_desc += 2
+        spell_level += 1  
+        spell_count = your_spell_list.iloc[levelled_spells_allowed, int(your_character['Level']) - 1]    
+        df_spell_col = pd.DataFrame(spell_sheet.row_values(spell_row_name))
+        df_spell_info_col = pd.DataFrame(spell_sheet.row_values(spell_row_desc))         
 ##############################################################################
 print(your_spells_and_attacks)
 
