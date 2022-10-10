@@ -1003,8 +1003,8 @@ def find_spell_list():
             spell_sheet.row_values(spell_row_desc)
         )
     elif your_character['Class'] == 'Cleric':
-        spell_row_name = 3
-        spell_row_desc = 4
+        spell_row_name = 1
+        spell_row_desc = 2
         your_spell_list = pd.DataFrame.from_dict(cleric_spell_data)
         total_spell_count = your_spell_list.iloc[
             1, int(your_character['Level']) - 1
@@ -1017,8 +1017,8 @@ def find_spell_list():
             spell_sheet.row_values(spell_row_desc)
         )
     elif your_character['Class'] == 'Druid':
-        spell_row_name = 5
-        spell_row_desc = 6
+        spell_row_name = 1
+        spell_row_desc = 2
         your_spell_list = pd.DataFrame.from_dict(druid_spell_data)
         total_spell_count = your_spell_list.iloc[
             1, int(your_character['Level']) - 1
@@ -1031,8 +1031,8 @@ def find_spell_list():
             spell_sheet.row_values(spell_row_desc)
         )
     elif your_character['Class'] == 'Paladin':
-        spell_row_name = 7
-        spell_row_desc = 8
+        spell_row_name = 1
+        spell_row_desc = 2
         your_spell_list = pd.DataFrame.from_dict(paladin_spell_data)
         total_spell_count = your_spell_list.iloc[
             1, int(your_character['Level']) - 1
@@ -1045,8 +1045,8 @@ def find_spell_list():
             spell_sheet.row_values(spell_row_desc)
         )
     elif your_character['Class'] == 'Sorcerer':
-        spell_row_name = 9
-        spell_row_desc = 10
+        spell_row_name = 1
+        spell_row_desc = 2
         your_spell_list = pd.DataFrame.from_dict(sorcerer_spell_data)
         total_spell_count = your_spell_list.iloc[
             1, int(your_character['Level']) - 1
@@ -1059,8 +1059,8 @@ def find_spell_list():
             spell_sheet.row_values(spell_row_desc)
         )
     elif your_character['Class'] == 'Warlock':
-        spell_row_name = 11
-        spell_row_desc = 12
+        spell_row_name = 1
+        spell_row_desc = 2
         your_spell_list = pd.DataFrame.from_dict(warlock_spell_data)
         total_spell_count = your_spell_list.iloc[
             1, int(your_character['Level']) - 1
@@ -1073,8 +1073,8 @@ def find_spell_list():
             spell_sheet.row_values(spell_row_desc)
         )
     elif your_character['Class'] == 'Wizard':
-        spell_row_name = 13
-        spell_row_desc = 14
+        spell_row_name = 1
+        spell_row_desc = 2
         your_spell_list = pd.DataFrame.from_dict(wizard_spell_data)
         total_spell_count = your_spell_list.iloc[
             1, int(your_character['Level']) - 1
