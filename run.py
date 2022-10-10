@@ -870,7 +870,9 @@ def pull_cantrip_traits(chosen_cantrip):
             ' please select again.'
         )
         df_cantrip = df_cantrip_col
-        print(f'\033[38;5;63m{df_cantrip.to_string(index=False, header=None)}\n')
+        print(
+            f'\033[38;5;63m{df_cantrip.to_string(index=False, header=None)}\n'
+        )
 
 
 if your_character['Class'] in [
@@ -940,7 +942,8 @@ while cantrips_chosen != cantrip_count:
                 print('change decision')
                 df_cantrip = df_cantrip_col
                 print(
-                    f'\033[38;5;63m{df_cantrip.to_string(index=False, header=None)}\n'
+                    f'\033[38;5;63mf'
+                    f'{df_cantrip.to_string(index=False, header=None)}\n'
                 )
                 seventh_choice()
             else:
@@ -1114,7 +1117,9 @@ while total_chosen_spell != total_spell_count:
             ' please choose from one of the following spells.\n'.center(80)
         )
         df_spell = df_spell_col
-        print(f'\033[38;5;129m{df_spell.to_string(index=False, header=None)}\n')
+        print(
+            f'\033[38;5;129m{df_spell.to_string(index=False, header=None)}\n'
+        )
 
     def pull_spell_traits(chosen_spell):
         """
@@ -1142,7 +1147,10 @@ while total_chosen_spell != total_spell_count:
                 ' please select again.'
             )
             df_spell = df_spell_col
-            print(f'\033[38;5;129m{df_spell.to_string(index=False, header=None)}\n')
+            print(
+                f'\033[38;5;129m'
+                f'{df_spell.to_string(index=False, header=None)}\n'
+            )
 
     spell_chosen = 0
     while spell_chosen != spell_count:
@@ -1216,7 +1224,10 @@ while total_chosen_spell != total_spell_count:
                     spell_loop = 1
                     print('change decision')
                     df_spell = df_spell_col
-                    print(f'\033[38;5;129m{df_spell.to_string(index=False, header=None)}\n')
+                    print(
+                        f'\033[38;5;129m'
+                        f'{df_spell.to_string(index=False, header=None)}\n'
+                    )
                     eighth_choice()
                 else:
                     print('Please only type "Yes" or "No".')
