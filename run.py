@@ -196,7 +196,7 @@ def first_choice():
             return input(prompt).capitalize()
         global chosen_race
         chosen_race = select_race(
-            'Type a race here to see their traits and starting abilities: '
+            'Type a race here to see their traits and starting abilities: \n'
         )
 # connects to google sheets to pull the information about each race
         pull_racial_traits(chosen_race)
@@ -225,7 +225,7 @@ def race_confirmation():
     while confirmed_race != 'Yes':
         confirmed_race = confirm_race(
             f'Are you sure you want to choose {chosen_race}?'
-            ' Please answer "Yes" or "No" '
+            ' Please answer "Yes" or "No" \n'
         )
         if confirmed_race == 'Yes':
             print(f'{chosen_race} confirmed! \n')
@@ -311,7 +311,7 @@ def second_choice():
             return input(prompt).capitalize()
         global chosen_class
         chosen_class = select_class(
-            'Type a class here to see their description and abilities: '
+            'Type a class here to see their description and abilities: \n'
         )
 
         pull_class_traits(chosen_class)
@@ -339,7 +339,7 @@ def class_confirmation():
     while confirmed_class != 'Yes':
         confirmed_class = confirm_class(
             f'Are you sure you want to choose {chosen_class}? '
-            'Please answer "Yes" or "No" '
+            'Please answer "Yes" or "No" \n'
         )
         if confirmed_class == 'Yes':
             print(f'{chosen_class} confirmed!')
@@ -376,7 +376,7 @@ def third_choice():
         """
         return input(prompt)
     global chosen_level
-    chosen_level = choose_level('Please choose your level: ')
+    chosen_level = choose_level('Please choose your level: \n')
 
 
 third_choice()
@@ -418,7 +418,7 @@ def level_confirmation():
     while confirmed_level != 'Yes':
         confirmed_level = confirm_level(
             f'Are you sure you want to choose {chosen_level}? '
-            'Please answer "Yes" or "No" '
+            'Please answer "Yes" or "No" \n'
         )
         if confirmed_level == 'Yes':
             print(f'{chosen_level} confirmed!')
@@ -501,12 +501,12 @@ while "" in your_ability_scores.values():
 
     print(f'\033[38;5;231m{your_ability_scores}')
     chosen_ability = select_ability(
-        "\033[38;5;231mChoose one of the abilities to add this score to: "
+        "\033[38;5;231mChoose one of the abilities to add this score to: \n"
     )
     while chosen_ability not in your_ability_scores:
         print('please choose only one of the above abilities')
         chosen_ability = select_ability(
-            "Choose one of the abilities to add this score to: "
+            "Choose one of the abilities to add this score to: \n"
         )
     if your_ability_scores[f'{chosen_ability}'] != "":
         old_score = your_ability_scores[f'{chosen_ability}']
@@ -639,7 +639,7 @@ while "" in your_ability_scores.values():
         elif confirmed_ability == 'No':
             print('change decision')
             chosen_ability = select_ability(
-                "Choose one of the abilities to add the score to: "
+                "Choose one of the abilities to add the score to: \n"
             )
             confirmed_ability = confirm_ability(
                 f'Are you sure you want to add {your_score}'
@@ -693,14 +693,14 @@ def sixth_choice():
     prof_count = 1
     while prof_count < 3:
         chosen_prof = select_prof(
-            'Choose one of the skills above as a proficency: '
+            'Choose one of the skills above as a proficency: \n'
         )
         while chosen_prof.capitalize() not in str(df_prof_info):
             print(
                 'Please only choose one of the skills above as a proficency: '
             )
             chosen_prof = select_prof(
-                "Choose one of the skills above as a proficency: "
+                "Choose one of the skills above as a proficency: \n"
             )
             if chosen_prof in your_skills_and_proficiencies[
                 'proficient skills'
@@ -739,7 +739,7 @@ def prof_confirmation():
         your_prof = your_skills_and_proficiencies['proficient skills']
         confirmed_prof = confirm_prof(
             f'Are you sure you want to choose {your_prof}? '
-            'Please answer "Yes" or "No" '
+            'Please answer "Yes" or "No" \n'
         )
         if confirmed_prof == 'Yes':
             print('confirmed!')
@@ -892,7 +892,7 @@ while cantrips_chosen != cantrip_count:
                 return input(prompt).capitalize()
             global chosen_cantrip
             chosen_cantrip = select_cantrip(
-                'Type a spell here: '
+                'Type a spell here: \n'
             )
             if chosen_cantrip in your_spells_and_attacks['cantrips']:
                 print(
@@ -900,7 +900,7 @@ while cantrips_chosen != cantrip_count:
                     ' please choose a different spell'
                     )
                 chosen_cantrip = select_cantrip(
-                    'Type a spell here: '
+                    'Type a spell here: \n'
                 )
             pull_cantrip_traits(chosen_cantrip)
 
@@ -928,7 +928,7 @@ while cantrips_chosen != cantrip_count:
         while confirmed_cantrip != 'Yes':
             confirmed_cantrip = confirm_cantrip(
                 f'Are you sure you want to choose {chosen_cantrip}?'
-                ' Please answer "Yes" or "No" '
+                ' Please answer "Yes" or "No" \n'
             )
             if confirmed_cantrip == 'Yes':
                 print(f'{chosen_cantrip} confirmed! \n')
@@ -1159,7 +1159,7 @@ while total_chosen_spell != total_spell_count:
                     return input(prompt).capitalize()
                 global chosen_spell
                 chosen_spell = select_spell(
-                    'Type a spell here: '
+                    'Type a spell here: \n'
                 )
                 if chosen_spell in your_spells_and_attacks[spell_level]:
                     print(
@@ -1167,7 +1167,7 @@ while total_chosen_spell != total_spell_count:
                         ' please choose a different spell'
                     )
                     chosen_spell = select_spell(
-                        'Type a spell here: '
+                        'Type a spell here: \n'
                     )
                 pull_spell_traits(chosen_spell)
 
@@ -1196,7 +1196,7 @@ while total_chosen_spell != total_spell_count:
             while confirmed_spell != 'Yes':
                 confirmed_spell = confirm_spell(
                     f'Are you sure you want to choose {chosen_spell}?'
-                    ' Please answer "Yes" or "No" '
+                    ' Please answer "Yes" or "No" \n'
                 )
                 if confirmed_spell == 'Yes':
                     print(f'{chosen_spell} confirmed! \n')
@@ -1265,7 +1265,7 @@ def equipment_list():
         equipment_count = 1
         while equipment_count < 3:
             chosen_equipment = select_equipment(
-                'Type one of the weapons to take it: '
+                'Type one of the weapons to take it: \n'
             )
             while chosen_equipment.capitalize() not in str(
                 weapon_list['Martial']
@@ -1274,7 +1274,7 @@ def equipment_list():
                     'Please only choose one of the weapons above as: '
                 )
                 chosen_equipment = select_equipment(
-                    "Type one of the weapons to take it: "
+                    "Type one of the weapons to take it: \n"
                 )
             your_spells_and_attacks[
                 'weapons'
@@ -1288,7 +1288,7 @@ def equipment_list():
         equipment_count = 1
         while equipment_count < 2:
             chosen_equipment = select_equipment(
-                'Type one of the weapons to take it: '
+                'Type one of the weapons to take it: \n'
             )
             while chosen_equipment.capitalize() not in str(
                 weapon_list['Simple']
@@ -1297,7 +1297,7 @@ def equipment_list():
                     'Please only choose one of the weapons above as: '
                 )
                 chosen_equipment = select_equipment(
-                    "Type one of the weapons to take it: "
+                    "Type one of the weapons to take it: \n"
                 )
             your_spells_and_attacks[
                 'weapons'
@@ -1309,7 +1309,7 @@ def equipment_list():
         equipment_count = 1
         while equipment_count < 2:
             chosen_equipment = select_equipment(
-                'Type one of the weapons to take it: '
+                'Type one of the weapons to take it: \n'
             )
             while chosen_equipment.capitalize() not in str(
                 weapon_list['Martial']
@@ -1318,7 +1318,7 @@ def equipment_list():
                     'Please only choose one of the weapons above as: '
                 )
                 chosen_equipment = select_equipment(
-                    "Type one of the weapons to take it: "
+                    "Type one of the weapons to take it: \n"
                 )
             your_spells_and_attacks[
                 'weapons'
@@ -1330,7 +1330,7 @@ def equipment_list():
         equipment_count = 1
         while equipment_count < 3:
             chosen_equipment = select_equipment(
-                'Type one of the weapons to take it: '
+                'Type one of the weapons to take it: \n'
             )
             while chosen_equipment.capitalize() not in str(
                 weapon_list['Simple']
@@ -1339,7 +1339,7 @@ def equipment_list():
                     'Please only choose one of the weapons above as: '
                 )
                 chosen_equipment = select_equipment(
-                    "Type one of the weapons to take it: "
+                    "Type one of the weapons to take it: \n"
                 )
             your_spells_and_attacks[
                 'weapons'
@@ -1368,7 +1368,7 @@ def equipment_confirmation():
         your_equipment = your_spells_and_attacks['weapons']
         confirmed_equipment = confirm_equipment(
             f'Are you sure you want to choose {your_equipment}? '
-            'Please answer "Yes" or "No" '
+            'Please answer "Yes" or "No" \n'
         )
         if confirmed_equipment == 'Yes':
             print('confirmed!')
