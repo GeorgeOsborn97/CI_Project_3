@@ -91,7 +91,6 @@ def hit_dice_roller():
         x += 1
     print(
         f'You rolled {sum_dice}'
-        ' your constituation modifier will be added to this soon.\n'
     )
     return sum(sum_dice)
 
@@ -115,7 +114,7 @@ def begin(prompt):
         '\033[38;5;231mWelcome to '
         'the Dungeons and Dragons character creator!\n'.center(80)
     )
-    print('\033[1;31mIMPORTNAT INFORMATION:\n'.center(80))
+    print('\033[1;31mIMPORTANT INFORMATION:\n'.center(80))
     print(
         '\033[38;5;231m'
         'This application has been designed to help demonstrate and showcase '
@@ -277,7 +276,7 @@ def race_confirmation():
     os.system('cls' if os.name == 'nt' else 'clear')
     create_title()
     print(
-        "\033[38;5;231mNow that you have chosen a race for your chracter"
+        "\033[38;5;231mNow that you have chosen a race for your character"
         " it's time to pick a class"
     )
     print('Please choose from one of the following classes.\n')
@@ -1468,6 +1467,7 @@ def final_print():
         f'{class_colour}{character_saves}\n{character_prof}\n'
         f'{character_spells}\n'.center(80)
     )
+    print('If you wish to create another Character please press "RUN PROGRAM"')
 
 
 final_print()
