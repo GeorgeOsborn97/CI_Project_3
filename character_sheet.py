@@ -57,9 +57,7 @@ your_skills_and_proficiencies = {
     'Stealth': '',
     'Survival': '',
 }
-your_feats_and_traits = {
 
-}
 your_spells_and_attacks = {
     'weapons': [],
     'cantrips': [],

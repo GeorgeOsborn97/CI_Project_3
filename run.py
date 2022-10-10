@@ -12,15 +12,19 @@ from class_info import class_info
 from class_info import race_info
 from class_info import colour_scheme
 from class_info import dragonborn
-from class_info import warlock_spell_data
 from class_info import bard_spell_data
+from class_info import cleric_spell_data
+from class_info import druid_spell_data
+from class_info import paladin_spell_data
+from class_info import sorcerer_spell_data
+from class_info import warlock_spell_data
+from class_info import wizard_spell_data
 from class_info import weapon_list
 from character_sheet import your_character
 from character_sheet import your_ability_scores
 from character_sheet import your_ability_scores_modifiers
 from character_sheet import your_ability_saving_throws
 from character_sheet import your_skills_and_proficiencies
-# from character_sheet import your_feats_and_traits
 from character_sheet import your_spells_and_attacks
 
 
@@ -495,9 +499,10 @@ while "" in your_ability_scores.values():
         """
         return input(prompt).capitalize()
 
-    print(your_ability_scores)
-    chosen_ability = select_ability("""Choose one of the abilities
-    to add this score to: """)
+    print(f'\033[38;5;231m{your_ability_scores}')
+    chosen_ability = select_ability(
+        "\033[38;5;231mChoose one of the abilities to add this score to: "
+    )
     while chosen_ability not in your_ability_scores:
         print('please choose only one of the above abilities')
         chosen_ability = select_ability(
@@ -776,28 +781,38 @@ def find_cantrip_list():
         df_cantrip_col = pd.DataFrame(spell_sheet.col_values(1))
         df_cantrip_info_col = pd.DataFrame(spell_sheet.col_values(2))
     elif your_character['Class'] == 'Cleric':
-        your_spell_list = pd.DataFrame.from_dict(warlock_spell_data)
-        cantrip_count = your_spell_list.iloc[1, int(your_character['Level'])]
+        your_spell_list = pd.DataFrame.from_dict(bard_spell_data)
+        cantrip_count = your_spell_list.iloc[
+            0, int(your_character['Level']) - 1
+        ]
         df_cantrip_col = pd.DataFrame(spell_sheet.col_values(3))
         df_cantrip_info_col = pd.DataFrame(spell_sheet.col_values(4))
     elif your_character['Class'] == 'Druid':
-        your_spell_list = pd.DataFrame.from_dict(warlock_spell_data)
-        cantrip_count = your_spell_list.iloc[1, int(your_character['Level'])]
+        your_spell_list = pd.DataFrame.from_dict(bard_spell_data)
+        cantrip_count = your_spell_list.iloc[
+            0, int(your_character['Level']) - 1
+        ]
         df_cantrip_col = pd.DataFrame(spell_sheet.col_values(5))
         df_cantrip_info_col = pd.DataFrame(spell_sheet.col_values(6))
     elif your_character['Class'] == 'Sorcerer':
-        your_spell_list = pd.DataFrame.from_dict(warlock_spell_data)
-        cantrip_count = your_spell_list.iloc[1, int(your_character['Level'])]
+        your_spell_list = pd.DataFrame.from_dict(bard_spell_data)
+        cantrip_count = your_spell_list.iloc[
+            0, int(your_character['Level']) - 1
+        ]
         df_cantrip_col = pd.DataFrame(spell_sheet.col_values(9))
         df_cantrip_info_col = pd.DataFrame(spell_sheet.col_values(10))     
     elif your_character['Class'] == 'Warlock':
-        your_spell_list = pd.DataFrame.from_dict(warlock_spell_data)
-        cantrip_count = your_spell_list.iloc[1, int(your_character['Level'])]
+        your_spell_list = pd.DataFrame.from_dict(bard_spell_data)
+        cantrip_count = your_spell_list.iloc[
+            0, int(your_character['Level']) - 1
+        ]
         df_cantrip_col = pd.DataFrame(spell_sheet.col_values(11))
         df_cantrip_info_col = pd.DataFrame(spell_sheet.col_values(12))
     elif your_character['Class'] == 'Wizard':
-        your_spell_list = pd.DataFrame.from_dict(warlock_spell_data)
-        cantrip_count = your_spell_list.iloc[1, int(your_character['Level'])]
+        your_spell_list = pd.DataFrame.from_dict(bard_spell_data)
+        cantrip_count = your_spell_list.iloc[
+            0, int(your_character['Level']) - 1
+        ]
         df_cantrip_col = pd.DataFrame(spell_sheet.col_values(9))
         df_cantrip_info_col = pd.DataFrame(spell_sheet.col_values(10))
     print(your_spell_list)
@@ -988,29 +1003,65 @@ def find_spell_list():
             spell_sheet.row_values(spell_row_desc)
         )
     elif your_character['Class'] == 'Cleric':
-        your_spell_list = pd.DataFrame.from_dict(warlock_spell_data)
-        spell_count = your_spell_list.iloc[1, int(your_character['Level'])]
-        df_spell_col = pd.DataFrame(spell_sheet.col_values(3))
-        df_spell_info_col = pd.DataFrame(spell_sheet.col_values(4))
+        spell_row_name = 3
+        spell_row_desc = 4
+        your_spell_list = pd.DataFrame.from_dict(cleric_spell_data)
+        total_spell_count = your_spell_list.iloc[
+            1, int(your_character['Level']) - 1
+        ]
+        spell_count = your_spell_list.iloc[
+            levelled_spells_allowed, int(your_character['Level']) - 1
+        ]
+        df_spell_col = pd.DataFrame(spell_sheet.row_values(spell_row_name))
+        df_spell_info_col = pd.DataFrame(
+            spell_sheet.row_values(spell_row_desc)
+        )
     elif your_character['Class'] == 'Druid':
-        your_spell_list = pd.DataFrame.from_dict(warlock_spell_data)
-        spell_count = your_spell_list.iloc[1, int(your_character['Level'])]
-        df_spell_col = pd.DataFrame(spell_sheet.col_values(5))
-        df_spell_info_col = pd.DataFrame(spell_sheet.col_values(6))
+        spell_row_name = 5
+        spell_row_desc = 6
+        your_spell_list = pd.DataFrame.from_dict(druid_spell_data)
+        total_spell_count = your_spell_list.iloc[
+            1, int(your_character['Level']) - 1
+        ]
+        spell_count = your_spell_list.iloc[
+            levelled_spells_allowed, int(your_character['Level']) - 1
+        ]
+        df_spell_col = pd.DataFrame(spell_sheet.row_values(spell_row_name))
+        df_spell_info_col = pd.DataFrame(
+            spell_sheet.row_values(spell_row_desc)
+        )
     elif your_character['Class'] == 'Paladin':
-        your_spell_list = pd.DataFrame.from_dict(warlock_spell_data)
-        spell_count = your_spell_list.iloc[1, int(your_character['Level'])]
-        df_spell_col = pd.DataFrame(spell_sheet.col_values(7))
-        df_spell_info_col = pd.DataFrame(spell_sheet.col_values(8))
+        spell_row_name = 7
+        spell_row_desc = 8
+        your_spell_list = pd.DataFrame.from_dict(paladin_spell_data)
+        total_spell_count = your_spell_list.iloc[
+            1, int(your_character['Level']) - 1
+        ]
+        spell_count = your_spell_list.iloc[
+            levelled_spells_allowed, int(your_character['Level']) - 1
+        ]
+        df_spell_col = pd.DataFrame(spell_sheet.row_values(spell_row_name))
+        df_spell_info_col = pd.DataFrame(
+            spell_sheet.row_values(spell_row_desc)
+        )
     elif your_character['Class'] == 'Sorcerer':
-        your_spell_list = pd.DataFrame.from_dict(warlock_spell_data)
-        spell_count = your_spell_list.iloc[1, int(your_character['Level'])]
-        df_spell_col = pd.DataFrame(spell_sheet.col_values(9))
-        df_spell_info_col = pd.DataFrame(spell_sheet.col_values(10))
+        spell_row_name = 9
+        spell_row_desc = 10
+        your_spell_list = pd.DataFrame.from_dict(sorcerer_spell_data)
+        total_spell_count = your_spell_list.iloc[
+            1, int(your_character['Level']) - 1
+        ]
+        spell_count = your_spell_list.iloc[
+            levelled_spells_allowed, int(your_character['Level']) - 1
+        ]
+        df_spell_col = pd.DataFrame(spell_sheet.row_values(spell_row_name))
+        df_spell_info_col = pd.DataFrame(
+            spell_sheet.row_values(spell_row_desc)
+        )
     elif your_character['Class'] == 'Warlock':
         spell_row_name = 11
         spell_row_desc = 12
-        your_spell_list = pd.DataFrame.from_dict(bard_spell_data)
+        your_spell_list = pd.DataFrame.from_dict(warlock_spell_data)
         total_spell_count = your_spell_list.iloc[
             1, int(your_character['Level']) - 1
         ]
@@ -1022,10 +1073,19 @@ def find_spell_list():
             spell_sheet.row_values(spell_row_desc)
         )
     elif your_character['Class'] == 'Wizard':
-        your_spell_list = pd.DataFrame.from_dict(warlock_spell_data)
-        spell_count = your_spell_list.iloc[1, int(your_character['Level']) - 1]
-        df_spell_col = pd.DataFrame(spell_sheet.col_values(13))
-        df_spell_info_col = pd.DataFrame(spell_sheet.col_values(14))
+        spell_row_name = 13
+        spell_row_desc = 14
+        your_spell_list = pd.DataFrame.from_dict(wizard_spell_data)
+        total_spell_count = your_spell_list.iloc[
+            1, int(your_character['Level']) - 1
+        ]
+        spell_count = your_spell_list.iloc[
+            levelled_spells_allowed, int(your_character['Level']) - 1
+        ]
+        df_spell_col = pd.DataFrame(spell_sheet.row_values(spell_row_name))
+        df_spell_info_col = pd.DataFrame(
+            spell_sheet.row_values(spell_row_desc)
+        )
 
 
 if your_character['Class'] in ['Barbarian', 'Rogue', 'Fighter', 'Monk']:
@@ -1190,7 +1250,6 @@ while total_chosen_spell != total_spell_count:
             spell_sheet.row_values(spell_row_desc)
         )
 ##############################################################################
-########equipment######
 
 
 def select_equipment(prompt):
@@ -1200,7 +1259,7 @@ def select_equipment(prompt):
 
 def equipment_list():
     print('Please choose two weapons from the list below.')
-    if your_character['Class'] in ['Barbarian','Fighter', 'Paladin']:
+    if your_character['Class'] in ['Barbarian', 'Fighter', 'Paladin']:
         print(str(weapon_list['Martial']))
         equipment_count = 1
         while equipment_count < 3:
@@ -1220,7 +1279,9 @@ def equipment_list():
                 'weapons'
             ].append(chosen_equipment)
             equipment_count += 1
-    elif your_character['Class'] in ['Bard', 'Druid', 'Monk', 'Sorcerer', 'Warlock', 'Wizard']:
+    elif your_character['Class'] in [
+        'Bard', 'Druid', 'Monk', 'Sorcerer', 'Warlock', 'Wizard'
+    ]:
         print(str(weapon_list['Simple']))
         equipment_count = 1
         while equipment_count < 2:
@@ -1355,8 +1416,9 @@ def final_print():
         headers=character_header6, tablefmt='grid'
     )
     print(
-        f'{character}\n{character_ability}\n{character_mods}\n'
-        f'{character_saves}\n{character_prof}\n{character_spells}\n'.center(80)
+        f'{class_colour}{character}\n{character_ability}\n{character_mods}\n'
+        f'{class_colour}{character_saves}\n{character_prof}\n'
+        f'{character_spells}\n'.center(80)
     )
 
 
