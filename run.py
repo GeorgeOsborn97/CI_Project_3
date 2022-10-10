@@ -106,10 +106,46 @@ old_score = None
 cantrip_loop = None
 
 
+def begin(prompt):
+    """
+    creates an introduction
+    """
+    create_title()
+    print(
+        '\033[38;5;231mWelcome to '
+        'the Dungeons and Dragons character creator!\n'.center(80)
+    )
+    print('\033[1;31mIMPORTNAT INFORMATION:\n'.center(80))
+    print(
+        '\033[38;5;231m'
+        'This application has been designed to help demonstrate and showcase '
+        'the kind of character you may look to create when beginning a '
+        'campaign in D&D. The Focus of the "Character Sheet" '
+        'which you will be building are your ability scores and spells '
+        'as they are arguably the most important and the most fun. '
+        'You will be shown a lot of information when selecting '
+        'a Race and a Class. This information will not affect the '
+        '"character sheet" at the end of this applicatiion, '
+        'but is there to show you what a charcater would look like '
+        'in a real game. There are also hundreds more spells,'
+        'abilities and featutres that I could not fit in this creator.'
+        'However a lot are touched on when selecting a class and race'
+        'so keep those things in mind. Finally be aware,'
+        'if you cant see the DND Character Creator Logo,'
+        'you can scroll up to see more information.\n'
+    )
+
+    return input(prompt)
+
+
+begin("Please press 'Enter' to get started! \n")
+
+
 def create_initial_conditions():
     """
-    Creates the title and sets a few global variables.
+    Sets a few global variables. and presents the first choice to the users
     """
+    os.system('cls' if os.name == 'nt' else 'clear')
     create_title()
     global RACES
     RACES = SHEET.worksheet('Races')
@@ -120,10 +156,7 @@ def create_initial_conditions():
     global CLASSES_VALUES
     CLASSES_VALUES = CLASSES.get_all_values()
     print(
-        '\033[38;5;231mWelcome to'
-        ' the Dungeons and Drgaons character creator!'.center(80)
-    )
-    print(
+        '\033[38;5;231m'
         'To begin please choose from one of the following races.\n'.center(80)
     )
     df_race = pd.DataFrame(RACES.row_values(1))
