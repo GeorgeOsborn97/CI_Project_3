@@ -477,10 +477,10 @@ def fifth_choice():
     for x in range(1, 4, 1):
         x = rand_num('d6')
         rolls.append(x)
-    print(rolls)
+    print(f'\033[38;5;231m{rolls}')
     global your_score
     your_score = sum(rolls)
-    print(your_score)
+    print(f'\033[38;5;118m{your_score}')
 
 
 while "" in your_ability_scores.values():
@@ -841,7 +841,7 @@ def choose_cantrips():
         'To begin please choose from one of the following spells.\n'.center(80)
     )
     df_cantrip = df_cantrip_col
-    print(f'{df_cantrip.to_string(index=False, header=None)}\n')
+    print(f'\033[38;5;63m{df_cantrip.to_string(index=False, header=None)}\n')
 
 
 def pull_cantrip_traits(chosen_cantrip):
@@ -859,8 +859,8 @@ def pull_cantrip_traits(chosen_cantrip):
             df_cantrip_name = df_cantrip.to_string(index=False, header=None)
             c += 1
         df_cantrip_info = df_cantrip_info_col.iloc[c - 1]
-        df_cantrip_desc = df_cantrip_info  # .to_string(index=False, header=None)
-        print(df_cantrip_desc.values)
+        df_cantrip_desc = df_cantrip_info
+        print(f'\033[38;5;231m{df_cantrip_desc.values}')
         global cantrip_loop
         cantrip_loop += 1
 
@@ -870,7 +870,7 @@ def pull_cantrip_traits(chosen_cantrip):
             ' please select again.'
         )
         df_cantrip = df_cantrip_col
-        print(f'{df_cantrip.to_string(index=False, header=None)}\n')
+        print(f'\033[38;5;63m{df_cantrip.to_string(index=False, header=None)}\n')
 
 
 if your_character['Class'] in [
@@ -940,7 +940,7 @@ while cantrips_chosen != cantrip_count:
                 print('change decision')
                 df_cantrip = df_cantrip_col
                 print(
-                    f'{df_cantrip.to_string(index=False, header=None)}\n'
+                    f'\033[38;5;63m{df_cantrip.to_string(index=False, header=None)}\n'
                 )
                 seventh_choice()
             else:
@@ -1114,7 +1114,7 @@ while total_chosen_spell != total_spell_count:
             ' please choose from one of the following spells.\n'.center(80)
         )
         df_spell = df_spell_col
-        print(f'{df_spell.to_string(index=False, header=None)}\n')
+        print(f'\033[38;5;129m{df_spell.to_string(index=False, header=None)}\n')
 
     def pull_spell_traits(chosen_spell):
         """
@@ -1131,8 +1131,8 @@ while total_chosen_spell != total_spell_count:
                 df_spell_name = df_spell.to_string(index=False, header=None)
                 c += 1
             df_spell_info = df_spell_info_col.iloc[c - 1]
-            df_spell_desc = df_spell_info  # .to_string(index=False, header=None)
-            print(df_spell_desc.values)
+            df_spell_desc = df_spell_info
+            print(f'\033[38;5;231m{df_spell_desc.values}')
             global spell_loop
             spell_loop += 1
 
@@ -1142,7 +1142,7 @@ while total_chosen_spell != total_spell_count:
                 ' please select again.'
             )
             df_spell = df_spell_col
-            print(f'{df_spell.to_string(index=False, header=None)}\n')
+            print(f'\033[38;5;129m{df_spell.to_string(index=False, header=None)}\n')
 
     spell_chosen = 0
     while spell_chosen != spell_count:
@@ -1216,7 +1216,7 @@ while total_chosen_spell != total_spell_count:
                     spell_loop = 1
                     print('change decision')
                     df_spell = df_spell_col
-                    print(f'{df_spell.to_string(index=False, header=None)}\n')
+                    print(f'\033[38;5;129m{df_spell.to_string(index=False, header=None)}\n')
                     eighth_choice()
                 else:
                     print('Please only type "Yes" or "No".')
@@ -1260,7 +1260,8 @@ def select_equipment(prompt):
 def equipment_list():
     print('Please choose two weapons from the list below.')
     if your_character['Class'] in ['Barbarian', 'Fighter', 'Paladin']:
-        print(str(weapon_list['Martial']))
+        for i in weapon_list['Martial']:
+            print(i)
         equipment_count = 1
         while equipment_count < 3:
             chosen_equipment = select_equipment(
@@ -1282,7 +1283,8 @@ def equipment_list():
     elif your_character['Class'] in [
         'Bard', 'Druid', 'Monk', 'Sorcerer', 'Warlock', 'Wizard'
     ]:
-        print(str(weapon_list['Simple']))
+        for i in weapon_list['Simple']:
+            print(i)
         equipment_count = 1
         while equipment_count < 2:
             chosen_equipment = select_equipment(
@@ -1302,7 +1304,8 @@ def equipment_list():
             ].append(chosen_equipment)
             equipment_count += 1
     elif your_character['Class'] == 'Cleric':
-        print(str(weapon_list['Martial']))
+        for i in weapon_list['Martial']:
+            print(i)
         equipment_count = 1
         while equipment_count < 2:
             chosen_equipment = select_equipment(
@@ -1322,7 +1325,8 @@ def equipment_list():
             ].append(chosen_equipment)
             equipment_count += 1
     elif your_character['Class'] == 'Rogue':
-        print(str(weapon_list['Simple']))
+        for i in weapon_list['Simple']:
+            print(i)
         equipment_count = 1
         while equipment_count < 3:
             chosen_equipment = select_equipment(
@@ -1343,7 +1347,7 @@ def equipment_list():
             equipment_count += 1
 
 
-equipment_list()            
+equipment_list()        
 
 
 def confirm_equipment(prompt):
