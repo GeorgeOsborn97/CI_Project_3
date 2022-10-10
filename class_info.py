@@ -62,20 +62,17 @@ colour_scheme = {
 # level, cantrips known, spells known, spell, slots,
 # max spell level, spells known of that level
 weapon_list = {
-    'Simple melee': [
+    'Simple': [
         'Club', 'Dagger', 'Greatclub', 'Handaxe', 'Javelin',
-        'Light hammer', 'Mace', 'Quaterstaff', 'Sickle', 'Spear'
+        'Light hammer', 'Mace', 'Quaterstaff', 'Sickle', 'Spear',
+        'Light crossbow', 'Dart', 'Shortbow', 'Sling'
     ],
-    'Martial melee': [
+    'Martial': [
         'Battleaxe', 'Flail', 'Glaive', 'Greataxe', 'Greatsword',
         'Halberd', 'Lance', 'Longsword', 'Maul', 'Morningstar', 'Pike',
-        'Rapier', 'Schimitar', 'Shortsword', 'Trident', 'Warpick', 'Warhammer'
-    ],
-    'Simple ranged': ['Light crossbow', 'Dart', 'Shortbow', 'Sling'],
-    'Martial ranged': [
+        'Rapier', 'Schimitar', 'Shortsword', 'Trident', 'Warpick', 'Warhammer',
         'Blowgun', 'Hand crossbow', 'Heavy crossbow', 'Longbow', 'Net'
     ],
-
 }
 bard_spell_data = {
                 1: [2, 4, 2, '1st', 2, 0, 0, 0, 0, 0, 0, 0, 0],

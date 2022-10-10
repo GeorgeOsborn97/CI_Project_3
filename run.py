@@ -682,6 +682,7 @@ def sixth_choice():
         "\033[38;5;231mNow we have your ability Scores"
         "it's time to Choose 2 proficiancies from the list below: \n"
     )
+    global df_prof_info
     df_prof_info = pd.DataFrame(prof.col_values(26))
     print(f'{df_prof_info.to_string(index=False, header=None)}\n')
     prof_count = 1
@@ -696,8 +697,8 @@ def sixth_choice():
             chosen_prof = select_prof(
                 "Choose one of the skills above as a proficency: "
             )
-            if chosen_prof == your_skills_and_proficiencies[
-                'proficient skill 1'
+            if chosen_prof in your_skills_and_proficiencies[
+                'proficient skills'
             ]:
                 print(
                     f'You have akready picked {chosen_prof}'
@@ -707,13 +708,47 @@ def sixth_choice():
                     'Type a skill here: '
                 )
         your_skills_and_proficiencies[
-            f'proficient skill {prof_count}'
-        ] = chosen_prof
+            'proficient skills'
+        ].append(chosen_prof)
         prof_count += 1
 
 
 sixth_choice()
 
+
+def confirm_prof(prompt):
+    """
+    confirm the users chosen level
+    """
+    return input(prompt).capitalize()
+
+
+def prof_confirmation():
+    """
+    confirm equipment
+    """
+    os.system('cls' if os.name == 'nt' else 'clear')
+    create_title()
+    confirmed_prof = None
+    while confirmed_prof != 'Yes':
+        your_prof = your_skills_and_proficiencies['proficient skills']
+        confirmed_prof = confirm_prof(
+            f'Are you sure you want to choose {your_prof}? '
+            'Please answer "Yes" or "No" '
+        )
+        if confirmed_prof == 'Yes':
+            print('confirmed!')
+        elif confirmed_prof == 'No':
+            print('change decision')
+            your_skills_and_proficiencies['proficient skills'] = []
+            print(f'{df_prof_info.to_string(index=False, header=None)}\n')
+            sixth_choice()
+        else:
+            print('Please only type "Yes" or "No".')
+    os.system('cls' if os.name == 'nt' else 'clear')
+
+
+prof_confirmation()
 
 ##############################################################################
 # place into a def, build spell dicts for all classes if
@@ -1165,15 +1200,75 @@ def select_equipment(prompt):
 
 def equipment_list():
     print('Please choose two weapons from the list below.')
-    if your_character['Class'] == 'Barbarian':
-        print(str(weapon_list['Martial melee']))
+    if your_character['Class'] in ['Barbarian','Fighter', 'Paladin']:
+        print(str(weapon_list['Martial']))
         equipment_count = 1
         while equipment_count < 3:
             chosen_equipment = select_equipment(
                 'Type one of the weapons to take it: '
             )
             while chosen_equipment.capitalize() not in str(
-                weapon_list['Martial melee']
+                weapon_list['Martial']
+            ):
+                print(
+                    'Please only choose one of the weapons above as: '
+                )
+                chosen_equipment = select_equipment(
+                    "Type one of the weapons to take it: "
+                )
+            your_spells_and_attacks[
+                'weapons'
+            ].append(chosen_equipment)
+            equipment_count += 1
+    elif your_character['Class'] in ['Bard', 'Druid', 'Monk', 'Sorcerer', 'Warlock', 'Wizard']:
+        print(str(weapon_list['Simple']))
+        equipment_count = 1
+        while equipment_count < 2:
+            chosen_equipment = select_equipment(
+                'Type one of the weapons to take it: '
+            )
+            while chosen_equipment.capitalize() not in str(
+                weapon_list['Simple']
+            ):
+                print(
+                    'Please only choose one of the weapons above as: '
+                )
+                chosen_equipment = select_equipment(
+                    "Type one of the weapons to take it: "
+                )
+            your_spells_and_attacks[
+                'weapons'
+            ].append(chosen_equipment)
+            equipment_count += 1
+    elif your_character['Class'] == 'Cleric':
+        print(str(weapon_list['Martial']))
+        equipment_count = 1
+        while equipment_count < 2:
+            chosen_equipment = select_equipment(
+                'Type one of the weapons to take it: '
+            )
+            while chosen_equipment.capitalize() not in str(
+                weapon_list['Martial']
+            ):
+                print(
+                    'Please only choose one of the weapons above as: '
+                )
+                chosen_equipment = select_equipment(
+                    "Type one of the weapons to take it: "
+                )
+            your_spells_and_attacks[
+                'weapons'
+            ].append(chosen_equipment)
+            equipment_count += 1
+    elif your_character['Class'] == 'Rogue':
+        print(str(weapon_list['Simple']))
+        equipment_count = 1
+        while equipment_count < 3:
+            chosen_equipment = select_equipment(
+                'Type one of the weapons to take it: '
+            )
+            while chosen_equipment.capitalize() not in str(
+                weapon_list['Simple']
             ):
                 print(
                     'Please only choose one of the weapons above as: '

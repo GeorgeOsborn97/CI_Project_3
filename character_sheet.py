@@ -37,8 +37,7 @@ your_ability_scores_modifiers = {
 # skills and proficencies that will be assigned in the sixth choice
 your_skills_and_proficiencies = {
     'proficency_bonus': '',
-    'proficient skill 1': '',
-    'proficient skill 2': '',
+    'proficient skills': [],
     'Acrobatics': '',
     'Animal Handling': '',
     'Arcana': '',
