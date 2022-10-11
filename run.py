@@ -101,6 +101,7 @@ CLASSES = None
 CLASSES_VALUES = None
 race_loop = None
 class_loop = None
+level_loop = 1
 old_score = None
 cantrip_loop = None
 
@@ -428,23 +429,26 @@ def level_confirmation():
     confirm level
     """
     global level_loop
-    level_loop = 1
     while level_loop == 1:
-        os.system('cls' if os.name == 'nt' else 'clear')
-        create_title()
-        if int(chosen_level) <= 0:
-            print(
-                f'{chosen_level} is not a valid character level'
-                ' please select again'
-            )
+        try:
+            os.system('cls' if os.name == 'nt' else 'clear')
+            create_title()
+            if int(chosen_level) <= 0:
+                print(
+                    f'{chosen_level} is not a valid character level'
+                    ' please select again'
+                )
+                third_choice()
+            elif int(chosen_level) > 20:
+                print(
+                    f'{chosen_level} exceeds the maximun level, please pick again'
+                )
+                third_choice()
+            else:
+                level_loop += 1
+        except Exception:
+            print('Please only choose a number between 1 and 20')
             third_choice()
-        elif int(chosen_level) > 20:
-            print(
-                f'{chosen_level} exceeds the maximun level, please pick again'
-            )
-            third_choice()
-        else:
-            level_loop += 1
 
     confirmed_level = None
     while confirmed_level != 'Yes':
@@ -458,6 +462,7 @@ def level_confirmation():
             level_loop = 1
             print('change decision')
             third_choice()
+            level_confirmation()
         else:
             print('Please only type "Yes" or "No".')
     your_character['Level'] = chosen_level
@@ -669,6 +674,7 @@ while "" in your_ability_scores.values():
             calc_mods()
             print(f'{chosen_ability} confirmed')
         elif confirmed_ability == 'No':
+            reassign_check = 1
             print('change decision')
             chosen_ability = select_ability(
                 "Choose one of the abilities to add the score to: \n"
