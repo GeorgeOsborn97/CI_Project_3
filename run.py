@@ -441,7 +441,8 @@ def level_confirmation():
                 third_choice()
             elif int(chosen_level) > 20:
                 print(
-                    f'{chosen_level} exceeds the maximun level, please pick again'
+                    f'{chosen_level} exceeds the maximun level, '
+                    'please pick again'
                 )
                 third_choice()
             else:
@@ -778,6 +779,8 @@ def prof_confirmation():
         confirmed_prof = confirm_prof(
             f'Are you sure you want to choose {your_prof}? '
             'Please answer "Yes" or "No" \n'
+            'Please check your spelling here, if wrong choose "No"' 
+            'And retype your choices.\n'
         )
         if confirmed_prof == 'Yes':
             print('confirmed!')
@@ -1434,7 +1437,17 @@ equipment_confirmation()
 
 ####################
 #####################
-print(your_spells_and_attacks)
+
+
+def choose_name(prompt):
+    os.system('cls' if os.name == 'nt' else 'clear')
+    create_title()
+    print("Finally its time to name your character!".center(80))
+    return input(prompt).capitalize()
+
+
+character_name = choose_name('Type your characters name here: \n')
+your_character['Name'] = character_name
 
 
 def final_print():

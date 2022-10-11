@@ -3,6 +3,7 @@ Character sheet
 """
 
 your_character = {
+    'Name': '',
     'Race': '',
     'Class': '',
     'Level': '',
