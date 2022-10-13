@@ -27,7 +27,7 @@ from character_sheet import your_ability_saving_throws
 from character_sheet import your_skills_and_proficiencies
 from character_sheet import your_spells_and_attacks
 
-
+# connection to google sheets API
 SCOPE = [
     "https://www.googleapis.com/auth/spreadsheets",
     "https://www.googleapis.com/auth/drive.file",
@@ -40,6 +40,9 @@ GSPREAD_CLIENT = gspread.authorize(SCOPED_CREDS)
 SHEET = GSPREAD_CLIENT.open('project3_test_sheet')
 
 
+# These first 3 functions are pre ones that are called back on later
+# at specific points in the program
+# This creates the red title that sits perminatly at the top of the terminal
 def create_title():
     """
     Create title
@@ -49,9 +52,7 @@ def create_title():
     print('\n')
 
 
-# the random number generator / dice roller
-
-
+# the random number generator / dice roller that is used to roll HP
 def rand_num(dice):
     """
     produce random numbers
@@ -70,19 +71,17 @@ def rand_num(dice):
         roll = (random.randrange(1, 21))
     return roll
 
-# this function calculates the charcaters hit points using their class
 
-
+# This function calculates the charcaters hit points using their class
+# and the dice selected from the function above
 def hit_dice_roller():
     """
-    dice roller
+    Class specific hit dice roller
     """
-
     dice = class_hit_dice[(your_character['Class'])]
     y = int(your_character['Level'])
     print("\033[38;5;231mIt's time to roll hit points for your charcter!")
     print(f"{(your_character['Class'])}'s hit dice are: {dice}\n")
-
     x = 0
     sum_dice = []
     while x < y:
@@ -95,6 +94,7 @@ def hit_dice_roller():
     return sum(sum_dice)
 
 
+# varibales set at the module level that get called upon later
 RACES = None
 RACE = None
 CLASSES = None
@@ -106,9 +106,11 @@ old_score = None
 cantrip_loop = None
 
 
+# This function creates an introduction to help the user understand
+# the purpose of the application
 def begin(prompt):
     """
-    creates an introduction
+    creates an introductory page
     """
     create_title()
     print(
@@ -141,6 +143,8 @@ def begin(prompt):
 begin("Please press 'Enter' to get started! \n")
 
 
+# This function creates a list of playable races and 
+# sets a few variables that are used later
 def create_initial_conditions():
     """
     Sets a few global variables. and presents the first choice to the users
@@ -171,14 +175,16 @@ def create_initial_conditions():
 
 create_initial_conditions()
 
-# The users first choice that will define the characters race
+# when this function is called
+# it finds and displays information regarding the users chosen race
 
 
-def pull_racial_traits(chosen_race):
+def pull_racial_traits():
     """
     Pull the relevent racial traits
     """
     os.system('cls' if os.name == 'nt' else 'clear')
+    # firstly it tries to find a sheet that matches what the user inputs
     try:
         trait_sheet = SHEET.worksheet(chosen_race)
         info_count = race_info[f'{chosen_race}']
@@ -187,6 +193,8 @@ def pull_racial_traits(chosen_race):
         print(f'{text_colour}{chosen_race}'.center(80))
         global i
         i = 1
+        # after finding a sheet this funcyion allows the user to cycle through
+        # the information
         while i < info_count:
             def cycle_info(prompt):
                 global i
@@ -207,7 +215,7 @@ def pull_racial_traits(chosen_race):
             print(f'{text_colour}{chosen_race}'.center(80))
         global race_loop
         race_loop += 1
-
+# if the users input is not find in a sheet they are asked to choose again.
     except Exception:
         print(
             f'{chosen_race} is not a playable Race,'
@@ -232,7 +240,7 @@ def first_choice():
             'Type a race here to see their traits and starting abilities: \n'
         )
 # connects to google sheets to pull the information about each race
-        pull_racial_traits(chosen_race)
+        pull_racial_traits()
 
 
 first_choice()
@@ -290,9 +298,9 @@ race_confirmation()
 #  this acts in the same way as the first function
 
 
-def pull_class_traits(chosen_class):
+def pull_class_traits():
     """
-    Pull the relevent racial traits
+    Pull the relevent class traits
     """
     os.system('cls' if os.name == 'nt' else 'clear')
     global class_loop
@@ -347,7 +355,7 @@ def second_choice():
             'Type a class here to see their description and abilities: \n'
         )
 
-        pull_class_traits(chosen_class)
+        pull_class_traits()
 
 
 second_choice()
@@ -762,14 +770,14 @@ sixth_choice()
 
 def confirm_prof(prompt):
     """
-    confirm the users chosen level
+    confirm the users chosen proficiency
     """
     return input(prompt).capitalize()
 
 
 def prof_confirmation():
     """
-    confirm equipment
+    confirm profiencies
     """
     os.system('cls' if os.name == 'nt' else 'clear')
     create_title()
@@ -779,7 +787,7 @@ def prof_confirmation():
         confirmed_prof = confirm_prof(
             f'Are you sure you want to choose {your_prof}? '
             'Please answer "Yes" or "No" \n'
-            'Please check your spelling here, if wrong choose "No"' 
+            'Please check your spelling here, if wrong choose "No" '
             'And retype your choices.\n'
         )
         if confirmed_prof == 'Yes':
@@ -797,14 +805,11 @@ def prof_confirmation():
 prof_confirmation()
 
 ##############################################################################
-# place into a def, build spell dicts for all classes if
-# your_character['class'] = x spell_list = y, cantrip_count
-#  = spell_list.iloc[1, int(your_character['level'])]
 
 
 def find_cantrip_list():
     """
-    Find the correct dictionary for the chosen class 
+    Find the correct dictionary for the chosen class
     """
     global cantrip_count
     cantrip_count = None
@@ -841,7 +846,7 @@ def find_cantrip_list():
             0, int(your_character['Level']) - 1
         ]
         df_cantrip_col = pd.DataFrame(spell_sheet.col_values(9))
-        df_cantrip_info_col = pd.DataFrame(spell_sheet.col_values(10))     
+        df_cantrip_info_col = pd.DataFrame(spell_sheet.col_values(10))
     elif your_character['Class'] == 'Warlock':
         your_spell_list = pd.DataFrame.from_dict(bard_spell_data)
         cantrip_count = your_spell_list.iloc[
@@ -872,7 +877,7 @@ elif your_character['Class'] in [
 
 def choose_cantrips():
     """
-    Choose spells to add to character sheet
+    Choose cantrips to add to character sheet
     """
     os.system('cls' if os.name == 'nt' else 'clear')
     create_title()
@@ -887,7 +892,7 @@ def choose_cantrips():
 
 def pull_cantrip_traits(chosen_cantrip):
     """
-    Pull the relevent racial traits
+    Pull the relevent spell information
     """
     os.system('cls' if os.name == 'nt' else 'clear')
     try:
@@ -924,13 +929,13 @@ cantrips_chosen = 0
 while cantrips_chosen != cantrip_count:
     def seventh_choice():
         """
-        users first choice
+        users seventh choice
         """
         choose_cantrips()
         while cantrip_loop == 1:
             def select_cantrip(prompt):
                 """
-                Return the users chosen race
+                Return the users chosen spell
                 """
                 return input(prompt).capitalize()
             global chosen_cantrip
@@ -1003,9 +1008,6 @@ while cantrips_chosen != cantrip_count:
         cantrip_confirmation()
 ##############################################################################
 ##############################################################################
-# place into a def, build spell dicts for all classes if
-# your_character['class'] = x spell_list = y, cantrip_count
-#  = spell_list.iloc[1, int(your_character['level'])]
 
 
 def find_spell_list():
@@ -1111,7 +1113,7 @@ def find_spell_list():
         ]
         spell_count = your_spell_list.iloc[
             levelled_spells_allowed, int(your_character['Level']) - 1
-        ]        
+        ]
         df_spell_col = pd.DataFrame(spell_sheet.row_values(spell_row_name))
         df_spell_info_col = pd.DataFrame(
             spell_sheet.row_values(spell_row_desc)
@@ -1253,13 +1255,6 @@ while total_chosen_spell != total_spell_count:
                     spell_chosen += 1
                     global total_chosen_spell
                     total_chosen_spell += 1
-                    print(f'spell_chosen = {spell_chosen}')
-                    print(f'spell_count = {spell_count}')
-                    print(f'total_spell_chosen = {total_chosen_spell}')
-                    print(f'total_spell_count = {total_spell_count}')
-                    print(f'levelled spells = {levelled_spells_allowed}')
-                    print(f'spell row name = {spell_row_name}')
-                    print(f'spell row desc = {spell_row_desc}')
                 elif confirmed_spell == 'No':
                     global spell_loop
                     spell_loop = 1
@@ -1399,7 +1394,7 @@ def equipment_list():
             equipment_count += 1
 
 
-equipment_list()        
+equipment_list()
 
 
 def confirm_equipment(prompt):
@@ -1421,6 +1416,8 @@ def equipment_confirmation():
         confirmed_equipment = confirm_equipment(
             f'Are you sure you want to choose {your_equipment}? '
             'Please answer "Yes" or "No" \n'
+            'Please check your spelling here, if wrong choose "No" '
+            'And retype your choices.\n'
         )
         if confirmed_equipment == 'Yes':
             print('confirmed!')
