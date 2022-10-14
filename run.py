@@ -922,7 +922,7 @@ def pull_cantrip_traits(chosen_cantrip):
     try:
         create_title()
         print(f'{chosen_cantrip}'.center(80))
-        c = 1
+        c = 0
         df_cantrip_name = None
         while df_cantrip_name != f'{chosen_cantrip}':
             df_cantrip = df_cantrip_col.iloc[c]

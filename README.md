@@ -57,6 +57,7 @@ ___
 ### external assets utilized:
 * [GitHub](https://github.com/)
 * [GitPod](https://gitpod.io/)
+* [Heroku](https://dashboard.heroku.com/)
 ___
 ## testing:
  
@@ -66,7 +67,7 @@ ___
 * Choose Race: 
    - What was expected? The user types a Race from the list provided and is presented with the relevent information regarding that Race. The user can then read and cycle through the information at their liesure. If the user inputs a Race that is not present or spells one of the races incorrectly they are told that their choice is not playable and are asked to pick again.
    - How it was tested? 
-   - What was the outcome?
+   - What was the outcome? 
    - Fixes? None required.
 * Choose Class: 
    - What was expected? The user types a class from the list provided and is presented with the relevent information regarding that Class. The user can then read and cycle through the information at their liesure. If the user inputs a Class that is not present or spells one of the Class incorrectly they are told that their choice is not playable and are asked to pick again.
@@ -99,27 +100,32 @@ ___
    - What was the outcome?
    - Fixes? None required.
 * Choose Cantrips: 
-   - What was expected?
+   - What was expected? The user would be presented with a list of cantrip spells, the contents of the list would be dependent on the class chosen. the user is allowed to choose a certain number of cantrips depending on their level. When a spell is typed the user is presented with the spells effects and a description and are asked to confirm if they want this spell. If the user mistypes or selects a spell that is not present they are asked to select again. If the chosen class is a martial based character then this choice would be bypassed. 
    - How it was tested?
    - What was the outcome?
    - Fixes? None required.
 * Choose Spells: 
-   - What was expected?
+   - What was expected?  The user would be presented with a list of spells, the contents of the list would be dependent on the level chosen. All spell casting classes can choose a certain number of level 1 spells. however as the level increases so does the spells they can choose. e.g a level 3 bard gets 4 evel 1 spells and 2 level 2 spells. however a level 6 bard gets access to 4 level 1 spells, 3 level 2 spells and 3 level 3 spells. The user first picks their level 1 spells, if they have a sufficient level they will then be presented the level 2 spell lista nd so on until their max spell count is met. When a spell is typed the user is presented with the spells effects and a description and are asked to confirm if they want this spell. If the user mistypes or selects a spell that is not present they are asked to select again. If the chosen class is a martial based character then this choice would be bypassed. 
    - How it was tested?
    - What was the outcome?
    - Fixes? None required.
 * Choose Equipment: 
-   - What was expected?
+   - What was expected? The user would be presented with a list of equipment, the contents of the list would be dependent on the class chosen. Classes either get the choice of martial weapons or simple weapons. Some classes also get the choice tp pick 2 weapons instead of just one. If the user inputted a weapons that is not in the list they are asked to choose again.
    - How it was tested?
    - What was the outcome?
    - Fixes? None required.
+* Choose Name: 
+   - What was expected? The user is finally presented with the option to choose a name for their charcater. There is no limitation here the user is free to input anything they desire.
+   - How it was tested?
+   - What was the outcome?
+   - Fixes? None required.   
 * All choice confirmations: 
-   - What was expected?
+   - What was expected? At the end of all choices the user is presented with the option to confirm their choice. they can either type yes or no, any other input should be met with 'Please only type yes or no' if the user confimrs their choice then it is added to the relevent dictionary that will form the charcter sheet later. if they choose no then they are given the option to choose again.
    - How it was tested?
    - What was the outcome?
    - Fixes? None required.   
 * Present Sheet: 
-   - What was expected?
+   - What was expected? At the end of the application the user is presnted with the tabulated data that they entered or has been calculated with their entry. This is in effect their character sheet like you would produce for a real game. it shows their Race, Class, Level, Hit points, Their characters name, Their skills, modifiers and ability scores. their proficient skills. Spells if applicabale and their equipment.
    - How it was tested?
    - What was the outcome?
    - Fixes? None required.                   
