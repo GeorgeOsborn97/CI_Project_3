@@ -1,7 +1,7 @@
 # DND Character Creator
 
 ![full-mockup]()
-Site Description.
+This site has been designed to be a full character creator for DND 5e. However due to time constraints this initail plan has had to be cut down. This site is now here to provide people an insight into what kind of characters are possible within the world of DND. THis site provides a lot of information on different Races, Classes and spells. Although many mechanics of the game are only touched upon and not everything makes it into the character sheet presented at the end, the user should end their time here with atleast an understanding of what the different Races and Classes offer, an insight into what a character at any level may look like and what abilities they may have at each level. This is a site that could be infinitly expanded upon. As you'll see below I have an extensive roadmap of new features and mechanics that can be implemented in the future. It is a shame I could not complete the whole character creator at this time. But this certainly should help potential players get a bitof prior knowledge and hopefully help them in tehir decision of what character they will play, should they go on to join a campaign. 
 
 Find a link to the deployed site [here]()
 
@@ -59,28 +59,60 @@ ___
 * [GitPod](https://gitpod.io/)
 ___
 ## testing:
-In order to test responsive elements throughout the development process Chrome Devtools was used frequently.
  
 ### Manual Testing:
 #### Feature Testing:
 * Fixes refers to any potential current fixes/improvements that are still potentially available. 'None required' refers to the fact that at this moment there is no additional work needed to improve that feature. Many bugs and errors were encounted during the development process and several of these features were very much trail and error. The accounts of which can be found throughout the commits in GitHub.
-* Background image: 
-   - What was expected? The background image should not be distracting, in focus and on desktop the image should slowly zoom in for a period of 5 minutes before resetting.
-   - How it was tested? The site was given to a number of people to gauge their reactions, none of them stated that they were distracted by the background whilst playing the game. The zoom effect was also watched to completion to ensure that it did reset after 5 minutes.
+* Choose Race: 
+   - What was expected?
+   - How it was tested?
    - What was the outcome?
-   The background worked as intended. it provides a fitting setting for the game whilst not distracting the user.
    - Fixes? None required.
-   
+* Choose Class: 
+   - What was expected?
+   - How it was tested?
+   - What was the outcome?
+   - Fixes? None required.
+* Choose Level: 
+   - What was expected?
+   - How it was tested?
+   - What was the outcome?
+   - Fixes? None required.
+* Choose Abilities: 
+   - What was expected?
+   - How it was tested?
+   - What was the outcome?
+   - Fixes? None required.
+* Choose Proficienies: 
+   - What was expected?
+   - How it was tested?
+   - What was the outcome?
+   - Fixes? None required.
+* Choose Cantrips: 
+   - What was expected?
+   - How it was tested?
+   - What was the outcome?
+   - Fixes? None required.
+* Choose Spells: 
+   - What was expected?
+   - How it was tested?
+   - What was the outcome?
+   - Fixes? None required.
+* Choose Equipment: 
+   - What was expected?
+   - How it was tested?
+   - What was the outcome?
+   - Fixes? None required.
+* Present Sheet: 
+   - What was expected?
+   - How it was tested?
+   - What was the outcome?
+   - Fixes? None required.                   
 #### Device testing:
 This site has been physically tested on:
    - ASUS ZenBook
    - Iphone X
-   - Samsung Galaxy S20
 
-After the initial deployment these are the bugs that needed addressing:
-   1. The UFO was loading off screen on mobile. This was solved by floating the box div over to the left and reducing it to 1px by 1px.
-   2. There was an oversight as I did not initially think of how I was going to open the keyboard on mobile. There was many attempts at ways to force open the keyboard but they did work unfortunatly. In the end the fix for this was to create an input that the user could interactive with to open the keyboard on mobile.
-   3. The input that was made in order to force open a mobile keyboard had one big issue. The screen zoomed in on the input when it was selected. The user was then required to zoom back out or scroll up to see the keys to be pressed. I have since put in a maximum-scale into the viewport meta, this has stopped the zooming effect.
    ___
 ## deployment:
   

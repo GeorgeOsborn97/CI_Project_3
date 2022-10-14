@@ -143,7 +143,7 @@ def begin(prompt):
 begin("Please press 'Enter' to get started! \n")
 
 
-# This function creates a list of playable races and 
+# This function creates a list of playable races and
 # sets a few variables that are used later
 def create_initial_conditions():
     """
@@ -313,6 +313,8 @@ def pull_class_traits():
         print(f'{class_colour}{chosen_class}\n'.center(80))
         global i
         i = 1
+        # just like the function above this allows the user
+        #  to cycle through infomation
         while i < info_count:
             def cycle_info(prompt):
                 global i
@@ -330,7 +332,8 @@ def pull_class_traits():
             create_title()
             print(f'{class_colour}{chosen_class}\n'.center(80))
         class_loop += 1
-
+# if the user inputted something unrelated to a sheet in the linked doc,
+# they are asked gto pick again.
     except Exception:
         print(
             f'{chosen_class}'
@@ -340,6 +343,8 @@ def pull_class_traits():
         print(f'{df_class.to_string(index=False, header=None)}\n')
 
 
+# these choice functions sit inside a while loop to ensure the user can
+# only move on if the correct conditions are met.
 def second_choice():
     """
     users second choice
@@ -404,7 +409,8 @@ def class_confirmation():
 
 
 class_confirmation()
-# choose the level of the character
+# choose the level of the character this effects the amount hit dice rolled
+# and tge spells allowed to be chosen.
 
 
 def third_choice():
@@ -422,7 +428,8 @@ def third_choice():
 
 third_choice()
 
-# confirm level
+# test whether the inpuuted level is within the acceptable parameters.
+# if not the user is asked to choose again.
 
 
 def confirm_level(prompt):
@@ -480,6 +487,8 @@ def level_confirmation():
 
 level_confirmation()
 # hit points are rolled based on the level and class of the character
+# different classes require different dice to be rolled, these are 
+# decided by the dict in class_info
 
 
 def forth_choice(prompt):
@@ -489,6 +498,8 @@ def forth_choice(prompt):
     create_title()
     hit_points = hit_dice_roller()
     your_character['Hit points'] = hit_points
+    # the user is shown the first table of their sheet
+    # showing their choices so far.
     print('Lets see how your charcter is looking! \n')
     print(f'{class_colour}{your_character}')
     return input(prompt)
@@ -497,6 +508,8 @@ def forth_choice(prompt):
 forth_choice("Please press 'Enter' to move on: ")
 
 
+# a small introduction to how the ability scores will be rolled and 
+# how it works assiging the values.
 def ability_score_intro():
     """
     print a paragraph to the terminal
@@ -508,6 +521,8 @@ def ability_score_intro():
         "You will be shown the sum of 3 d6 rolls, "
         "you will then be asked which ability to assign this score to. "
         "This will be reapeated 6 times."
+        "Please note that you can swap any scores around whilst assigning, "
+        "however when the final score is assigned you will be moved on."
     )
 
 
@@ -529,6 +544,9 @@ def fifth_choice():
     print(f'\033[38;5;118m{your_score}')
 
 
+# this whole function and its inner functions allows the user
+# to assign the scores, reassign any swapped scores and calculate 
+# the various skill bonuses and modifiers once the scores have been set.
 while "" in your_ability_scores.values():
     if old_score is None:
         global reassign_check
@@ -587,6 +605,7 @@ while "" in your_ability_scores.values():
         else:
             your_skills_and_proficiencies['proficency_bonus'] = 6
 
+# this is where the modifiers and skills are calculated
     def calc_mods():
         """
         calculate ability score modifiers
@@ -673,7 +692,7 @@ while "" in your_ability_scores.values():
             'Charisma'
         ] = your_ability_scores_modifiers['Charisma']
         calc_prof_mod()
-
+# finally the user is asked tpo confirm the assignment.
     confirmed_ability = confirm_ability(
         f'Are you sure you want to add'
         f' {your_score} to {chosen_ability}? '
@@ -715,9 +734,9 @@ while "" in your_ability_scores.values():
     create_title()
 print(your_ability_scores)
 
-# proficiency choice to be added after ability scores
 
-
+# the user is then asked to choose 2 skills as their proficeincy.
+# the list of which is related to their class.
 def sixth_choice():
     """
     Choose proficiencies
@@ -768,6 +787,7 @@ def sixth_choice():
 sixth_choice()
 
 
+# the user is then asked to confirm their choices.
 def confirm_prof(prompt):
     """
     confirm the users chosen proficiency
@@ -804,9 +824,9 @@ def prof_confirmation():
 
 prof_confirmation()
 
-##############################################################################
 
-
+# this function finds the correct list of cantrips that can be chosen,
+# the contents of which is decided by your class.
 def find_cantrip_list():
     """
     Find the correct dictionary for the chosen class
@@ -865,6 +885,8 @@ def find_cantrip_list():
     print(cantrip_count)
 
 
+# martial characters do not get spells so if the user chose one of these
+# they skip the choice of cantrips.
 if your_character['Class'] in [
     'Barbarian', 'Rogue', 'Fighter', 'Monk', 'Paladin'
 ]:
@@ -875,6 +897,8 @@ elif your_character['Class'] in [
     find_cantrip_list()
 
 
+# the function from  here works much like the race and class options,
+# the users input is tested and if infomation can be found it is presented.
 def choose_cantrips():
     """
     Choose cantrips to add to character sheet
@@ -1006,10 +1030,10 @@ while cantrips_chosen != cantrip_count:
         'Bard', 'Cleric', 'Druid', 'Sorcerer', 'Warlock', 'Wizard'
     ]:
         cantrip_confirmation()
-##############################################################################
-##############################################################################
 
 
+# this function works exactly like the one above the only difference is
+# that the spell list is different as is effected by your level.
 def find_spell_list():
     """
     Find the correct dictionary for the chosen class
@@ -1296,7 +1320,6 @@ while total_chosen_spell != total_spell_count:
         df_spell_info_col = pd.DataFrame(
             spell_sheet.row_values(spell_row_desc)
         )
-##############################################################################
 
 
 def select_equipment(prompt):
@@ -1304,6 +1327,7 @@ def select_equipment(prompt):
     return input(prompt).capitalize()
 
 
+# this is where the equipment that can be chosen is decided.
 def equipment_list():
     print('Please choose two weapons from the list below.')
     if your_character['Class'] in ['Barbarian', 'Fighter', 'Paladin']:
@@ -1404,6 +1428,8 @@ def confirm_equipment(prompt):
     return input(prompt).capitalize()
 
 
+# the user is then asked to choose equipment for their character,
+# their choice is dependent on their class
 def equipment_confirmation():
     """
     confirm equipment
@@ -1432,10 +1458,8 @@ def equipment_confirmation():
 
 equipment_confirmation()
 
-####################
-#####################
 
-
+# the last choice the user makes is the name of their character
 def choose_name(prompt):
     os.system('cls' if os.name == 'nt' else 'clear')
     create_title()
@@ -1447,6 +1471,7 @@ character_name = choose_name('Type your characters name here: \n')
 your_character['Name'] = character_name
 
 
+# finally the user is presented their character in the form of tabulated data.
 def final_print():
     os.system('cls' if os.name == 'nt' else 'clear')
     create_title()
