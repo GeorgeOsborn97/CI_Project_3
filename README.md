@@ -27,15 +27,15 @@ ___
 ## User experience:
 ### What I wanted to achieve:
 
-1. 
+1. Create a fun application that allows someone to be able to freely design and build a character that could be used in DnD 5e.
 
-2. 
+2. Have the user leave the application with a better understanding of what options are available when designing a character.
 
-3. 
+3. Present the user with a large varity of options that have real effects on the character which allows for hundreds of potentail character options
 
-4. 
+4. Allow the user the ability to look at all information surronding a choice before confimring that choice.
 
-5. 
+5. Present the user a charcater sheet at the end of teh application that clearly shows all the choices they made.
 
 ___
 ### Simple initial design plans:
@@ -64,27 +64,37 @@ ___
 #### Feature Testing:
 * Fixes refers to any potential current fixes/improvements that are still potentially available. 'None required' refers to the fact that at this moment there is no additional work needed to improve that feature. Many bugs and errors were encounted during the development process and several of these features were very much trail and error. The accounts of which can be found throughout the commits in GitHub.
 * Choose Race: 
-   - What was expected?
-   - How it was tested?
+   - What was expected? The user types a Race from the list provided and is presented with the relevent information regarding that Race. The user can then read and cycle through the information at their liesure. If the user inputs a Race that is not present or spells one of the races incorrectly they are told that their choice is not playable and are asked to pick again.
+   - How it was tested? 
    - What was the outcome?
    - Fixes? None required.
 * Choose Class: 
-   - What was expected?
+   - What was expected? The user types a class from the list provided and is presented with the relevent information regarding that Class. The user can then read and cycle through the information at their liesure. If the user inputs a Class that is not present or spells one of the Class incorrectly they are told that their choice is not playable and are asked to pick again.
    - How it was tested?
    - What was the outcome?
    - Fixes? None required.
 * Choose Level: 
-   - What was expected?
+   - What was expected? The user chooses a level between 1 and 20. they are then asked to confirm this level. if the user inputs either a string, or a number not within 1 and 20 they are informed that the level chosen is not within the parameters and are asked to pick again.
    - How it was tested?
    - What was the outcome?
    - Fixes? None required.
+* Rolled hit points: 
+   - What was expected? Once the user has chosen a level, their hit points would be rolled and calculated. This should be decided by the class hit dice. e.g Barbarians get a d12 and wizards get a d6. and their level. e.g a level 3 wizard would roll 3 d6. the sum of these dice decide theor hit points. This would then be presented to the user.
+   - How it was tested?
+   - What was the outcome?
+   - Fixes? None required.   
 * Choose Abilities: 
-   - What was expected?
+   - What was expected? The user is presnted with 3d6 rolls, the sum of which can be assigned to any one of 6 abilities. After assigning the first number a new roll is presented, this is reapeated untill all skills are assigned a score. If the user wishes to assign a rolled score to an already assigned ability they must re assign the old sore, they are not presented a new roll.
+   - How it was tested?
+   - What was the outcome?
+   - Fixes? None required.
+* Modifiers and skill calculations: 
+   - What was expected? When a score is assigned to an ability all skills that use that ability as thier base are given their modifiers based on what was rolled. e.g the skill Arcana is an intellegnce based skill, if the rolled score assigned to Intellegence is 14 then the Arcana modifier will be +2. likewise stealth is a dexterity based skill. if the score assigned to dexterity is 9 then the modifier to stealth would be -1.
    - How it was tested?
    - What was the outcome?
    - Fixes? None required.
 * Choose Proficienies: 
-   - What was expected?
+   - What was expected? The user is presented with a list of skills two of which can be assigned as proficent skills. The list provided is deterined by the class. e.g a bard can choose any two skills as proficient. However a Barbarian could not Choose Arcana as a proficent skill. there fore it would not appear in the list.
    - How it was tested?
    - What was the outcome?
    - Fixes? None required.
@@ -103,6 +113,11 @@ ___
    - How it was tested?
    - What was the outcome?
    - Fixes? None required.
+* All choice confirmations: 
+   - What was expected?
+   - How it was tested?
+   - What was the outcome?
+   - Fixes? None required.   
 * Present Sheet: 
    - What was expected?
    - How it was tested?

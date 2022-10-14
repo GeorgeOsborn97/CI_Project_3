@@ -487,7 +487,7 @@ def level_confirmation():
 
 level_confirmation()
 # hit points are rolled based on the level and class of the character
-# different classes require different dice to be rolled, these are 
+# different classes require different dice to be rolled, these are
 # decided by the dict in class_info
 
 
@@ -508,7 +508,7 @@ def forth_choice(prompt):
 forth_choice("Please press 'Enter' to move on: ")
 
 
-# a small introduction to how the ability scores will be rolled and 
+# a small introduction to how the ability scores will be rolled and
 # how it works assiging the values.
 def ability_score_intro():
     """
