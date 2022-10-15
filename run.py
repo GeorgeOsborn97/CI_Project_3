@@ -127,13 +127,13 @@ def begin(prompt):
         'as they are arguably the most important and the most fun. '
         'You will be shown a lot of information when selecting '
         'a Race and a Class. This information will not affect the '
-        '"character sheet" at the end of this applicatiion, '
+        '"character sheet" at the end of this application, '
         'but is there to show you what a charcater would look like '
-        'in a real game. There are also hundreds more spells,'
-        'abilities and featutres that I could not fit in this creator.'
-        'However a lot are touched on when selecting a class and race'
-        'so keep those things in mind. Finally be aware,'
-        'if you cant see the DND Character Creator Logo,'
+        'in a real game. There are also hundreds more spells, '
+        'abilities and featutres that I could not fit in this creator. '
+        'However a lot are touched on when selecting a class and race '
+        'so keep those things in mind. Finally be aware, '
+        'if you cant see the red DND Character Creator Logo, '
         'you can scroll up to see more information.\n'
     )
 
@@ -520,7 +520,7 @@ def ability_score_intro():
         "\033[38;5;231mNow it's time to calculate your ability scores. "
         "You will be shown the sum of 3 d6 rolls, "
         "you will then be asked which ability to assign this score to. "
-        "This will be reapeated 6 times."
+        "This will be reapeated 6 times. "
         "Please note that you can swap any scores around whilst assigning, "
         "however when the final score is assigned you will be moved on."
     )
@@ -545,7 +545,7 @@ def fifth_choice():
 
 
 # this whole function and its inner functions allows the user
-# to assign the scores, reassign any swapped scores and calculate 
+# to assign the scores, reassign any swapped scores and calculate
 # the various skill bonuses and modifiers once the scores have been set.
 while "" in your_ability_scores.values():
     if old_score is None:
@@ -707,6 +707,10 @@ while "" in your_ability_scores.values():
             chosen_ability = select_ability(
                 "Choose one of the abilities to add the score to: \n"
             )
+            if your_ability_scores[f'{chosen_ability}'] != "":
+                old_score = your_ability_scores[f'{chosen_ability}']
+                if reassign_check == 1:
+                    reassign_check = 2
             confirmed_ability = confirm_ability(
                 f'Are you sure you want to add {your_score}'
                 f' to {chosen_ability}? '

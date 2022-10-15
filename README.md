@@ -61,7 +61,7 @@ ___
 ___
 ## testing:
  
-### Manual Testing:
+### Testing:
 #### Feature Testing:
 * Fixes refers to any potential current fixes/improvements that are still potentially available. 'None required' refers to the fact that at this moment there is no additional work needed to improve that feature. Many bugs and errors were encounted during the development process and several of these features were very much trail and error. The accounts of which can be found throughout the commits in GitHub.
 * Choose Race: 
@@ -110,7 +110,7 @@ ___
    - What was the outcome?
    - Fixes? None required.
 * Choose Equipment: 
-   - What was expected? The user would be presented with a list of equipment, the contents of the list would be dependent on the class chosen. Classes either get the choice of martial weapons or simple weapons. Some classes also get the choice tp pick 2 weapons instead of just one. If the user inputted a weapons that is not in the list they are asked to choose again.
+   - What was expected? The user would be presented with a list of equipment, the contents of the list would be dependent on the class chosen. Classes either get the choice of martial weapons or simple weapons. Some classes also get the choice to pick 2 weapons instead of just one. If the user inputted a weapons that is not in the list they are asked to choose again.
    - How it was tested?
    - What was the outcome?
    - Fixes? None required.
@@ -143,4 +143,6 @@ ___
 -
 ### Media:
 -
+## The Roadmap:
+
 ## Final thoughts
