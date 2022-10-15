@@ -1369,7 +1369,7 @@ def equipment_list():
                 weapon_list['Simple']
             ):
                 print(
-                    'Please only choose one of the weapons above as: '
+                    'Please only choose one of the weapons above: '
                 )
                 chosen_equipment = select_equipment(
                     "Type one of the weapons to take it: \n"
