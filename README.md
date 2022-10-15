@@ -48,8 +48,35 @@ ___
 
 ___
 ## Features: 
-### The background and imagery:
-  -
+### Welcome page:
+  - The first thing the user will see is the intro page. This was put in to help describe the purpose of the site and to help them understand the mechanics. It also helps the user understand that not all the information they read about a race or a class will be present at the end.
+### Choose Race:
+  - The user is then presented with their first choice. What race to play? Here they can select any of the options provided and look through the information about their chosen race. It is hoped here that the user will start to see the depth and posibilities of charcter creation within DnD. They can spend as much time as they like here looking through all the options and confirming their choice when they are ready.
+### Information cycle:
+  - The way information is presented is in text blocks, some of which can get quite large. Hence why the intro tells the user that if they can not see the Logo they should scroll up as more information is hidden above. However I wanted to keep information as un cluttered as possible. Hence the ability to cycle through the information. This feature is prominent when choosing a race, a class and when looking at spells. It allows the terminal to be cleared and the next text block to be presented in a clear space so that it is more easily digestable.
+### Confirm:
+  - At the end of a lot of sections the user will be asked to confirm their choice. This boils down to typing "yes" or "No" but it gives the user pause to think before they proceed. Instead of being forced into the next section they have time to consider and maybe change their mind if they desire to.
+### Choose Class:
+  - The second choice the user is presented with is what class they would like to pick. this functions exactly like the race selection. They can cycle through all the information at their liesure and make what ever choice they desire at the end.
+### Choose Level:
+  - The third choice is the level of their charcater. This is an important one as it effects the spells they can select and their hit points. What i hope the user can do from here is see what a high level character may look like. often in character creation people are solely worried about level 1 - 5. here someone could see what their character may look like at level 20.
+### Your character so far:
+  - This is where your hit points are rolled and it is a place to pause and see how the charcater is starting to look. The user can see all their choices so far and reflect on potentially a name for the charcter that they will get to choose later. 
+### Choose Abilities:
+  - This is where the user will assign their ability scores. They can assign any number to any ability. Hopefully from redaing about their class they know roughly what skills to optimise, but they are feee to make any choice they like. they also have the abiility to reassign any f the scores they have set.
+### Choose Proficencies:
+  - The next choice the user will have is to choose two skills to make proficient. Now in the real game some classes and races have pre set proficiencies this isnt something i had time to implement nut may do in the future. For now the user gets the choice of a set of class specific skills to make their charcter proficent in.
+### Choose cantrips and spells:
+  - This next choice is not for every class. only spell casters get the opportunity to choose spells. Cantrips are a certain type of spell they dont use spell slots. The cantrip list is also different for every class, The Paladin is the only class that has access to spells but not cantrips. The spell lists are leveled and different levels have access to higher tiers of spells. There is also no difference in what levelled spells are available to different classes. Furthermore different leveled characters can choose more cantrips and spells. This section and the next work just like the class and race options. the user can loook over every spell before making any decisions.
+### Choose Equipment:
+  - Next the user can choose what weapons they would like. Some of the classes get 2 weapons some get 1. There are also 2 lists and each class can only pick from 1 list.
+### Choose Name:
+  - Finally the user can choose a name for their character. I purposly put this at the end as I thought it was a nice way to cap off the creation of a character.
+### Character sheet:
+  - And then at the end the user is presented with the 'Character Sheet' This summerises all their choices. Shows their Name, Race, Class, Level, Hit points, Weapons, Spells, Ability scores. skills modifiers and saving throws. 
+### Colour scheme:
+  - Throughout this application the user would of seen various colours. These were specific choices. The Logo is a bright red that so often is related to DnD. Each class and race has their own colour to give a sense of difference but also to give a sense of their 'personality' e.g the elf and gnome are green to reflect their link to Nature. The Tiefling is Red to give a sense of their link to Hell. The Character sheet at the end is also presnted in the colour of the users chosen class.
+
 ___
 ## Technology that was utilized:
 ### languages:
@@ -107,7 +134,7 @@ ___
    - Fixes? None required.
 * Choose Spells: 
    - What was expected?  The user would be presented with a list of spells, the contents of the list would be dependent on the level chosen. All spell casting classes can choose a certain number of level 1 spells. however as the level increases so does the spells they can choose. e.g a level 3 bard gets 4 evel 1 spells and 2 level 2 spells. however a level 6 bard gets access to 4 level 1 spells, 3 level 2 spells and 3 level 3 spells. The user first picks their level 1 spells, if they have a sufficient level they will then be presented the level 2 spell lista nd so on until their max spell count is met. When a spell is typed the user is presented with the spells effects and a description and are asked to confirm if they want this spell. If the user mistypes or selects a spell that is not present they are asked to select again. If the chosen class is a martial based character then this choice would be bypassed. 
-   - How it was tested? Spells were selected from the spell list shown. first bane was chosen. this then took me to the spell description and i was able to confirm my choice or pick again. i confirmed this choice and was able to choose another spell. this time ityped "currre woounds". this was prompted with "currre woounds is not a spell. please select again." All spells were checked to make sure the correct information was shown. like wise at higher levels you can pick more spells and higherlevel spells therefore charcaters were created at different levels to ensure the correct number of spells were available to be chosen as well as the correct caliber of spell.
+   - How it was tested? Firstly the martial based characters were selected to make sure they skipped this step. Spells were selected from the spell list shown. first bane was chosen. this then took me to the spell description and i was able to confirm my choice or pick again. i confirmed this choice and was able to choose another spell. this time ityped "currre woounds". this was prompted with "currre woounds is not a spell. please select again." All spells were checked to make sure the correct information was shown. like wise at higher levels you can pick more spells and higherlevel spells therefore charcaters were created at different levels to ensure the correct number of spells were available to be chosen as well as the correct caliber of spell.
    - What was the outcome?  All Martial characters skipped this step. All the spells showed the relevent informtion and the correct amount of spells are availbale at each level. And the spell list changed if the level was applicable to higher level spells and all spells were chosen at the prevoius level.
    - Fixes? None required.
 * Choose Equipment: 
