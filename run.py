@@ -1333,7 +1333,7 @@ def select_equipment(prompt):
 
 # this is where the equipment that can be chosen is decided.
 def equipment_list():
-    print('Please choose two weapons from the list below.')
+    print('Please choose weapons from the list below.')
     if your_character['Class'] in ['Barbarian', 'Fighter', 'Paladin']:
         for i in weapon_list['Martial']:
             print(i)
