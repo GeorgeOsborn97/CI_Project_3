@@ -30,7 +30,7 @@ Find a link to the deployed site [here](https://character-creator-ci-project-3.h
    - [Languages](#languages)
    - [External assets](#external-assets-utilized)
 5. [Testing](#testing)  
-   - [Manual testing](#manual-testing)
+   - [Feature testing](#feature-testing)
    - [Device testing](#device-testing)
 6. [Deployment](#deployment)
 7. [Credits/Acknowledgments](#creditsacknowledgments)
@@ -207,18 +207,18 @@ This site has been physically tested on:
 
    ___
 ## deployment:
-Firstly pip3 freeze > requirements.txt was used in order to update the requirements.txt file so that all the imports would be read properly on Heroku.
-from the Heroku dashboard 'create a new app' was clicked.
-I then named my app characetr-creator-ci-project-3. 
-I selected my region and clicked create app.
-I then clicked on settings at the tab at the top of the page.
-I then created a configs var to include my creds.json file 
-I then added the python and node.js buildpacks.
-I then hit deploy in tab at the top of the page.
-I then connected to my github.
-After connecting to my gitHub I was able to search and select my required repository.
-I then selected automatic deployment in order to push any changes made in GitHub automatically to my application.
-With that done i was able to view my application and ensure everything worked as expected.
+* Firstly pip3 freeze > requirements.txt was used in order to update the requirements.txt file so that all the imports would be read properly on Heroku.
+* From the Heroku dashboard 'create a new app' was clicked.
+* I then named my app characetr-creator-ci-project-3. 
+* I selected my region and clicked create app.
+* I then clicked on settings at the tab at the top of the page.
+* I then created a configs var to include my creds.json file 
+* I then added the python and node.js buildpacks.
+* I then hit deploy in tab at the top of the page.
+* I then connected to my github.
+* After connecting to my gitHub I was able to search and select my required repository.
+* I then selected automatic deployment in order to push any changes made in GitHub automatically to my application.
+* With that done I was able to view my application and ensure everything worked as expected.
 
 ___
 ## credits/acknowledgments
@@ -228,3 +228,4 @@ ___
 - I would like to Thank DnD Beyond for providing all the information available throughout this application. Without their vast amount of available information this application would not have been quite so possible.
 
 ## Final thoughts
+- This was a monumental task I set myself, I under estimated the work that would be needed to achieve what I wanted. However I do have to say im happy with how it has turned out. There is still lots that could be done here. I know that it's far from perfect but I learnt a lot along the way and I pushed myself to do something different and I can be proud of what I achieved here.

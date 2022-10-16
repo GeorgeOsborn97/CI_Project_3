@@ -912,7 +912,7 @@ def choose_cantrips():
     global cantrip_loop
     cantrip_loop = 1
     print(
-        'To begin please choose from one of the following spells.\n'.center(80)
+        'Please choose from one of the following spells.\n'.center(80)
     )
     df_cantrip = df_cantrip_col
     print(f'\033[38;5;63m{df_cantrip.to_string(index=False, header=None)}\n')
@@ -1184,8 +1184,7 @@ while total_chosen_spell != total_spell_count:
         os.system('cls' if os.name == 'nt' else 'clear')
         create_title()
         print(
-            'To begin'
-            ' please choose from one of the following spells.\n'.center(80)
+            'Please choose from one of the following spells.\n'.center(80)
         )
         df_spell = df_spell_col
         print(
