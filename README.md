@@ -7,11 +7,25 @@ Find a link to the deployed site [here](https://character-creator-ci-project-3.h
 
 ## contents:
 1. [User experience](#user-experience)
-   - [Mockup desings](#simple-initial-design-plans)
+   - [what i wanted to achieve](#what-i-wanted-to-achieve)
+   - [the road map](#the-plan-and-the-roadmap)
 2. [Final product](#final-product)
    - 
 3. [Features](#features)
-   - 
+   - [The intro](#welcome-page)
+   - [Choose race](#choose-race)
+   - [Info cycle](#information-cycle)
+   - [confirmation](#confirm)
+   - [choose class](#choose-class)
+   - [choose level](#choose-level)
+   - [Your character so far](#your-character-so-far)
+   - [choose abilities](#choose-abilities)
+   - [choose profs](#choose-proficencies)
+   - [choose spells](#choose-cantrips-and-spells)
+   - [choose equipment](#choose-equipment)
+   - [choose name](#choose-name)
+   - [character sheet](#character-sheet)
+   - [colour scheme](#colour-scheme)
 4. [Technology that was utilized](#technology-that-was-utilized)   
    - [Languages](#languages)
    - [External assets](#external-assets-utilized)
@@ -39,9 +53,12 @@ ___
 
 ___
 ### The Plan and the Roadmap:
-state | Mockup example |
 ![The flow chart](assets/roadmap.png)
--
+- The plan for this application in the beggining was to create a character creator that would provide almost all the options available in DnD beyond and other like creators. I originally planned to have all Racial and class benefits in the final sheet. I also planned to include class specfific levelled spells however this proved far too ambitous for this project. In the end many features had to be left out and many choices do not have the desired affect on the final sheet. However the application has been stopped at a point that I belive still achieves most of the desired outcome from such a project.
+That being said there is still a lot that can go in to this. As you can see from the above flowchart, 2 sections have not yet been implemented. In the future I would like to start with these 3 steps to move this project along:
+* Finish the class specific spell tables to accuratly show what spells can be taken for each class at each level.
+* Implement the Race and class specfific benefits seen in the race and class options into the final sheet. 
+* Implement level bonuses such as ability score improvments and feats.
 
 ___
 ## Final Product
@@ -113,11 +130,10 @@ ___
 * [GitHub](https://github.com/)
 * [GitPod](https://gitpod.io/)
 * [Heroku](https://dashboard.heroku.com/)
+* [Google Sheets](https://www.google.co.uk/sheets/about/)
 ___
-## testing:
- 
-### Testing:
-#### Feature Testing:
+## Testing:
+### Feature Testing:
 * Fixes refers to any potential current fixes/improvements that are still potentially available. 'None required' refers to the fact that at this moment there is no additional work needed to improve that feature. Many bugs and errors were encounted during the development process and several of these features were very much trail and error. The accounts of which can be found throughout the commits in GitHub.
 * Choose Race: 
    - What was expected? The user types a Race from the list provided and is presented with the relevent information regarding that Race. The user can then read and cycle through the information at their liesure. If the user inputs a Race that is not present or spells one of the races incorrectly they are told that their choice is not playable and are asked to pick again.
@@ -195,8 +211,8 @@ This site has been physically tested on:
 ___
 ## credits/acknowledgments
 ### Content:
--
+- All code was written by myself, no external code was taking during the devolopment of this application. 
 ### Media:
--
+- I would like to Thank DnD Beyond for providing all the information available throughout this application. Without their vast amount of available information this application would not have been quite so possible.
 
 ## Final thoughts
