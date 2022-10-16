@@ -1,7 +1,8 @@
 # DND Character Creator
 
 ![full-mockup](assets/Full-mockup.png)
-This site has been designed to be a full character creator for DND 5e. However due to time constraints this initail plan has had to be cut down. This site is now here to provide people an insight into what kind of characters are possible within the world of DND. THis site provides a lot of information on different Races, Classes and spells. Although many mechanics of the game are only touched upon and not everything makes it into the character sheet presented at the end, the user should end their time here with atleast an understanding of what the different Races and Classes offer, an insight into what a character at any level may look like and what abilities they may have at each level. This is a site that could be infinitly expanded upon. As you'll see below I have an extensive roadmap of new features and mechanics that can be implemented in the future. It is a shame I could not complete the whole character creator at this time. But this certainly should help potential players get a bitof prior knowledge and hopefully help them in tehir decision of what character they will play, should they go on to join a campaign. 
+This site has been designed to be a full character creator for DND 5e. However due to time constraints this initail plan has had to be cut down. This site is now here to provide people an insight into what kind of characters are possible within the world of DnD. THis site provides a lot of information on different Races, Classes and spells. Although many mechanics of the game are only touched upon and not everything makes it into the character sheet presented at the end, the user should end their time here with atleast an understanding of what the different Races and Classes offer, an insight into what a character at any level may look like and what abilities they may have at each level. This is a site that could be infinitly expanded upon. As you'll see below I have an extensive roadmap of new features and mechanics that can be implemented in the future. It is a shame I could not complete the whole character creator at this time. But this certainly should help potential players get a bitof prior knowledge and hopefully help them in tehir decision of what character they will play, should they go on to join a campaign.
+* For those that are unaware DnD stands for Dungeons and Dragosn. a table top role playing game. For more information regarding DnD please visit DnDBeyond [here](https://www.dndbeyond.com/) 
 
 Find a link to the deployed site [here](https://character-creator-ci-project-3.herokuapp.com/)
 
@@ -10,7 +11,9 @@ Find a link to the deployed site [here](https://character-creator-ci-project-3.h
    - [what i wanted to achieve](#what-i-wanted-to-achieve)
    - [the road map](#the-plan-and-the-roadmap)
 2. [Final product](#final-product)
-   - 
+   - [The start](#the-start)
+   - [The end](#the-end)
+   - [The background infomation](#the-background)
 3. [Features](#features)
    - [The intro](#welcome-page)
    - [Choose race](#choose-race)
@@ -62,7 +65,16 @@ That being said there is still a lot that can go in to this. As you can see from
 
 ___
 ## Final Product
-![final product](assets/final-product.png)
+### The start
+![The start](assets/final-product.png)
+* As you can see above this is the first screen that the user will be faced with. It is hoped that through reading this brief intoduction that they will understand what this application has to offer and will be excited to begin to create their own charcater.
+### The end
+![The end](assets/character-sheet1.png)
+* The Sheet the user builds is the summerisation of their time spent in the application. It is formatted to neatly show all their choices and show them the character they have created. It is the ultimate goal of this application to give users a glimpse into the world of DnD. they may not understand the maths that has gone on to work out all their skills. But it is my hope that they can look over what they have created and get a sense of the kind of character they have created, maybe they can start to visualise how they would play this character. Maybe they will start to think of a backstory for their charcater. And maybe this sheet will hopefully help inform their choices when they go on to create a chracter for a real game.
+For a full breakdown of all the features please see below.
+### The background
+![Cantrip spell list](assets/google-sheet.png)
+* Working in the background is an extensive libary of information stored in a google sheet doc. This is where all the information regarding the races, classes and spells is pulled from. Without this, the application would not be possible. Above is a screen shot showing the cantrip spell list. Each spell casting class pulls from a different pair of columns. The first column in each pair is the spell's name and the secons contains the infrmoation about it. This is the formatt across all sheets and how all the information is stored.
 ___
 ## Features: 
 ### Welcome page:
@@ -131,6 +143,8 @@ ___
 * [GitPod](https://gitpod.io/)
 * [Heroku](https://dashboard.heroku.com/)
 * [Google Sheets](https://www.google.co.uk/sheets/about/)
+* [Pandas](https://pandas.pydata.org/)
+* Tabulate
 ___
 ## Testing:
 ### Feature Testing:
@@ -204,26 +218,33 @@ ___
 #### Device testing:
 This site has been physically tested on:
    - ASUS ZenBook
+#### Validation
+The code was put into pythonchecker.com a link to which can be found [here](https://www.pythonchecker.com/)
+As you can see from the two images the highest score was a 92% and the lowest 82% which upon their rating system is regarded as excellent. All of the code was put through this checker i have purposely only included images of the highest and lowest scores as to avoid clutter. All other results sat in between these two figures.
+![Validatio High](assets/validation-high.png)
+![Validation Low](assets/validation-low.png)   
 
    ___
-## deployment:
-* Firstly pip3 freeze > requirements.txt was used in order to update the requirements.txt file so that all the imports would be read properly on Heroku.
-* From the Heroku dashboard 'create a new app' was clicked.
-* I then named my app characetr-creator-ci-project-3. 
-* I selected my region and clicked create app.
-* I then clicked on settings at the tab at the top of the page.
-* I then created a configs var to include my creds.json file 
-* I then added the python and node.js buildpacks.
-* I then hit deploy in tab at the top of the page.
-* I then connected to my github.
-* After connecting to my gitHub I was able to search and select my required repository.
-* I then selected automatic deployment in order to push any changes made in GitHub automatically to my application.
-* With that done I was able to view my application and ensure everything worked as expected.
+## Deployment:
+1. Firstly pip3 freeze > requirements.txt was used in order to update the requirements.txt file so that all the imports would be read properly on Heroku.
+2. From the Heroku dashboard 'create a new app' was clicked.
+3. I then named my app characetr-creator-ci-project-3. 
+4. I selected my region and clicked create app.
+5. I then clicked on settings at the tab at the top of the page.
+6. I then created a configs var to include my creds.json file 
+7. I then added the python and node.js buildpacks.
+8. I then hit deploy in tab at the top of the page.
+9. I then connected to my github.
+10. After connecting to my gitHub I was able to search and select my required repository.
+11. I then selected automatic deployment in order to push any changes made in GitHub automatically to my application.
+12. With that done I was able to view my application and ensure everything worked as expected.
 
 ___
 ## credits/acknowledgments
 ### Content:
 - All code was written by myself, no external code was taking during the devolopment of this application. 
+- Pandas was used to read the google sheets.
+- Tabulate was used for the presentation of the character sheet.
 ### Media:
 - I would like to Thank DnD Beyond for providing all the information available throughout this application. Without their vast amount of available information this application would not have been quite so possible.
 

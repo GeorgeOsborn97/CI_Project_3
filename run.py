@@ -215,7 +215,7 @@ def pull_racial_traits():
             print(f'{text_colour}{chosen_race}'.center(80))
         global race_loop
         race_loop += 1
-# if the users input is not find in a sheet they are asked to choose again.
+    # if the users input is not find in a sheet they are asked to choose again.
     except Exception:
         print(
             f'{chosen_race} is not a playable Race,'
