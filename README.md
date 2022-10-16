@@ -62,7 +62,7 @@ That being said there is still a lot that can go in to this. As you can see from
 
 ___
 ## Final Product
-
+![final product](assets/final-product.png)
 ___
 ## Features: 
 ### Welcome page:
@@ -207,7 +207,19 @@ This site has been physically tested on:
 
    ___
 ## deployment:
-  
+Firstly pip3 freeze > requirements.txt was used in order to update the requirements.txt file so that all the imports would be read properly on Heroku.
+from the Heroku dashboard 'create a new app' was clicked.
+I then named my app characetr-creator-ci-project-3. 
+I selected my region and clicked create app.
+I then clicked on settings at the tab at the top of the page.
+I then created a configs var to include my creds.json file 
+I then added the python and node.js buildpacks.
+I then hit deploy in tab at the top of the page.
+I then connected to my github.
+After connecting to my gitHub I was able to search and select my required repository.
+I then selected automatic deployment in order to push any changes made in GitHub automatically to my application.
+With that done i was able to view my application and ensure everything worked as expected.
+
 ___
 ## credits/acknowledgments
 ### Content:
